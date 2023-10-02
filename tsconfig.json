@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "target": "ESNext",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "moduleResolution": "node",
+        // Для абсолютного импорта
+        "baseUrl": ".",
+        "strict": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        // esModuleInterop для использования import вместо common js
+        "esModuleInterop": true,
+        // allowSyntheticDefaultImports для использования import <package> вместо import * as <package>
+        "allowSyntheticDefaultImports": true,
+        "plugins": [
+            {
+                "name": "typescript-plugin-css-modules"
+            }
+        ],
+        "isolatedModules": true
+    },
+    // дополнительная настройка для import/export
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+    "include": [
+        "./config/jest/setupTests.ts",
+        "./src/**/*.ts",
+        "./src/**/*.tsx"
+    ]
+}
