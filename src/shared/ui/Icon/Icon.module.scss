@@ -1,0 +1,9 @@
+.Icon {
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.Icon:hover {
+    background-color: var(--bg-color);
+}

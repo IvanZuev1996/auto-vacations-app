@@ -1,0 +1,25 @@
+.item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    margin: 0px 15px;
+    transition: background-color 0.2s;
+}
+
+.item:hover {
+    background-color: var(--bg-color);
+}
+
+.collapsed {
+    .title {
+        display: none;
+    }
+
+    .item {
+        margin: 0;
+    }
+}
