@@ -2,20 +2,19 @@ import {
     CommentOutlined,
     InsertRowAboveOutlined,
     LineChartOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
     PartitionOutlined,
     QuestionCircleOutlined,
     SettingOutlined,
     UserOutlined,
     UsergroupAddOutlined
 } from '@ant-design/icons';
-import { Select } from 'antd';
-import { memo, useState } from 'react';
+import { memo } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import { classNames } from '@/shared/lib/helpers/classNames';
-import { Icon } from '@/shared/ui/Icon/Icon';
 
+import { getSidabarState } from '../../model/selectors/getSidebarState';
 import { SidebarItemType } from '../../model/types/sidebar';
 import { SidebarItem } from '../SidebarItem/SidebarItem';
 
@@ -33,27 +32,27 @@ const links: SidebarItemType[] = [
     },
     {
         title: 'Сотрудники',
-        path: '/',
+        path: '/staff',
         icon: UsergroupAddOutlined
     },
     {
         title: 'Заявки',
-        path: '/',
+        path: '/applications',
         icon: CommentOutlined
     },
     {
         title: 'Профиль',
-        path: '/',
+        path: '/profile/:id',
         icon: UserOutlined
     },
     {
         title: 'Подразделения',
-        path: '/',
+        path: '/divisions',
         icon: PartitionOutlined
     },
     {
         title: 'Статистика',
-        path: '/',
+        path: '/statistics',
         icon: LineChartOutlined
     }
 ];
@@ -61,20 +60,19 @@ const links: SidebarItemType[] = [
 const settingsLinks: SidebarItemType[] = [
     {
         title: 'Настройки',
-        path: '/',
+        path: '/settings',
         icon: SettingOutlined
     },
     {
         title: 'Справочный центр',
-        path: '/',
+        path: '/info',
         icon: QuestionCircleOutlined
     }
 ];
 
 export const Sidebar = memo(({ className }: SidebarProps) => {
-    const [isOpen, setIsOpen] = useState(true);
-
-    const MenuIcon = isOpen ? MenuFoldOutlined : MenuUnfoldOutlined;
+    const { pathname } = useLocation();
+    const isOpen = useSelector(getSidabarState);
 
     return (
         <aside
@@ -83,32 +81,10 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
                 className
             ])}
         >
-            <div className={cls.sidebarHeader}>
-                <h3 className={cls.logo}>ОтпускПлюс!</h3>
-                <Icon
-                    Icon={MenuIcon}
-                    onClick={() => setIsOpen((prev) => !prev)}
-                    size={20}
-                    className={cls.menuIcon}
-                />
-            </div>
-            <div className={cls.selectWrapper}>
-                <Select
-                    defaultValue="Подразделение 1"
-                    size="large"
-                    style={{ width: '100%' }}
-                    onChange={undefined}
-                    options={[
-                        { value: 'Подразделение 1', label: 'Подразделение 1' },
-                        { value: 'Подразделение 2', label: 'Подразделение 2' },
-                        { value: 'Подразделение 3', label: 'Подразделение 3' }
-                    ]}
-                />
-            </div>
-            <hr className={cls.hr} />
             <div role="navigation" className={cls.items}>
                 {links.map((link) => (
                     <SidebarItem
+                        active={pathname === link.path}
                         collapsed={!isOpen}
                         icon={link.icon}
                         path={link.path}
@@ -121,6 +97,7 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
             <div role="navigation" className={cls.items}>
                 {settingsLinks.map((link) => (
                     <SidebarItem
+                        active={pathname === link.path}
                         collapsed={!isOpen}
                         icon={link.icon}
                         path={link.path}

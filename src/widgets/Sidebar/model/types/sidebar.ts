@@ -5,3 +5,7 @@ export interface SidebarItemType {
     title?: string;
     path?: string;
 }
+
+export interface SidebarSchema {
+    isOpen?: boolean;
+}

@@ -3,23 +3,60 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 5px;
     text-decoration: none;
-    border-radius: 15px;
-    margin: 0px 15px;
-    transition: background-color 0.2s;
+    transition: background-color 0.1s ease-out;
+}
+
+.activeBlink {
+    width: 6px;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+    background-color: rgb(0 112 255);
+    display: none;
+}
+
+.icon {
+    opacity: 0.6;
+    margin-left: 7px;
+}
+
+.title {
+    transition: all 0.1s;
+    opacity: 0.6;
+}
+
+.active {
+    background-color: rgb(0 112 255 / 6%);
+    pointer-events: none;
+    cursor: default;
+
+    .activeBlink {
+        display: block;
+    }
+
+    .icon {
+        opacity: 1;
+    }
+
+    .title {
+        font: var(--font-s-bold);
+        opacity: 1;
+    }
 }
 
 .item:hover {
-    background-color: var(--bg-color);
+    background-color: rgb(177 177 177 / 10%);
+
+    .title {
+        color: rgb(0 112 255);
+    }
 }
 
 .collapsed {
+    margin: 0;
+
     .title {
         display: none;
-    }
-
-    .item {
-        margin: 0;
     }
 }

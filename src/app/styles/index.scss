@@ -1,20 +1,21 @@
 @import 'reset';
-@import 'variables/global.scss';
-@import 'colors.scss';
+@import 'variables/global';
+@import 'colors';
 
 body {
     overflow: hidden;
-    font: var(--font-s);;
+    font: var(--font-s);
 }
 
 .app {
     color: black;
-    background: #F5F5F9;
+    background: var(--bg-color);
     min-height: 100vh;
 }
 
 .content-page {
     display: flex;
+    padding-top: var(--navbar-height);
 }
 
 /* полоса прокрутки (скроллбар) */

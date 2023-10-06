@@ -4,11 +4,7 @@ module.exports = {
         es2021: true,
         jest: true
     },
-    extends: [
-        'plugin:react/recommended',
-        'airbnb',
-        'prettier'
-    ],
+    extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -96,7 +92,8 @@ module.exports = {
         'babun4ek-fsd-plugin/layer-imports-checker': [
             'error',
             {
-                alias: '@'
+                alias: '@',
+                ignoreImportsPatters: ['**/StoreProvider']
             }
         ]
     },
