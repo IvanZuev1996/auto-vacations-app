@@ -13,13 +13,14 @@
     box-shadow: 0 6px 8px -5px rgb(34 60 80 / 10%);
 }
 
-.logoSection {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
+.select {
+    width: fit-content;
 }
 
 .logo {
     z-index: 1000;
+}
+
+.logout {
+    margin-left: auto;
 }

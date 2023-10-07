@@ -7,14 +7,18 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 
+import { UserSchema } from '@/entities/User';
+import { LoginSchema } from '@/features/AuthByUsername';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { SidebarSchema } from '@/widgets/Sidebar';
 
 export interface StateSchema {
     sidebar: SidebarSchema;
+    user: UserSchema;
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
     // асинхронные редюсеры
+    loginForm?: LoginSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

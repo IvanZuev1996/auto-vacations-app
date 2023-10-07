@@ -3,3 +3,6 @@ export enum AppRoutes {
     // last page
     NOT_FOUND = 'not_found'
 }
+
+export const getRouteMain = () => '/';
+export const getRouteNotFound = () => '*';

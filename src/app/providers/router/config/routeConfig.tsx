@@ -1,16 +1,20 @@
+import { NotFoundPage } from '@/pages/NotFoundPage';
 import { VacationSchedulePage } from '@/pages/VacationSchedulePage';
-import { AppRoutes } from '@/shared/consts/router';
+import {
+    AppRoutes,
+    getRouteMain,
+    getRouteNotFound
+} from '@/shared/consts/router';
 import { AppRouteProps } from '@/shared/types/router';
-import { PageError } from '@/widgets/PageError';
 
 export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.VACATION_SCHEDULE]: {
-        path: '/',
+        path: getRouteMain(),
         element: <VacationSchedulePage />
     },
     // last route
     [AppRoutes.NOT_FOUND]: {
-        path: '*',
-        element: <PageError />
+        path: getRouteNotFound(),
+        element: <NotFoundPage />
     }
 };

@@ -1,0 +1,27 @@
+.Input {
+    width: 100%;
+    padding: 10px 18px;
+    outline: none;
+    border-radius: 4px;
+    color: black;
+    border: 1px solid var(--gray-color);
+    background-color: var(-sidebar-bg);
+    transition: border 0.2s;
+}
+
+.Input:hover {
+    border: 1px solid var(--secondary-color-light);
+}
+
+.Input:focus {
+    border: 1px solid var(--secondary-color);
+}
+
+.error {
+    border: 1px solid rgb(255 0 0 / 30%);
+}
+
+.readonly {
+    cursor: auto;
+    opacity: 0.4;
+}

@@ -1,5 +1,16 @@
 :root {
     // --bg-color: #f5f5f9;
     --bg-color: #fff;
-    --secondary-color: #d5d5d5;
+    --primary-color: #000;
+    --secondary-color: #0070ff;
+    --secondary-color-light: rgb(0 112 255 / 30%);
+    --secondary-color-super-light: rgb(117 177 255 / 7%);
+    --sidebar-bg: #f9fbfa;
+    --error-color: rgb(255 52 52);
+
+    // table colors
+    --gray-color: rgb(218 218 218);
+    --gray-light-color: rgb(244 244 244 / 50%);
+    --green-color: rgb(64 121 19);
+    --green-light-color: rgb(165 216 125 / 60%);
 }

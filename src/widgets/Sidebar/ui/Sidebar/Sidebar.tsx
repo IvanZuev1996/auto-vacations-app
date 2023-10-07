@@ -1,21 +1,13 @@
-import {
-    CommentOutlined,
-    InsertRowAboveOutlined,
-    LineChartOutlined,
-    PartitionOutlined,
-    QuestionCircleOutlined,
-    SettingOutlined,
-    UserOutlined,
-    UsergroupAddOutlined
-} from '@ant-design/icons';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { classNames } from '@/shared/lib/helpers/classNames';
+import { Line } from '@/shared/ui/Line';
+import { VStack } from '@/shared/ui/Stack';
 
+import { links, settingsLinks } from '../../model/consts/sidebarLinks';
 import { getSidabarState } from '../../model/selectors/getSidebarState';
-import { SidebarItemType } from '../../model/types/sidebar';
 import { SidebarItem } from '../SidebarItem/SidebarItem';
 
 import cls from './Sidebar.module.scss';
@@ -23,52 +15,6 @@ import cls from './Sidebar.module.scss';
 interface SidebarProps {
     className?: string;
 }
-
-const links: SidebarItemType[] = [
-    {
-        title: 'График отпусков',
-        path: '/',
-        icon: InsertRowAboveOutlined
-    },
-    {
-        title: 'Сотрудники',
-        path: '/staff',
-        icon: UsergroupAddOutlined
-    },
-    {
-        title: 'Заявки',
-        path: '/applications',
-        icon: CommentOutlined
-    },
-    {
-        title: 'Профиль',
-        path: '/profile/:id',
-        icon: UserOutlined
-    },
-    {
-        title: 'Подразделения',
-        path: '/divisions',
-        icon: PartitionOutlined
-    },
-    {
-        title: 'Статистика',
-        path: '/statistics',
-        icon: LineChartOutlined
-    }
-];
-
-const settingsLinks: SidebarItemType[] = [
-    {
-        title: 'Настройки',
-        path: '/settings',
-        icon: SettingOutlined
-    },
-    {
-        title: 'Справочный центр',
-        path: '/info',
-        icon: QuestionCircleOutlined
-    }
-];
 
 export const Sidebar = memo(({ className }: SidebarProps) => {
     const { pathname } = useLocation();
@@ -81,7 +27,7 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
                 className
             ])}
         >
-            <div role="navigation" className={cls.items}>
+            <VStack gap="12" role="navigation" max className={cls.items}>
                 {links.map((link) => (
                     <SidebarItem
                         active={pathname === link.path}
@@ -92,9 +38,9 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
                         key={link.title}
                     />
                 ))}
-            </div>
-            <hr className={cls.hr} />
-            <div role="navigation" className={cls.items}>
+            </VStack>
+            <Line className={cls.hr} />
+            <VStack gap="12" role="navigation" max className={cls.items}>
                 {settingsLinks.map((link) => (
                     <SidebarItem
                         active={pathname === link.path}
@@ -105,7 +51,7 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
                         key={link.title}
                     />
                 ))}
-            </div>
+            </VStack>
         </aside>
     );
 });

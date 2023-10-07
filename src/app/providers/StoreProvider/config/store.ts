@@ -5,6 +5,7 @@ import {
     ReducersMapObject
 } from '@reduxjs/toolkit';
 
+import { userReducer } from '@/entities/User';
 import { $api } from '@/shared/api/api';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { sidebarReducer } from '@/widgets/Sidebar';
@@ -19,6 +20,7 @@ export function createReduxStore(
     const rootReducer: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         sidebar: sidebarReducer,
+        user: userReducer,
         [rtkApi.reducerPath]: rtkApi.reducer
     };
 

@@ -1,0 +1,35 @@
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    user-select: none;
+    font: var(--font-s-bold);
+    opacity: 0.5;
+}
+
+.subText {
+    margin-left: 20px;
+}
+
+.btn {
+    font: var(--font-s);
+    width: 200px;
+    height: 40px;
+    margin-left: auto;
+    margin-top: 20px;
+}
+
+.content {
+    margin-top: 30px;
+}
+
+.quations {
+    cursor: pointer;
+    margin-top: 50px;
+    text-decoration: underline;
+    transition: color 0.1s ease-in;
+}
+
+.quations:hover {
+    color: var(--secondary-color);
+}

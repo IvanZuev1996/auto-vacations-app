@@ -1,0 +1,16 @@
+.AuthPage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+}
+
+.card {
+    margin-top: 100px;
+    width: 35%;
+    min-height: 45%;
+    font: var(--font-s);
+    padding: 30px 50px;
+}

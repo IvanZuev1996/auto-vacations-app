@@ -1,0 +1,82 @@
+.Card {
+    width: 100%;
+    overflow-x: auto;
+
+    // margin: 0 30px;
+}
+
+.content {
+    box-shadow: 0 5px 10px 0 rgb(34 60 80 / 11%);
+}
+
+.days {
+    flex: 31;
+    border-bottom: 1px solid var(--gray-color);
+}
+
+.rows {
+    flex: 31;
+    z-index: 1000;
+    transition: background-color 0.1s;
+}
+
+.item {
+    flex: 1;
+    text-align: center;
+    min-width: 40px;
+    height: 40px;
+    background-color: var(--gray-light-color);
+    font: var(--font-m);
+    transition: background-color 0.1s;
+}
+
+.odd {
+    background-color: white;
+    transition: background-color 0.1s;
+}
+
+.rows:hover {
+    background-color: var(--secondary-color-super-light);
+
+    .item {
+        background-color: var(--secondary-color-super-light);
+    }
+
+    .odd {
+        background-color: var(--secondary-color-super-light);
+    }
+}
+
+.active {
+    cursor: pointer;
+    z-index: 1000;
+    flex: 1;
+    text-align: center;
+    min-width: 40px;
+    height: 35px;
+    border-bottom: 1px solid var(--green-color);
+    border-top: 1px solid var(--green-color);
+    background-color: var(--green-light-color);
+    font: var(--font-m);
+}
+
+.end {
+    border-radius: 0 5px 5px 0;
+    border-right: 1px solid var(--green-color);
+}
+
+.start {
+    border-radius: 5px 0 0 5px;
+    border-left: 1px solid var(--green-color);
+}
+
+.name {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    font: var(--font-s);
+    border-bottom: 1px solid var(--gray-color);
+    border-right: 1px solid var(--gray-color);
+}

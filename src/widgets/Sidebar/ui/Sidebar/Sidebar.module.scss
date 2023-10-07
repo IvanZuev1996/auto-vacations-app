@@ -1,13 +1,12 @@
 .Sidebar {
     height: calc(100vh - var(--navbar-height));
     width: var(--sidebar-width);
-    background: #f9fbfa;
+    background: var(--sidebar-bg);
 
     // background: var(--bg-color);
     position: relative;
     padding-top: 10px;
-
-    // transition: width 0.2s;
+    flex-shrink: 0;
 }
 
 .sidebarHeader {
@@ -21,7 +20,6 @@
 
 .hr {
     margin: 30px 0;
-    opacity: 0.5;
 }
 
 .collapsed {
@@ -37,9 +35,6 @@
 }
 
 .items {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     margin-bottom: 50px;
     margin-top: 15px;
 }
