@@ -25,8 +25,12 @@
 
     --navbar-height: 60px;
     --sidebar-width: 230px;
-    --sidebar-width-collapsed: 80px;
-    --comment-avatar-width: 40px;
+
+    // Table
+
+    --table-item-height: 35px;
+    --table-active-item-height: calc(var(--table-item-height) - 5px);
+    --table-item-width: 30px;
 
     // z - Идексы
 

@@ -9,6 +9,7 @@ import { AxiosInstance } from 'axios';
 
 import { UserSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/AuthByUsername';
+import { VacationsPageSchema } from '@/pages/VacationsPage';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { SidebarSchema } from '@/widgets/Sidebar';
 
@@ -19,6 +20,7 @@ export interface StateSchema {
 
     // асинхронные редюсеры
     loginForm?: LoginSchema;
+    vacationsPage?: VacationsPageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

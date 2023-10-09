@@ -1,4 +1,5 @@
 .Card {
+    padding: 0 10px;
     width: 100%;
     overflow-x: auto;
 
@@ -23,8 +24,8 @@
 .item {
     flex: 1;
     text-align: center;
-    min-width: 40px;
-    height: 40px;
+    min-width: var(--table-item-width);
+    height: var(--table-item-height);
     background-color: var(--gray-light-color);
     font: var(--font-m);
     transition: background-color 0.1s;
@@ -47,13 +48,17 @@
     }
 }
 
+.namesColumn {
+    margin-top: var(--table-item-height);
+}
+
 .active {
     cursor: pointer;
     z-index: 1000;
     flex: 1;
     text-align: center;
-    min-width: 40px;
-    height: 35px;
+    min-width: var(--table-item-width);
+    height: var(--table-active-item-height);
     border-bottom: 1px solid var(--green-color);
     border-top: 1px solid var(--green-color);
     background-color: var(--green-light-color);
@@ -75,8 +80,18 @@
     justify-content: flex-start;
     align-items: center;
     width: 150px;
-    height: 40px;
+    height: var(--table-item-height);
     font: var(--font-s);
     border-bottom: 1px solid var(--gray-color);
     border-right: 1px solid var(--gray-color);
+}
+
+.year {
+    .rows {
+        flex: 12;
+    }
+
+    .active {
+        min-width: 0;
+    }
 }

@@ -1,11 +1,19 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Button, Select } from 'antd';
+import {
+    DownOutlined,
+    LogoutOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserOutlined
+} from '@ant-design/icons';
+import { Button, Dropdown, MenuProps, Select, Space } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { userActions } from '@/entities/User';
+import { getRouteMain } from '@/shared/consts/router';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { AppLink } from '@/shared/ui/AppLink';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { HStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -18,28 +26,55 @@ interface NavbarProps {
     className?: string;
 }
 
+const items = [
+    {
+        label: <AppLink to={getRouteMain()}>Мой профиль</AppLink>,
+        key: '1',
+        icon: <UserOutlined />
+    },
+    {
+        key: '2',
+        label: 'Выйти',
+        icon: <LogoutOutlined />,
+        danger: true
+    }
+];
+
 export const Navbar = memo(({ className }: NavbarProps) => {
     const isOpen = useSelector(getSidabarState);
     const dispatch = useAppDispatch();
     const MenuIcon = isOpen ? MenuFoldOutlined : MenuUnfoldOutlined;
 
-    const handleClick = () => {
+    const onLogout = () => {
+        dispatch(userActions.logout());
+    };
+
+    const handleSidebarClick = () => {
         dispatch(sidebarActions.toggleState(!isOpen));
     };
 
-    const onLogout = () => {
-        dispatch(userActions.logout());
+    const handleMenuClick: MenuProps['onClick'] = (e) => {
+        if (
+            items.find((item) => item?.key === e.key && item.label === 'Выйти')
+        ) {
+            onLogout();
+        }
+    };
+
+    const menuProps = {
+        items,
+        onClick: handleMenuClick
     };
 
     return (
         <nav className={classNames(cls.Navbar, {}, [className])}>
             <HStack gap="4" justify="center" align="center">
-                <Icon Icon={MenuIcon} onClick={handleClick} size={20} />
+                <Icon Icon={MenuIcon} onClick={handleSidebarClick} size={20} />
                 <Text size="L" weight="bold_weight" className={cls.logo}>
                     ОтпускПлюс!
                 </Text>
             </HStack>
-            <div className={cls.selectWrapper}>
+            <div>
                 <Select
                     defaultValue="Подразделение 1"
                     size="middle"
@@ -52,9 +87,21 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                     ]}
                 />
             </div>
-            <Button type="primary" onClick={onLogout} className={cls.logout}>
+            <Dropdown
+                menu={menuProps}
+                trigger={['click']}
+                className={cls.logout}
+            >
+                <Button>
+                    <Space>
+                        Иванов И.И.
+                        <DownOutlined />
+                    </Space>
+                </Button>
+            </Dropdown>
+            {/* <Button type="primary" onClick={onLogout} className={cls.logout}>
                 Выйти
-            </Button>
+            </Button> */}
         </nav>
     );
 });

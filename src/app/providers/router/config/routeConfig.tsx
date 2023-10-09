@@ -1,5 +1,5 @@
 import { NotFoundPage } from '@/pages/NotFoundPage';
-import { VacationSchedulePage } from '@/pages/VacationSchedulePage';
+import { VacationsPage } from '@/pages/VacationsPage';
 import {
     AppRoutes,
     getRouteMain,
@@ -10,7 +10,7 @@ import { AppRouteProps } from '@/shared/types/router';
 export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.VACATION_SCHEDULE]: {
         path: getRouteMain(),
-        element: <VacationSchedulePage />
+        element: <VacationsPage />
     },
     // last route
     [AppRoutes.NOT_FOUND]: {

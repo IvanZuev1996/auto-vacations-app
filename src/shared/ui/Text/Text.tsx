@@ -1,6 +1,6 @@
 import { ReactNode, memo } from 'react';
 
-import { classNames } from '@/shared/lib/helpers/classNames';
+import { classNames, Mods } from '@/shared/lib/helpers/classNames';
 
 import cls from './Text.module.scss';
 
@@ -32,18 +32,22 @@ export const Text = memo((props: TextProps) => {
     const {
         className,
         children,
+        max,
         align = 'left',
         theme = 'primary',
         size = 'S',
-        max,
         weight = 'normal_weight'
     } = props;
 
     const HeaderTag = mapSizeToHeaderTag[size];
 
+    const mods: Mods = {
+        [cls.max]: max
+    };
+
     return (
         <div
-            className={classNames('', { [cls.max]: max }, [
+            className={classNames('', mods, [
                 className,
                 cls[theme],
                 cls[align],
