@@ -2,6 +2,7 @@ import { Card } from 'antd';
 import { MutableRefObject, useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
 
+import { Vacation } from '@/entities/Vacation';
 import { shortMonthsArray as mounthList } from '@/shared/consts/dates';
 import { Mods, classNames } from '@/shared/lib/helpers/classNames';
 import {
@@ -14,11 +15,6 @@ import { HStack, VStack } from '@/shared/ui/Stack';
 import { TableView } from '../../model/types/table';
 
 import cls from './Table.module.scss';
-
-interface Vacation {
-    end: Date;
-    start: Date;
-}
 
 interface TableProps {
     vacations?: Vacation[];
@@ -263,8 +259,15 @@ export const Table = (props: TableProps) => {
         >
             <HStack justify="start" align="start" max>
                 <VStack className={cls.namesColumn}>
-                    {vacations?.map(() => (
-                        <div className={cls.name}>Иванов И.И.</div>
+                    {vacations?.map((vacation) => (
+                        <div className={cls.name}>
+                            {`${vacation.user.firstname} ${
+                                vacation.user.lastname[0]
+                            }.${
+                                vacation.user?.patronymic &&
+                                vacation.user?.patronymic[0]
+                            } `}
+                        </div>
                     ))}
                 </VStack>
                 <VStack max>

@@ -9,7 +9,7 @@ import { Button, Dropdown, MenuProps, Select, Space } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { userActions } from '@/entities/User';
+import { getUserAuthData, userActions } from '@/entities/User';
 import { getRouteMain } from '@/shared/consts/router';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -42,6 +42,7 @@ const items = [
 
 export const Navbar = memo(({ className }: NavbarProps) => {
     const isOpen = useSelector(getSidabarState);
+    const userData = useSelector(getUserAuthData);
     const dispatch = useAppDispatch();
     const MenuIcon = isOpen ? MenuFoldOutlined : MenuUnfoldOutlined;
 
@@ -94,7 +95,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
             >
                 <Button>
                     <Space>
-                        Иванов И.И.
+                        {`${userData?.firstname} ${userData?.lastname[0]}.`}
                         <DownOutlined />
                     </Space>
                 </Button>
