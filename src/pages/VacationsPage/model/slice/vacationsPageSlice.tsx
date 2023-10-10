@@ -55,6 +55,7 @@ const vacationsPageSlice = createSlice({
             })
             .addCase(fetchVacations.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.error = undefined;
                 vacationsAdapter.setAll(state, action.payload);
             })
             .addCase(fetchVacations.rejected, (state, action) => {

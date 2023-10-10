@@ -1,0 +1,22 @@
+.days {
+    flex: 31;
+    border-bottom: 1px solid var(--gray-color);
+}
+
+.rows {
+    flex: 31;
+    z-index: 1000;
+    transition: background-color 0.1s;
+}
+
+.rows:hover {
+    background-color: var(--secondary-color-super-light);
+
+    .item {
+        background-color: var(--secondary-color-super-light);
+    }
+
+    .odd {
+        background-color: var(--secondary-color-super-light);
+    }
+}

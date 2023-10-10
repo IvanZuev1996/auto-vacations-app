@@ -18,10 +18,13 @@ export interface User {
     post?: string; // должность
     role: UserRole; // роль пользователя: Руководитель/Сотрудник
     department?: number; // отдел
-    division: number; // подразделение
+    division: string; // подразделение
     intersections?: string[]; // пересечения
     startWork?: Date; // дата начала работы
     balance: number; // баланс отпускных дней
+}
+
+export interface UserDetails extends User {
     daysOnVacations: number; // кол-во дней проведенных в отпуске
     visibleUsers: string[]; // доступные для просмотра пользователи
     vacationStatus: 'in vacation' | 'work'; // статус 'в отпуске' или 'работает'

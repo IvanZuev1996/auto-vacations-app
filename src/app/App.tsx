@@ -50,6 +50,10 @@ const App = () => {
                         Dropdown: {
                             controlPaddingHorizontal: 25,
                             controlHeight: 40
+                        },
+                        Skeleton: {
+                            controlHeight: 50,
+                            padding: 0
                         }
                     }
                 }}
