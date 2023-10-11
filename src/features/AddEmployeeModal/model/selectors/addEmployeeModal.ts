@@ -9,3 +9,5 @@ export const getAddEmployeeIsSuccess = (state: StateSchema) =>
 
 export const getAddEmployeeUserData = (state: StateSchema) =>
     state.addEmployeeModal?.data;
+export const getAddEmployeeAuthData = (state: StateSchema) =>
+    state.addEmployeeModal?.data.auth;

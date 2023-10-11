@@ -1,6 +1,7 @@
 import { Button, DatePicker, Input, Result, Select, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { ChangeEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates/getNormalizedDate';
@@ -9,6 +10,7 @@ import { NumericInput } from '@/shared/ui/NumericInput/NumericInput';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 
+import { getAddEmployeeAuthData } from '../../../model/selectors/addEmployeeModal';
 import { NewUserData } from '../../../model/types/AddEmployeeModalSchema';
 import cls from '../AddEmployeeForm.module.scss';
 
@@ -49,20 +51,41 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
         onChangeStartWork
     } = props;
     const [divisionNumber, serDivisionNumber] = useState<number>(1);
+    const authData = useSelector(getAddEmployeeAuthData);
 
     if (isSuccess) {
         return (
-            <Result
-                status="success"
-                title="Пользователь добавлен успешно!"
-                subTitle="Вот данные пользователя..."
-                extra={[
+            <Result status="success" title="Пользователь добавлен успешно!">
+                <Text size="M">Данные для входа в аккаунт:</Text>
+                <VStack gap="4" style={{ marginTop: 12, marginBottom: 12 }}>
+                    <HStack gap="12">
+                        <Text size="M" weight="bold_weight">
+                            Логин:
+                        </Text>
+                        <Text size="M">{authData?.username}</Text>
+                    </HStack>
+                    <HStack gap="12">
+                        <Text size="M" weight="bold_weight">
+                            Пароль:
+                        </Text>
+                        <Text size="M">{authData?.testPassword}</Text>
+                    </HStack>
+                </VStack>
+                <HStack
+                    align="center"
+                    justify="end"
+                    max
+                    gap="16"
+                    style={{ marginLeft: 'auto' }}
+                >
+                    <Button key="buy" type="text">
+                        Закрыть
+                    </Button>
                     <Button type="primary" key="console">
-                        Go Console
-                    </Button>,
-                    <Button key="buy">Buy Again</Button>
-                ]}
-            />
+                        Отправить
+                    </Button>
+                </HStack>
+            </Result>
         );
     }
 

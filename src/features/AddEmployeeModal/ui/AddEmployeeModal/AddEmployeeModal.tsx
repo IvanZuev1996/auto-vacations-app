@@ -3,6 +3,7 @@ import { Suspense, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { HStack } from '@/shared/ui/Stack';
 
 import { getAddEmployeeUserData } from '../../model/selectors/addEmployeeModal';
 import { addEmployee } from '../../model/services/addEmployee';
@@ -31,7 +32,18 @@ export const AddEmployeeModal = (props: AddEmployeeModalProps) => {
             onCancel={onCloseModal}
             destroyOnClose
         >
-            <Suspense fallback={<Spin />}>
+            <Suspense
+                fallback={
+                    <HStack
+                        align="center"
+                        justify="center"
+                        max
+                        style={{ height: '60vh' }}
+                    >
+                        <Spin />
+                    </HStack>
+                }
+            >
                 <AddEmployeeForm
                     onCancel={onCloseModal}
                     onSuccess={onAddEmployee}

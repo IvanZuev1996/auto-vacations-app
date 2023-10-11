@@ -1,6 +1,6 @@
 import { UserRole } from '../consts/userConsts';
 
-interface AuthData {
+export interface AuthData {
     username: string;
     password: string;
     salt: string;
@@ -22,13 +22,13 @@ export interface User {
     intersections?: string[]; // пересечения
     startWork?: Date; // дата начала работы
     balance: number; // баланс отпускных дней
+    auth: AuthData;
 }
 
 export interface UserDetails extends User {
     daysOnVacations: number; // кол-во дней проведенных в отпуске
     visibleUsers: string[]; // доступные для просмотра пользователи
     vacationStatus: 'in vacation' | 'work'; // статус 'в отпуске' или 'работает'
-    auth: AuthData;
     createdAt: Date;
     updatedAt: Date;
 }
