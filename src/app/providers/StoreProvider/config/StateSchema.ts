@@ -10,6 +10,7 @@ import { AxiosInstance } from 'axios';
 import { UserSchema } from '@/entities/User';
 import { AddEmployeeModalSchema } from '@/features/AddEmployeeModal';
 import { LoginSchema } from '@/features/AuthByUsername';
+import { EmployeeListPageSchema } from '@/pages/EmployeeListPage';
 import { VacationsPageSchema } from '@/pages/VacationsPage';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { SidebarSchema } from '@/widgets/Sidebar';
@@ -23,6 +24,7 @@ export interface StateSchema {
     loginForm?: LoginSchema;
     vacationsPage?: VacationsPageSchema;
     addEmployeeModal?: AddEmployeeModalSchema;
+    employeeListPage?: EmployeeListPageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;
