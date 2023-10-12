@@ -1,6 +1,6 @@
-import { Vacation } from '@/entities/Vacation';
+import { SortByUserVacation } from '@/entities/Vacation';
 import { shortMonthsArray as mounthList } from '@/shared/consts/dates';
-import { getDaysArray } from '@/shared/lib/helpers/dates';
+import { getDaysArray, isWeekend } from '@/shared/lib/helpers/dates';
 import { HStack, VStack } from '@/shared/ui/Stack';
 
 import { TableView } from '../../model/types/table';
@@ -13,7 +13,7 @@ interface TableContentProps {
     month: number;
     year: number;
     view: TableView;
-    vacations?: Vacation[];
+    vacations?: SortByUserVacation[];
 }
 
 export const TableContent = (props: TableContentProps) => {
@@ -28,15 +28,34 @@ export const TableContent = (props: TableContentProps) => {
                         <TableItem index={index} monthItem={item} visible />
                     ))}
                 </HStack>
-                {vacations?.map((item) => (
-                    <HStack justify="start" className={cls.rows} max>
+                {vacations?.map((vacationData) => (
+                    <HStack
+                        justify="start"
+                        className={cls.rows}
+                        max
+                        key={vacationData.userData?._id}
+                    >
                         {mounthList.map((_, index) => (
-                            <TableVacationYear
-                                item={item}
-                                index={index}
-                                month={month}
-                                year={year}
-                            />
+                            <HStack
+                                style={{ position: 'relative' }}
+                                max
+                                key={index}
+                            >
+                                <HStack style={{ position: 'absolute' }} max>
+                                    {vacationData.userVacations?.map(
+                                        (vacationItem) => (
+                                            <TableVacationYear
+                                                item={vacationItem}
+                                                index={index}
+                                                month={month}
+                                                year={year}
+                                                key={vacationItem._id}
+                                            />
+                                        )
+                                    )}
+                                </HStack>
+                                <TableItem index={index} />
+                            </HStack>
                         ))}
                     </HStack>
                 ))}
@@ -48,17 +67,28 @@ export const TableContent = (props: TableContentProps) => {
         <VStack max>
             <HStack justify="start" className={cls.days} max>
                 {daysList.map((item) => (
-                    <TableItem index={item} visible />
+                    <TableItem
+                        key={item}
+                        index={item}
+                        visible
+                        weekend={isWeekend({ year, month, day: item })}
+                    />
                 ))}
             </HStack>
-            {vacations?.map((item) => (
-                <HStack justify="start" className={cls.rows} max>
+            {vacations?.map((vacationData) => (
+                <HStack
+                    justify="start"
+                    className={cls.rows}
+                    max
+                    key={vacationData.userData?._id}
+                >
                     {daysList.map((index) => (
                         <TableVacationMonth
-                            item={item}
+                            items={vacationData.userVacations}
                             index={index}
                             month={month}
                             year={year}
+                            key={index}
                         />
                     ))}
                 </HStack>

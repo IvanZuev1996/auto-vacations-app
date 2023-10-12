@@ -21,14 +21,12 @@ import {
     getVacationsPageError,
     getVacationsPageIsLoading,
     getVacationsPageMonth,
+    getVacationsPageVacations,
     getVacationsPageView,
     getVacationsPageYear
 } from '../../model/selectors/vacationsPage';
 import { fetchVacations } from '../../model/services/fetchVacations';
-import {
-    getVacations,
-    vacationsPageReducer
-} from '../../model/slice/vacationsPageSlice';
+import { vacationsPageReducer } from '../../model/slice/vacationsPageSlice';
 import { VacationsPageFilters } from '../VacationsPageFilters/VacationsPageFilters';
 
 const reducers: ReducerList = {
@@ -36,7 +34,7 @@ const reducers: ReducerList = {
 };
 
 const VacationsPage = () => {
-    const vacations = useSelector(getVacations.selectAll);
+    const vacations = useSelector(getVacationsPageVacations);
     const month = useSelector(getVacationsPageMonth);
     const viewType = useSelector(getVacationsPageView);
     const year = useSelector(getVacationsPageYear);

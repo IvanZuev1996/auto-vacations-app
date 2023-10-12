@@ -22,6 +22,25 @@
     border-bottom: 1px solid var(--gray-color);
 }
 
+.item {
+    flex: 1;
+    text-align: center;
+    min-width: var(--table-item-width);
+    height: var(--table-item-height);
+    background-color: var(--gray-light-color);
+    font: var(--font-m-bold);
+    transition: background-color 0.1s;
+}
+
+.odd {
+    background-color: white;
+    transition: background-color 0.1s;
+}
+
+.visible {
+    border-radius: 5px 5px 0 0;
+}
+
 .rows {
     flex: 31;
     z-index: 1000;
@@ -38,21 +57,22 @@
     .odd {
         background-color: var(--secondary-color-super-light);
     }
+
+    .visible {
+        background-color: var(--secondary-color-super-light);
+    }
 }
 
-.item {
-    flex: 1;
-    text-align: center;
-    min-width: var(--table-item-width);
-    height: var(--table-item-height);
-    background-color: var(--gray-light-color);
-    font: var(--font-m);
-    transition: background-color 0.1s;
+.weekend {
+    color: var(--red-dark);
+    background-color: var(--red-super-light) !important;
+    border-right: 1px solid var(--bg-color);
+    border-left: 1px solid var(--bg-color);
 }
 
-.odd {
-    background-color: white;
-    transition: background-color 0.1s;
+.vacationsOnYearWrapper {
+    position: absolute;
+    width: 100%;
 }
 
 .namesColumn {
@@ -82,8 +102,16 @@
     border-right: 1px solid var(--green-color);
 }
 
+.daysCount {
+    opacity: 0.5;
+    padding-left: 10px;
+    position: absolute;
+    width: fit-content;
+}
+
 .start {
     border-radius: 5px 0 0 5px;
+    z-index: 2000;
     border-left: 1px solid var(--green-color);
 }
 

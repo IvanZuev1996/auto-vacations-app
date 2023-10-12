@@ -1,17 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { Vacation } from '@/entities/Vacation';
+import { SortByUserVacation } from '@/entities/Vacation';
 
 export const fetchVacations = createAsyncThunk<
-    Vacation[],
+    SortByUserVacation[],
     void,
     ThunkConfig<string>
 >('vacationsPage/fetchVacations', async (props, thunkApi) => {
     const { extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.get<Vacation[]>('/api/vacations');
+        const response = await extra.api.get<SortByUserVacation[]>(
+            '/api/vacations'
+        );
 
         if (!response.data) {
             throw new Error();

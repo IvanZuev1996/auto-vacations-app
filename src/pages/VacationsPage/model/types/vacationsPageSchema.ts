@@ -1,6 +1,4 @@
-import { EntityState } from '@reduxjs/toolkit';
-
-import { Vacation } from '@/entities/Vacation';
+import { SortByUserVacation } from '@/entities/Vacation';
 import { TableView } from '@/widgets/Table';
 
 interface VacationsSelectors {
@@ -9,8 +7,9 @@ interface VacationsSelectors {
     view?: TableView;
 }
 
-export interface VacationsPageSchema extends EntityState<Vacation> {
+export interface VacationsPageSchema {
     isLoading?: boolean;
     error?: string;
     selectors: VacationsSelectors;
+    vacations: SortByUserVacation[];
 }

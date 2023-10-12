@@ -48,13 +48,13 @@ export const VacationsPageFilters = () => {
         dispatch(vacationsPageActions.setTableView(newType?.value || 'month'));
     };
 
-    const onChangeMonth = (dayjsDate: any, date: string) => {
+    const onChangeMonth = (_: any, date: string) => {
         const newDate = new Date(date);
         const newMonth = newDate.getMonth() + 1;
         const newYear = newDate.getFullYear();
 
-        dispatch(vacationsPageActions.setMonth(newMonth));
         dispatch(vacationsPageActions.setYear(newYear));
+        dispatch(vacationsPageActions.setMonth(newMonth));
     };
 
     const onChangeYear = (_: any, date: string) => {

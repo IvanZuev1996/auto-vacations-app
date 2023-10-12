@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 
+import { getNormalizeDate } from './getNormalizeDate';
+
 interface GetDaysByMonthProps {
     year: number;
     month: number;
 }
 
-const normalizeDate = (year: number, month: number) => `${year}-${month}`;
-
 export const getDaysByMonth = ({ month, year }: GetDaysByMonthProps) =>
-    dayjs(normalizeDate(year, month)).daysInMonth();
+    dayjs(getNormalizeDate(year, month)).daysInMonth();

@@ -1,7 +1,8 @@
 import { Card, Skeleton } from 'antd';
 import { MutableRefObject, useRef } from 'react';
+import { useDraggable } from 'react-use-draggable-scroll';
 
-import { Vacation } from '@/entities/Vacation';
+import { SortByUserVacation } from '@/entities/Vacation';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getCurrentDate } from '@/shared/lib/helpers/dates';
 import { getShortName } from '@/shared/lib/helpers/names';
@@ -13,7 +14,7 @@ import { TableContent } from '../TableContent/TableContent';
 import cls from './Table.module.scss';
 
 interface TableProps {
-    vacations?: Vacation[];
+    vacations: SortByUserVacation[];
     className?: string;
     year?: number;
     month?: number;
@@ -32,9 +33,9 @@ export const Table = (props: TableProps) => {
         viewType = 'month'
     } = props;
     const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLInputElement>;
-    // const { events } = useDraggable(ref, {
-    //     applyRubberBandEffect: true
-    // });
+    const { events } = useDraggable(ref, {
+        applyRubberBandEffect: true
+    });
 
     return (
         <Skeleton
@@ -51,16 +52,16 @@ export const Table = (props: TableProps) => {
                     [className]
                 )}
                 ref={ref}
-                // {...events}
+                {...events}
             >
                 <HStack justify="start" align="start" max>
                     <VStack className={cls.namesColumn}>
-                        {vacations?.map(({ user }) => (
-                            <div className={cls.name}>
+                        {vacations?.map(({ userData }) => (
+                            <div className={cls.name} key={userData?._id}>
                                 {getShortName({
-                                    firstname: user.firstname,
-                                    lastname: user.lastname,
-                                    patronymic: user.patronymic
+                                    firstname: userData!.firstname,
+                                    lastname: userData!.lastname,
+                                    patronymic: userData?.patronymic
                                 })}
                             </div>
                         ))}

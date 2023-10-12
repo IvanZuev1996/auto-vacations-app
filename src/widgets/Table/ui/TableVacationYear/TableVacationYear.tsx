@@ -1,5 +1,5 @@
 import { Vacation } from '@/entities/Vacation';
-import { Mods, classNames } from '@/shared/lib/helpers/classNames';
+import { classNames } from '@/shared/lib/helpers/classNames';
 import { getDaysByMonth } from '@/shared/lib/helpers/dates';
 import { HStack } from '@/shared/ui/Stack';
 
@@ -30,21 +30,12 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
     const startYear = new Date(item.start).getFullYear();
     const endYear = new Date(item.end).getFullYear();
 
-    if (startYear !== year && endYear !== year) {
-        return <TableItem index={index} />;
-    }
-
-    const mods: Mods = {
-        [cls.end]: true,
-        [cls.start]: true
-    };
-
     let monthDaysCount = getDaysByMonth({
         month: startMonth,
         year: startYear
     });
 
-    if (startMonth === currentMonth) {
+    if (startMonth === currentMonth && startYear === year) {
         if (endMonth !== startMonth) {
             endDay += monthDaysCount;
         }
@@ -62,7 +53,11 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                 : 0;
 
         return (
-            <HStack className={classNames(cls.item, { [cls.odd]: isOdd })}>
+            <HStack
+                className={classNames(cls.item, { [cls.odd]: isOdd }, [
+                    cls.vacationsOnYearWrapper
+                ])}
+            >
                 <div style={{ width: `${startPercent}%` }} />
                 <div
                     className={cls.active}
@@ -79,7 +74,11 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
         startYear === endYear
     ) {
         return (
-            <HStack className={classNames(cls.item, { [cls.odd]: isOdd })}>
+            <HStack
+                className={classNames(cls.item, { [cls.odd]: isOdd }, [
+                    cls.vacationsOnYearWrapper
+                ])}
+            >
                 <div
                     className={classNames(cls.active)}
                     style={{ width: '100%' }}
@@ -88,7 +87,7 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
         );
     }
 
-    if (endMonth === currentMonth) {
+    if (endMonth === currentMonth && endYear === year) {
         monthDaysCount = getDaysByMonth({
             month: endMonth,
             year: endYear
@@ -102,7 +101,11 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                 : 0;
 
         return (
-            <HStack className={classNames(cls.item, { [cls.odd]: isOdd })}>
+            <HStack
+                className={classNames(cls.item, { [cls.odd]: isOdd }, [
+                    cls.vacationsOnYearWrapper
+                ])}
+            >
                 <div
                     className={cls.active}
                     style={{ width: `${startPercent}%` }}

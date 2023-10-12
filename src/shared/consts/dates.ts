@@ -27,3 +27,13 @@ export const shortMonthsArray = [
     'Ноя',
     'Дек'
 ];
+
+export const daysOfWeek: Record<number, boolean> = {
+    0: false,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: false
+};

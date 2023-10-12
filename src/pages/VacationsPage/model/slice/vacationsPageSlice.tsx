@@ -1,41 +1,24 @@
-import {
-    createEntityAdapter,
-    createSlice,
-    PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { StateSchema } from '@/app/providers/StoreProvider';
-import { Vacation } from '@/entities/Vacation';
-import { getCurrentDate } from '@/shared/lib/helpers/dates';
 import { TableView } from '@/widgets/Table';
 
 import { fetchVacations } from '../services/fetchVacations';
 import { VacationsPageSchema } from '../types/vacationsPageSchema';
 
-const vacationsAdapter = createEntityAdapter<Vacation>({
-    // получение id (для того, чтобы antity adapter понимал по какому полю будет идти нормализация)
-    selectId: (vacation) => vacation._id
-});
-
-export const getVacations = vacationsAdapter.getSelectors<StateSchema>(
-    (state) => state.vacationsPage || vacationsAdapter.getInitialState()
-);
-
-const { currentMonth, currentYear } = getCurrentDate();
+const initialState: VacationsPageSchema = {
+    selectors: {
+        month: undefined,
+        view: undefined,
+        year: undefined
+    },
+    error: undefined,
+    isLoading: false,
+    vacations: []
+};
 
 const vacationsPageSlice = createSlice({
     name: 'vacationsPageSlice',
-    initialState: vacationsAdapter.getInitialState<VacationsPageSchema>({
-        selectors: {
-            month: currentMonth,
-            year: currentYear,
-            view: 'month'
-        },
-        isLoading: false,
-        error: undefined,
-        entities: {},
-        ids: []
-    }),
+    initialState,
     reducers: {
         setTableView: (state, action: PayloadAction<TableView>) => {
             state.selectors.view = action.payload;
@@ -56,7 +39,7 @@ const vacationsPageSlice = createSlice({
             .addCase(fetchVacations.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.error = undefined;
-                vacationsAdapter.setAll(state, action.payload);
+                state.vacations = action.payload;
             })
             .addCase(fetchVacations.rejected, (state, action) => {
                 state.isLoading = false;
