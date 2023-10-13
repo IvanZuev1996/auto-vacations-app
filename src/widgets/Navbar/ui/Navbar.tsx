@@ -5,11 +5,12 @@ import {
     MenuUnfoldOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import { Button, Dropdown, MenuProps, Select, Space } from 'antd';
+import { Button, Dropdown, MenuProps, Space } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getUserAuthData, userActions } from '@/entities/User';
+import { ChangeDivisionSelect } from '@/features/ChangeDivisionSelect';
 import { getRouteMain } from '@/shared/consts/router';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -76,17 +77,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                 </Text>
             </HStack>
             <div>
-                <Select
-                    defaultValue="Подразделение 1"
-                    size="middle"
-                    style={{ width: '100%' }}
-                    onChange={undefined}
-                    options={[
-                        { value: 'Подразделение 1', label: 'Подразделение 1' },
-                        { value: 'Подразделение 2', label: 'Подразделение 2' },
-                        { value: 'Подразделение 3', label: 'Подразделение 3' }
-                    ]}
-                />
+                <ChangeDivisionSelect />
             </div>
             <Dropdown
                 menu={menuProps}
@@ -100,9 +91,6 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                     </Space>
                 </Button>
             </Dropdown>
-            {/* <Button type="primary" onClick={onLogout} className={cls.logout}>
-                Выйти
-            </Button> */}
         </nav>
     );
 });

@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AddEmployeeModal } from '@/features/AddEmployeeModal';
+import { AddVacationModal } from '@/features/AddVacationModal';
 import {
     DynamicModuleLoader,
     ReducerList
@@ -49,7 +49,8 @@ const VacationsPage = () => {
 
     const onCloseModal = useCallback(() => {
         setIsModalOpen(false);
-    }, []);
+        dispatch(fetchVacations());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(fetchVacations());
@@ -57,7 +58,7 @@ const VacationsPage = () => {
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterAnmount={false}>
-            <AddEmployeeModal
+            <AddVacationModal
                 isOpen={isModalOpen}
                 onCloseModal={onCloseModal}
             />
@@ -68,12 +69,8 @@ const VacationsPage = () => {
                         <Text size="L" weight="bold_weight">
                             График отпусков
                         </Text>
-                        <Button
-                            type="primary"
-                            style={{ fontSize: '13px' }}
-                            onClick={onOpenModal}
-                        >
-                            + Добавить сотрудника
+                        <Button type="primary" onClick={onOpenModal}>
+                            + Запланировать отпуск
                         </Button>
                     </HStack>
                     <Line />
@@ -89,7 +86,6 @@ const VacationsPage = () => {
                             viewType={viewType}
                         />
                     )}
-                    <div style={{ height: '100px' }} />
                 </VStack>
             </Page>
         </DynamicModuleLoader>

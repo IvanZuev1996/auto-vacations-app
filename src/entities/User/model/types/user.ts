@@ -21,6 +21,7 @@ export interface User {
     division: string; // подразделение
     intersections?: string[]; // пересечения
     startWork?: Date; // дата начала работы
+    prevBalance?: number; // баланс отпускных дней
     balance: number; // баланс отпускных дней
     auth: AuthData;
 }

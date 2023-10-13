@@ -1,6 +1,7 @@
 import { FilterOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Tabs } from 'antd';
+import { Button, Card, DatePicker, Drawer, Tabs } from 'antd';
 import dayjs from 'dayjs';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -36,6 +37,7 @@ const items: ViewItem[] = [
 ];
 
 export const VacationsPageFilters = () => {
+    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
     const selectedMonth = useSelector(getVacationsPageMonth);
     const selectedYear = useSelector(getVacationsPageYear);
     const tableView = useSelector(getVacationsPageView);
@@ -43,29 +45,56 @@ export const VacationsPageFilters = () => {
 
     const getCurrentDate = () => `${selectedYear}-${selectedMonth}`;
 
-    const onChangeTableView = (key: string) => {
-        const newType = items.find((item) => item.key === key);
-        dispatch(vacationsPageActions.setTableView(newType?.value || 'month'));
-    };
+    const onCloseDrawer = useCallback(() => {
+        setIsDrawerOpen(false);
+    }, []);
 
-    const onChangeMonth = (_: any, date: string) => {
-        const newDate = new Date(date);
-        const newMonth = newDate.getMonth() + 1;
-        const newYear = newDate.getFullYear();
+    const onOpenDrawer = useCallback(() => {
+        setIsDrawerOpen(true);
+    }, []);
 
-        dispatch(vacationsPageActions.setYear(newYear));
-        dispatch(vacationsPageActions.setMonth(newMonth));
-    };
+    const onChangeTableView = useCallback(
+        (key: string) => {
+            const newType = items.find((item) => item.key === key);
+            dispatch(
+                vacationsPageActions.setTableView(newType?.value || 'month')
+            );
+        },
+        [dispatch]
+    );
 
-    const onChangeYear = (_: any, date: string) => {
-        const newDate = new Date(date);
-        const newYear = newDate.getFullYear();
+    const onChangeMonth = useCallback(
+        (_: any, date: string) => {
+            const newDate = new Date(date);
+            const newMonth = newDate.getMonth() + 1;
+            const newYear = newDate.getFullYear();
 
-        dispatch(vacationsPageActions.setYear(newYear));
-    };
+            dispatch(vacationsPageActions.setYear(newYear));
+            dispatch(vacationsPageActions.setMonth(newMonth));
+        },
+        [dispatch]
+    );
+
+    const onChangeYear = useCallback(
+        (_: any, date: string) => {
+            const newDate = new Date(date);
+            const newYear = newDate.getFullYear();
+
+            dispatch(vacationsPageActions.setYear(newYear));
+        },
+        [dispatch]
+    );
 
     return (
         <Card className={cls.filtersCard}>
+            <Drawer
+                title="Фильтры"
+                placement="right"
+                open={isDrawerOpen}
+                onClose={onCloseDrawer}
+            >
+                Фильтры
+            </Drawer>
             <HStack align="center" justify="between">
                 <Tabs
                     centered
@@ -95,7 +124,11 @@ export const VacationsPageFilters = () => {
                     >
                         Сохранить
                     </Button>
-                    <Button type="default" icon={<FilterOutlined />}>
+                    <Button
+                        type="default"
+                        icon={<FilterOutlined />}
+                        onClick={onOpenDrawer}
+                    >
                         Фильтр
                     </Button>
                 </HStack>

@@ -32,6 +32,11 @@ const columns: ColumnsType<User> = [
         title: 'Статус',
         key: 'vacationStatus',
         dataIndex: 'vacationStatus'
+    },
+    {
+        title: '',
+        key: '',
+        dataIndex: ''
     }
 ];
 

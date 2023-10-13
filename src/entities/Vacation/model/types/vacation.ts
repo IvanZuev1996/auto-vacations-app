@@ -6,7 +6,7 @@ export type VacationType = 'standart';
 
 export interface Vacation {
     _id: string; // id заявки
-    user: User; // id пользователя
+    user?: User; // id пользователя
     start: string; // дата начала отпуска
     end: string; // дата конца отпуска
     type: VacationType; // тип отпуска

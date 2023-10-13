@@ -7,8 +7,10 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 
+import { DivisionSchema } from '@/entities/Division';
 import { UserSchema } from '@/entities/User';
 import { AddEmployeeModalSchema } from '@/features/AddEmployeeModal';
+import { AddVacationModalSchema } from '@/features/AddVacationModal';
 import { LoginSchema } from '@/features/AuthByUsername';
 import { EmployeeListPageSchema } from '@/pages/EmployeeListPage';
 import { VacationsPageSchema } from '@/pages/VacationsPage';
@@ -18,6 +20,7 @@ import { SidebarSchema } from '@/widgets/Sidebar';
 export interface StateSchema {
     sidebar: SidebarSchema;
     user: UserSchema;
+    division: DivisionSchema;
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
     // асинхронные редюсеры
@@ -25,6 +28,7 @@ export interface StateSchema {
     vacationsPage?: VacationsPageSchema;
     addEmployeeModal?: AddEmployeeModalSchema;
     employeeListPage?: EmployeeListPageSchema;
+    addVacationModal?: AddVacationModalSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

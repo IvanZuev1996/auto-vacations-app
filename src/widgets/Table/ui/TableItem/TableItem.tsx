@@ -35,10 +35,7 @@ export const TableItem = (props: TableItemProps) => {
                 {monthItem || index}
             </Tooltip>
         ) : (
-            <div
-                title="Выходной"
-                className={classNames(cls.item, visibleMods, [cls.visible])}
-            >
+            <div className={classNames(cls.item, visibleMods, [cls.visible])}>
                 {monthItem || index}
             </div>
         );
