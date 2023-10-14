@@ -8,6 +8,7 @@ import {
 import { Button, Dropdown, MenuProps, Space } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { getUserAuthData, userActions } from '@/entities/User';
 import { ChangeDivisionSelect } from '@/features/ChangeDivisionSelect';
@@ -72,9 +73,11 @@ export const Navbar = memo(({ className }: NavbarProps) => {
         <nav className={classNames(cls.Navbar, {}, [className])}>
             <HStack gap="4" justify="center" align="center">
                 <Icon Icon={MenuIcon} onClick={handleSidebarClick} size={20} />
-                <Text size="L" weight="bold_weight" className={cls.logo}>
-                    ОтпускПлюс!
-                </Text>
+                <Link to={getRouteMain()}>
+                    <Text size="L" weight="bold_weight" className={cls.logo}>
+                        ОтпускПлюс!
+                    </Text>
+                </Link>
             </HStack>
             <div>
                 <ChangeDivisionSelect />

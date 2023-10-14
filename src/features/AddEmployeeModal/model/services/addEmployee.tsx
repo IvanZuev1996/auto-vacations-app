@@ -20,7 +20,7 @@ export const addEmployee = createAsyncThunk<
         );
 
         if (!response.data) {
-            throw new Error();
+            throw new Error(response.data);
         }
 
         return response.data;

@@ -66,7 +66,9 @@ const EmployeeListPage = () => {
                             <Text size="L" weight="bold_weight">
                                 Список сотрудников
                             </Text>
-                            <Text size="S">Кол-во сотрудников: 3</Text>
+                            <Text size="S">
+                                Кол-во сотрудников: {users.length}
+                            </Text>
                         </HStack>
                         <Button
                             type="primary"
