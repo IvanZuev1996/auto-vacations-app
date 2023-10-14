@@ -24,14 +24,11 @@ export interface User {
     prevBalance?: number; // баланс отпускных дней
     balance: number; // баланс отпускных дней
     auth: AuthData;
-}
-
-export interface UserDetails extends User {
-    daysOnVacations: number; // кол-во дней проведенных в отпуске
-    visibleUsers: string[]; // доступные для просмотра пользователи
-    vacationStatus: 'in vacation' | 'work'; // статус 'в отпуске' или 'работает'
-    createdAt: Date;
-    updatedAt: Date;
+    daysOnVacations?: number; // кол-во дней проведенных в отпуске
+    visibleUsers?: string[]; // доступные для просмотра пользователи
+    vacationStatus?: 'on vacation' | 'work'; // статус 'в отпуске' или 'работает'
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export interface UserSchema {

@@ -2,5 +2,6 @@ export type {
     Vacation,
     VacationType,
     SortByUserVacation,
-    VacationStatus
+    VacationStatus,
+    SortByDivisionVacation
 } from './model/types/vacation';

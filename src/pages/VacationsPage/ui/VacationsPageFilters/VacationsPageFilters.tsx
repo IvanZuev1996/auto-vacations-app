@@ -100,6 +100,9 @@ export const VacationsPageFilters = () => {
                     centered
                     items={items}
                     defaultActiveKey="2"
+                    activeKey={
+                        items.find((item) => item.value === tableView)?.key
+                    }
                     onChange={onChangeTableView}
                 />
                 {tableView === 'month' ? (

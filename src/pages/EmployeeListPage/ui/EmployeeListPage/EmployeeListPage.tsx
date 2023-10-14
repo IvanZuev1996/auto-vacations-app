@@ -2,6 +2,7 @@ import { Button, Card } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { getCurrentDivision } from '@/entities/Division';
 import { UserList } from '@/entities/User';
 import { AddEmployeeModal } from '@/features/AddEmployeeModal';
 import {
@@ -37,6 +38,7 @@ const EmployeeListPage = () => {
     const users = useSelector(getUsers.selectAll);
     const isLoading = useSelector(getEmployeeListPageIsLoading);
     const error = useSelector(getEmployeeListPageError);
+    const currentDivision = useSelector(getCurrentDivision);
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -50,7 +52,7 @@ const EmployeeListPage = () => {
 
     useEffect(() => {
         dispatch(fetchUsersList());
-    }, [dispatch]);
+    }, [dispatch, currentDivision]);
 
     return (
         <DynamicModuleLoader reducers={reducers}>

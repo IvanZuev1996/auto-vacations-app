@@ -1,7 +1,12 @@
 import { Select } from 'antd';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { Division, divisionActions } from '@/entities/Division';
+import {
+    Division,
+    divisionActions,
+    getCurrentDivision
+} from '@/entities/Division';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 
 import { useDivisions } from '../api/changeDivisionSelectApi';
@@ -14,6 +19,7 @@ interface SelectOption extends Division {
 export const ChangeDivisionSelect = () => {
     const dispatch = useAppDispatch();
     const { data, isLoading, error } = useDivisions();
+    const currentDivision = useSelector(getCurrentDivision);
 
     const options: SelectOption[] = [
         { value: 'Все', label: 'Все', _id: '', divisionNumber: 0 }
@@ -26,6 +32,12 @@ export const ChangeDivisionSelect = () => {
             value: String(division.divisionNumber)
         })
     );
+
+    useEffect(() => {
+        if (data) {
+            dispatch(divisionActions.initDivision());
+        }
+    }, [data, dispatch]);
 
     const onChangeDivision = useCallback(
         (value: string) => {
@@ -43,9 +55,15 @@ export const ChangeDivisionSelect = () => {
 
     return (
         <Select
-            defaultValue="Подразделение 1"
+            loading={isLoading}
+            disabled={isLoading}
+            value={
+                isLoading
+                    ? 'Загрузка...'
+                    : String(currentDivision?.divisionNumber || 'Все')
+            }
             size="middle"
-            style={{ width: '160px' }}
+            style={{ width: '180px' }}
             onChange={onChangeDivision}
             options={options}
         />

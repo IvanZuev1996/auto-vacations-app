@@ -4,8 +4,11 @@ export interface Division {
     name?: string; // название подразделения
     submitApplications?: number; // кол-во отправленных заявок
     agreedApplications?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export interface DivisionSchema {
     currentDivision?: Division;
+    _inited?: boolean;
 }

@@ -1,4 +1,4 @@
-import { SortByUserVacation } from '@/entities/Vacation';
+import { SortByDivisionVacation } from '@/entities/Vacation';
 import { TableView } from '@/widgets/Table';
 
 interface VacationsSelectors {
@@ -11,5 +11,5 @@ export interface VacationsPageSchema {
     isLoading?: boolean;
     error?: string;
     selectors: VacationsSelectors;
-    vacations: SortByUserVacation[];
+    vacations: SortByDivisionVacation[];
 }

@@ -3,6 +3,7 @@ import locale from 'antd/locale/ru_RU';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { getDivisionInited } from '@/entities/Division';
 import { getUserAuthData, getUserInited, userActions } from '@/entities/User';
 import { LoginPage } from '@/pages/AuthPage';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -17,7 +18,8 @@ import './styles/index.scss';
 
 const App = () => {
     const dispatch = useAppDispatch();
-    const inited = useSelector(getUserInited);
+    const userInited = useSelector(getUserInited);
+    const divisionInited = useSelector(getDivisionInited);
     const authData = useSelector(getUserAuthData);
 
     useEffect(() => {
@@ -61,7 +63,7 @@ const App = () => {
                 <Navbar />
                 <div className="content-page">
                     <Sidebar />
-                    {inited && <AppRouter />}
+                    {userInited && divisionInited && <AppRouter />}
                 </div>
             </ConfigProvider>
         </div>

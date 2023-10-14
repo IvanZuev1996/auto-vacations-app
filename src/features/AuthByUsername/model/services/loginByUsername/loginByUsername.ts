@@ -27,9 +27,6 @@ export const loginByUsername = createAsyncThunk<
         if (!response.data) {
             throw new Error();
         }
-
-        console.log(response);
-        console.log(response.headers['set-cookie']);
         // cookies.set('auth', response.headers['set-cookie']);
 
         localStorage.setItem(

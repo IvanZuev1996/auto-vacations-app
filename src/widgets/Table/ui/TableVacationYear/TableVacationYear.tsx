@@ -4,7 +4,6 @@ import { getDaysByMonth } from '@/shared/lib/helpers/dates';
 import { HStack } from '@/shared/ui/Stack';
 
 import cls from '../Table/Table.module.scss';
-import { TableItem } from '../TableItem/TableItem';
 
 interface TableVacationMonthProps {
     item: Vacation;
@@ -115,5 +114,5 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
         );
     }
 
-    return <TableItem index={index} />;
+    return null;
 };

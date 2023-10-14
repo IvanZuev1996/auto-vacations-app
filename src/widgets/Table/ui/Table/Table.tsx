@@ -1,12 +1,14 @@
-import { Card, Skeleton } from 'antd';
+import { Card } from 'antd';
 import { MutableRefObject, useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
 
+import { Division } from '@/entities/Division';
 import { SortByUserVacation } from '@/entities/Vacation';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getCurrentDate } from '@/shared/lib/helpers/dates';
 import { getShortName } from '@/shared/lib/helpers/names';
 import { HStack, VStack } from '@/shared/ui/Stack';
+import { Text } from '@/shared/ui/Text';
 
 import { TableView } from '../../model/types/table';
 import { TableContent } from '../TableContent/TableContent';
@@ -20,6 +22,7 @@ interface TableProps {
     month?: number;
     viewType?: TableView;
     isLoading?: boolean;
+    division?: Division;
 }
 
 export const Table = (props: TableProps) => {
@@ -28,6 +31,7 @@ export const Table = (props: TableProps) => {
         className,
         vacations,
         isLoading,
+        division,
         month = currentMonth,
         year = currentYear,
         viewType = 'month'
@@ -38,12 +42,22 @@ export const Table = (props: TableProps) => {
     });
 
     return (
-        <Skeleton
-            paragraph={{ rows: 7, width: '100%' }}
-            active
-            loading={isLoading}
-            className={cls.skeleton}
-        >
+        <>
+            {division && (
+                <Card className={cls.divisions}>
+                    <HStack
+                        align="center"
+                        gap="8"
+                        max
+                        className={cls.divisions}
+                    >
+                        <Text weight="bold_weight">Подразделение #</Text>
+                        <Text weight="bold_weight">
+                            {division.divisionNumber}
+                        </Text>
+                    </HStack>
+                </Card>
+            )}
             <Card
                 bordered={false}
                 className={classNames(
@@ -74,6 +88,6 @@ export const Table = (props: TableProps) => {
                     />
                 </HStack>
             </Card>
-        </Skeleton>
+        </>
     );
 };

@@ -60,7 +60,7 @@ const AddVacationForm = (props: AddVacationFormProps) => {
                 setDaysCount(dayjsDates[1].diff(dates[0], 'day') + 1);
                 if (userData?.balance) {
                     if (userData.balance - Number(daysCount) < 0) {
-                        setIsApprove(false);
+                        setIsApprove(true);
                     } else {
                         setIsApprove(true);
                     }
@@ -89,6 +89,7 @@ const AddVacationForm = (props: AddVacationFormProps) => {
                 isSuccess={isSuccess}
                 error={error}
                 isLoading={isLoading}
+                className={className}
             />
         </DynamicModuleLoader>
     );

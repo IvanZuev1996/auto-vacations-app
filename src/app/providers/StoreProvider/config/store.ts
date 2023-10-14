@@ -19,11 +19,11 @@ export function createReduxStore(
     asyncReducers?: ReducersMapObject<StateSchema>
 ) {
     const rootReducer: ReducersMapObject<StateSchema> = {
-        ...asyncReducers,
         sidebar: sidebarReducer,
         user: userReducer,
         division: divisionReducer,
-        [rtkApi.reducerPath]: rtkApi.reducer
+        [rtkApi.reducerPath]: rtkApi.reducer,
+        ...asyncReducers
     };
 
     const reducerManager = createReducerManager(rootReducer);

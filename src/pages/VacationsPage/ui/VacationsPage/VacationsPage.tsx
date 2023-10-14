@@ -1,8 +1,8 @@
-// eslint-disable-next-line babun4ek-fsd-plugin/layer-imports-checker
-import { Button } from 'antd';
+import { Button, Skeleton } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { getCurrentDivision } from '@/entities/Division';
 import { AddVacationModal } from '@/features/AddVacationModal';
 import {
     DynamicModuleLoader,
@@ -29,6 +29,8 @@ import { fetchVacations } from '../../model/services/fetchVacations';
 import { vacationsPageReducer } from '../../model/slice/vacationsPageSlice';
 import { VacationsPageFilters } from '../VacationsPageFilters/VacationsPageFilters';
 
+import cls from './VacationsPage.module.scss';
+
 const reducers: ReducerList = {
     vacationsPage: vacationsPageReducer
 };
@@ -38,6 +40,7 @@ const VacationsPage = () => {
     const month = useSelector(getVacationsPageMonth);
     const viewType = useSelector(getVacationsPageView);
     const year = useSelector(getVacationsPageYear);
+    const currentDivision = useSelector(getCurrentDivision);
     const isLoading = useSelector(getVacationsPageIsLoading);
     const error = useSelector(getVacationsPageError);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -54,7 +57,7 @@ const VacationsPage = () => {
 
     useEffect(() => {
         dispatch(fetchVacations());
-    }, [dispatch]);
+    }, [dispatch, currentDivision]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterAnmount={false}>
@@ -78,13 +81,26 @@ const VacationsPage = () => {
                     {error ? (
                         <PageError title="Не удалось построить график отпусков" />
                     ) : (
-                        <Table
-                            vacations={vacations}
-                            isLoading={isLoading}
-                            month={month}
-                            year={year}
-                            viewType={viewType}
-                        />
+                        <Skeleton
+                            paragraph={{ rows: 7, width: '100%' }}
+                            active
+                            loading={isLoading}
+                            className={cls.skeleton}
+                        >
+                            {vacations.map((vacationsInDivision) => (
+                                <Table
+                                    vacations={
+                                        vacationsInDivision.vacations || []
+                                    }
+                                    isLoading={isLoading}
+                                    month={month}
+                                    year={year}
+                                    viewType={viewType}
+                                    division={vacationsInDivision.division}
+                                    key={vacationsInDivision.division._id}
+                                />
+                            ))}
+                        </Skeleton>
                     )}
                 </VStack>
             </Page>

@@ -1,3 +1,4 @@
+import { Division } from '@/entities/Division';
 import { User } from '@/entities/User';
 
 export type VacationStatus = 'pending' | 'rejected' | 'agreed';
@@ -16,4 +17,9 @@ export interface Vacation {
 export interface SortByUserVacation {
     userData?: User;
     userVacations: Vacation[];
+}
+
+export interface SortByDivisionVacation {
+    division: Division;
+    vacations?: SortByUserVacation[];
 }

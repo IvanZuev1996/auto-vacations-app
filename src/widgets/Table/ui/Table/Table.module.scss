@@ -8,6 +8,7 @@
 }
 
 .Card {
+    margin-bottom: 30px;
     padding: 0 10px;
     width: 100%;
     overflow-x: auto;
@@ -134,4 +135,9 @@
     .active {
         min-width: 0;
     }
+}
+
+.divisions {
+    width: 100%;
+    margin: 10px 0;
 }
