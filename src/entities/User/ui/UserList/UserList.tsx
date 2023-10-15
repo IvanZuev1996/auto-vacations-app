@@ -1,5 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons';
-import { Button, Card, Spin, Table } from 'antd';
+import { Button, Table } from 'antd';
 import Column from 'antd/es/table/Column';
 
 import { getRouteUserDetails } from '@/shared/consts/router';
@@ -34,18 +34,13 @@ export const UserList = (props: UserListProps) => {
         })
     );
 
-    if (isLoading) {
-        return (
-            <Card bordered={false} style={{ width: '100%', padding: '50px' }}>
-                <HStack justify="center" align="center" max>
-                    <Spin />
-                </HStack>
-            </Card>
-        );
-    }
-
     return (
-        <Table pagination={false} dataSource={data} style={{ width: '100%' }}>
+        <Table
+            pagination={false}
+            dataSource={data}
+            style={{ width: '100%', minHeight: '300px' }}
+            loading={isLoading}
+        >
             <Column title="Сотрудник" dataIndex="fullName" key="fullName" />
             <Column title="Должность" dataIndex="post" key="post" />
             <Column

@@ -8,3 +8,7 @@ export {
     getCurrentDivision,
     getDivisionInited
 } from './model/selectors/division';
+
+export { useDivisions } from './api/divisionSelectApi';
+
+export { DivisionSelect } from './ui/DivisionSelect/DivisionSelect';

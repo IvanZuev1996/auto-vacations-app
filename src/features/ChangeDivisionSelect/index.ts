@@ -1,2 +1,2 @@
 export { ChangeDivisionSelect } from './ui/ChangeDivisionSelect';
-export { useDivisions } from './api/changeDivisionSelectApi';
+export { useDivisions } from '../../entities/Division/api/divisionSelectApi';

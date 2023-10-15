@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { getCurrentDivision } from '@/entities/Division';
 import { User } from '@/entities/User';
 // eslint-disable-next-line babun4ek-fsd-plugin/layer-imports-checker
 import { fetchUsersList } from '@/pages/EmployeeListPage';
@@ -14,14 +13,12 @@ export const addEmployee = createAsyncThunk<
     NewUserData | undefined,
     ThunkConfig<string>
 >('addEmployeeModal/addEmployee', async (props, thunkApi) => {
-    const { extra, rejectWithValue, getState, dispatch } = thunkApi;
-
-    const division = getCurrentDivision(getState());
+    const { extra, rejectWithValue, dispatch } = thunkApi;
 
     try {
         const response: AxiosResponse<User> = await extra.api.post(
             'api/auth/register',
-            { ...props, division: division?._id }
+            props
         );
 
         if (!response.data) {

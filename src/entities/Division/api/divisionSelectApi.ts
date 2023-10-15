@@ -1,7 +1,8 @@
-import { Division } from '@/entities/Division';
 import { rtkApi } from '@/shared/api/rtkApi';
 
-const changeDivisionSelectApi = rtkApi.injectEndpoints({
+import { Division } from '../model/types/division';
+
+const divisionSelectApi = rtkApi.injectEndpoints({
     endpoints: (build) => ({
         getDivisions: build.query<Division[], void>({
             query: () => ({
@@ -11,4 +12,4 @@ const changeDivisionSelectApi = rtkApi.injectEndpoints({
     })
 });
 
-export const useDivisions = changeDivisionSelectApi.useGetDivisionsQuery;
+export const useDivisions = divisionSelectApi.useGetDivisionsQuery;

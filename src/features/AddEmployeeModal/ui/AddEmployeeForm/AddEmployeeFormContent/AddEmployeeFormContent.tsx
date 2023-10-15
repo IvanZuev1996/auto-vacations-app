@@ -1,8 +1,8 @@
 import { Button, DatePicker, Input, Result, Select, Spin } from 'antd';
 import dayjs from 'dayjs';
-import { ChangeEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { ChangeEvent } from 'react';
 
+import { DivisionSelect, useDivisions } from '@/entities/Division';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates/getNormalizedDate';
 import { Line } from '@/shared/ui/Line';
@@ -10,7 +10,6 @@ import { NumericInput } from '@/shared/ui/NumericInput/NumericInput';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 
-import { getAddEmployeeAuthData } from '../../../model/selectors/addEmployeeModal';
 import { NewUserData } from '../../../model/types/AddEmployeeModalSchema';
 import cls from '../AddEmployeeForm.module.scss';
 
@@ -25,7 +24,7 @@ interface AddEmployeeFormContentProps {
     onChangeLastName?: (e: ChangeEvent<HTMLInputElement>) => void;
     onChangePatronymic?: (e: ChangeEvent<HTMLInputElement>) => void;
     onChangePost?: (e: ChangeEvent<HTMLInputElement>) => void;
-    onChangeDivision?: (value: number) => void;
+    onChangeDivision?: (divisionId: string) => void;
     onChangeBalance: (value: string) => void;
     onChangeIntersections?: (value: string[]) => void;
     onChangeStartWork?: (_: any, date: string) => void;
@@ -50,8 +49,10 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
         onChangePost,
         onChangeStartWork
     } = props;
-    const [divisionNumber, serDivisionNumber] = useState<number>(1);
-    const authData = useSelector(getAddEmployeeAuthData);
+    const { data: divisions } = useDivisions();
+    const choosenDivison = divisions?.find(
+        (item) => item._id === data?.division
+    );
 
     if (isSuccess) {
         return (
@@ -62,13 +63,13 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                         <Text size="M" weight="bold_weight">
                             Логин:
                         </Text>
-                        <Text size="M">{authData?.username}</Text>
+                        <Text size="M">{data?.auth.username}</Text>
                     </HStack>
                     <HStack gap="12">
                         <Text size="M" weight="bold_weight">
                             Пароль:
                         </Text>
-                        <Text size="M">{authData?.testPassword}</Text>
+                        <Text size="M">{data?.auth.testPassword}</Text>
                     </HStack>
                 </VStack>
                 <HStack
@@ -207,26 +208,10 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                 <VStack gap="16" className={cls.inputsArea}>
                     <VStack gap="8" max>
                         <Text>Подразделение</Text>
-                        <Select
-                            className={cls.selectDivision}
-                            defaultValue={1}
-                            size="middle"
-                            value={divisionNumber}
-                            onChange={onChangeDivision}
-                            options={[
-                                {
-                                    value: 1,
-                                    label: 'Подразделение 1'
-                                },
-                                {
-                                    value: 2,
-                                    label: 'Подразделение 2'
-                                },
-                                {
-                                    value: 3,
-                                    label: 'Подразделение 3'
-                                }
-                            ]}
+                        <DivisionSelect
+                            onChangeDivision={onChangeDivision}
+                            value={choosenDivison?.name}
+                            style={{ width: '100%' }}
                         />
                     </VStack>
                     <HStack gap="16" align="center">
@@ -260,7 +245,7 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                 <VStack gap="8" max>
                     <HStack align="center" gap="12" max>
                         <Text weight="bold_weight">Подразделение:</Text>
-                        <Text>{data?.division || 1}</Text>
+                        <Text>{choosenDivison?.name}</Text>
                     </HStack>
                     <HStack align="center" gap="12">
                         <Text weight="bold_weight">Дата начала работы:</Text>

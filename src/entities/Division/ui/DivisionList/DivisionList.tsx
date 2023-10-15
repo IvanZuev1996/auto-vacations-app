@@ -1,5 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons';
-import { Button, Card, Spin, Table } from 'antd';
+import { Button, Table } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -36,18 +36,13 @@ export const DivisionList = (props: DivisionListProps) => {
         [dispatch, divisions]
     );
 
-    if (isLoading) {
-        return (
-            <Card bordered={false} style={{ width: '100%', padding: '50px' }}>
-                <HStack justify="center" align="center" max>
-                    <Spin />
-                </HStack>
-            </Card>
-        );
-    }
-
     return (
-        <Table pagination={false} dataSource={data} style={{ width: '100%' }}>
+        <Table
+            pagination={false}
+            dataSource={data}
+            style={{ width: '100%' }}
+            loading={isLoading}
+        >
             <Column
                 title="№ Подразделения"
                 dataIndex="divisionNumber"

@@ -68,8 +68,8 @@ const AddEmployeeForm = (props: AddEmployeeFormProps) => {
     );
 
     const onChangeDivision = useCallback(
-        (value: number) => {
-            dispatch(addEmployeeModalActions.setDivision(String(value)));
+        (divisionId: string) => {
+            dispatch(addEmployeeModalActions.setDivision(divisionId));
         },
         [dispatch]
     );
