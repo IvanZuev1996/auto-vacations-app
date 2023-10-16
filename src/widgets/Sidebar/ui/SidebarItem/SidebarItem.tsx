@@ -1,6 +1,8 @@
 import { Tooltip } from 'antd';
 import { memo } from 'react';
+import { useSelector } from 'react-redux';
 
+import { getIsUserAdmin } from '@/entities/User';
 import { classNames, Mods } from '@/shared/lib/helpers/classNames';
 import { AntdIconType } from '@/shared/types/icon';
 import { AppLink } from '@/shared/ui/AppLink';
@@ -15,10 +17,24 @@ interface SidebarItemProps {
     path?: string;
     active?: boolean;
     className?: string;
+    isAdminOnly?: boolean;
 }
 
 export const SidebarItem = memo((props: SidebarItemProps) => {
-    const { className, collapsed, icon, path = '', title, active } = props;
+    const {
+        className,
+        collapsed,
+        icon,
+        path = '',
+        title,
+        active,
+        isAdminOnly
+    } = props;
+    const isUserAdmin = useSelector(getIsUserAdmin);
+
+    if (isAdminOnly && !isUserAdmin) {
+        return null;
+    }
 
     const mods: Mods = {
         [cls.collapsed]: collapsed,

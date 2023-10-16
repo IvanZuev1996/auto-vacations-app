@@ -18,7 +18,7 @@ const initialState: AddEmployeeModalSchema = {
         division: '',
         balance: 0,
         intersections: [],
-        role: UserRole.USER,
+        role: [UserRole.USER],
         auth: {
             password: '',
             salt: '',

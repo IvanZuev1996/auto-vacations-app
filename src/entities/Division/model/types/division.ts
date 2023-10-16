@@ -1,6 +1,6 @@
 export interface Division {
     _id: string;
-    divisionNumber: number; // номер подразделения
+    divisionNumber?: number; // номер подразделения
     name?: string; // название подразделения
     submitApplications?: number; // кол-во отправленных заявок
     agreedApplications?: number;
@@ -9,6 +9,6 @@ export interface Division {
 }
 
 export interface DivisionSchema {
-    currentDivision?: Division;
+    currentDivisionId?: string;
     _inited?: boolean;
 }

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {
     DivisionSelect,
     divisionActions,
-    getCurrentDivision,
+    getCurrentDivisionId,
     useDivisions
 } from '@/entities/Division';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -12,7 +12,7 @@ import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch
 export const ChangeDivisionSelect = () => {
     const dispatch = useAppDispatch();
     const { data } = useDivisions();
-    const currentDivision = useSelector(getCurrentDivision);
+    const currentDivisionId = useSelector(getCurrentDivisionId);
 
     useEffect(() => {
         if (data) {
@@ -22,23 +22,22 @@ export const ChangeDivisionSelect = () => {
 
     const onChangeDivision = useCallback(
         (divisionId: string) => {
-            const newDivision = data?.find((item) => item._id === divisionId);
-            if (newDivision) {
-                dispatch(divisionActions.changeDivision(newDivision));
+            if (divisionId) {
+                dispatch(divisionActions.changeDivision(divisionId));
             } else {
                 dispatch(divisionActions.removeDivision());
             }
         },
-        [data, dispatch]
+        [dispatch]
     );
 
     return (
         <DivisionSelect
             onChangeDivision={onChangeDivision}
             selectOptions={[
-                { value: 'Все', label: 'Все', _id: '', divisionNumber: 0 }
+                { value: '', label: 'Все', _id: '', divisionNumber: 0 }
             ]}
-            value={currentDivision?.name || 'Все'}
+            value={currentDivisionId || ''}
             style={{ width: '180px' }}
         />
     );

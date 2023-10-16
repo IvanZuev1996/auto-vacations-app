@@ -8,9 +8,9 @@ import {
 import { Button, Dropdown, MenuProps, Space } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { getUserAuthData, userActions } from '@/entities/User';
+import { getUserAuthData, getIsUserAdmin, userActions } from '@/entities/User';
 import { ChangeDivisionSelect } from '@/features/ChangeDivisionSelect';
 import { getRouteMain } from '@/shared/consts/router';
 import { classNames } from '@/shared/lib/helpers/classNames';
@@ -46,6 +46,8 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     const isOpen = useSelector(getSidabarState);
     const userData = useSelector(getUserAuthData);
     const dispatch = useAppDispatch();
+    const isUserAdmin = useSelector(getIsUserAdmin);
+    const navigate = useNavigate();
     const MenuIcon = isOpen ? MenuFoldOutlined : MenuUnfoldOutlined;
 
     const onLogout = () => {
@@ -61,6 +63,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
             items.find((item) => item?.key === e.key && item.label === 'Выйти')
         ) {
             onLogout();
+            navigate(getRouteMain());
         }
     };
 
@@ -79,9 +82,9 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                     </Text>
                 </Link>
             </HStack>
-            <div>
-                <ChangeDivisionSelect />
-            </div>
+
+            {isUserAdmin && <ChangeDivisionSelect />}
+
             <Dropdown
                 menu={menuProps}
                 trigger={['click']}

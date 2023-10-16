@@ -4,6 +4,7 @@ export interface SidebarItemType {
     icon?: AntdIconType;
     title?: string;
     path?: string;
+    adminOnly?: boolean;
 }
 
 export interface SidebarSchema {

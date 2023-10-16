@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { getCurrentDivision } from '@/entities/Division';
+import { getCurrentDivisionId } from '@/entities/Division';
 import { User } from '@/entities/User';
 
 import {
@@ -18,14 +18,14 @@ export const fetchUsersList = createAsyncThunk<
 
     const sort = getEmployeeListPageSort(getState());
     const search = getEmployeeListPageSearch(getState());
-    const division = getCurrentDivision(getState());
+    const divisionId = getCurrentDivisionId(getState());
 
     try {
         const response = await extra.api.get<User[]>('/api/users', {
             params: {
                 sort,
                 search,
-                division: division?._id
+                division: divisionId
             }
         });
 

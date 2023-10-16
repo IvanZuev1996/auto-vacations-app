@@ -36,6 +36,24 @@ const LoginForm = () => {
     const isDisabled = !password || !username;
     const dispatch = useAppDispatch();
 
+    const onUserLogin = () => {
+        dispatch(
+            loginByUsername({
+                password: 'Y7LYJIWUeE',
+                username: '3sxayIOEc4'
+            })
+        );
+    };
+
+    const onDirectorLogin = () => {
+        dispatch(
+            loginByUsername({
+                password: '40QDHyytHn',
+                username: 'RO1qUJicug'
+            })
+        );
+    };
+
     const onChangeUsername = useCallback(
         (value: string) => {
             dispatch(loginActions.setUsername(value));
@@ -73,6 +91,20 @@ const LoginForm = () => {
                         Не верный логин или пароль
                     </Text>
                 )}
+                <Button
+                    type="primary"
+                    onClick={onDirectorLogin}
+                    style={{ width: '100%' }}
+                >
+                    Войти как руководитель
+                </Button>
+                <Button
+                    type="default"
+                    onClick={onUserLogin}
+                    style={{ width: '100%' }}
+                >
+                    Войти как сотрудник
+                </Button>
                 <VStack gap="4" max>
                     <Text className={cls.subText}>Логин</Text>
                     <Input

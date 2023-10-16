@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { getCurrentDivision } from '@/entities/Division';
+import { getCurrentDivisionId } from '@/entities/Division';
 import { SortByDivisionVacation } from '@/entities/Vacation';
 
 export const fetchVacations = createAsyncThunk<
@@ -10,14 +10,14 @@ export const fetchVacations = createAsyncThunk<
     ThunkConfig<string>
 >('vacationsPage/fetchVacations', async (props, thunkApi) => {
     const { extra, rejectWithValue, getState } = thunkApi;
-    const division = getCurrentDivision(getState());
+    const divisionId = getCurrentDivisionId(getState());
 
     try {
         const response = await extra.api.get<SortByDivisionVacation[]>(
             '/api/vacations',
             {
                 params: {
-                    division: division?._id
+                    division: divisionId
                 }
             }
         );

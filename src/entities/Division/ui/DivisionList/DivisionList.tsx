@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { HStack } from '@/shared/ui/Stack';
 
-import { getCurrentDivision } from '../../model/selectors/division';
+import { getCurrentDivisionId } from '../../model/selectors/division';
 import { divisionActions } from '../../model/slice/divisionSlice';
 import { Division } from '../../model/types/division';
 
@@ -22,18 +22,16 @@ interface DivisionListProps {
 export const DivisionList = (props: DivisionListProps) => {
     const { divisions, error, isLoading } = props;
     const dispatch = useAppDispatch();
-    const currentDivision = useSelector(getCurrentDivision);
+    const currentDivisionId = useSelector(getCurrentDivisionId);
     const data: Division[] = divisions;
 
     const onDivisionClick = useCallback(
         (id: string) => {
-            const newDivision = divisions.find((el) => el._id === id);
-
-            if (newDivision) {
-                dispatch(divisionActions.changeDivision(newDivision));
+            if (id) {
+                dispatch(divisionActions.changeDivision(id));
             }
         },
-        [dispatch, divisions]
+        [dispatch]
     );
 
     return (
@@ -63,7 +61,7 @@ export const DivisionList = (props: DivisionListProps) => {
                 dataIndex="_id"
                 key="_id"
                 render={(id: string) => {
-                    if (currentDivision?._id === id) {
+                    if (currentDivisionId === id) {
                         return (
                             <Button type="text" disabled>
                                 Выбрано

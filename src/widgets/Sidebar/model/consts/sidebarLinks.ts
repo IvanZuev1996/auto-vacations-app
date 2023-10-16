@@ -15,12 +15,14 @@ export const links: SidebarItemType[] = [
     {
         title: 'График отпусков',
         path: '/',
-        icon: InsertRowAboveOutlined
+        icon: InsertRowAboveOutlined,
+        adminOnly: false
     },
     {
         title: 'Сотрудники',
         path: '/staff',
-        icon: UsergroupAddOutlined
+        icon: UsergroupAddOutlined,
+        adminOnly: true
     },
     {
         title: 'Заявки',
@@ -35,7 +37,8 @@ export const links: SidebarItemType[] = [
     {
         title: 'Подразделения',
         path: '/divisions',
-        icon: PartitionOutlined
+        icon: PartitionOutlined,
+        adminOnly: true
     },
     {
         title: 'Статистика',

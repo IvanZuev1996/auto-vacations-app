@@ -1,3 +1,8 @@
+/* eslint-disable babun4ek-fsd-plugin/layer-imports-checker */
 import { RouteProps } from 'react-router-dom';
 
-export type AppRouteProps = RouteProps;
+import { UserRole } from '@/entities/User';
+
+export type AppRouteProps = RouteProps & {
+    roles?: UserRole[];
+};

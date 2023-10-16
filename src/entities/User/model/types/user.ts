@@ -16,7 +16,7 @@ export interface User {
     avatar?: string; // аватарка
     email?: string; // почта
     post?: string; // должность
-    role: UserRole; // роль пользователя: Руководитель/Сотрудник
+    role: UserRole[]; // роль пользователя: Руководитель/Сотрудник
     department?: number; // отдел
     division: string; // подразделение
     intersections?: string[]; // пересечения

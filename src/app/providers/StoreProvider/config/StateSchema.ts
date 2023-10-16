@@ -9,6 +9,7 @@ import { AxiosInstance } from 'axios';
 
 import { DivisionSchema } from '@/entities/Division';
 import { UserSchema } from '@/entities/User';
+import { AddDivsionModalSchema } from '@/features/AddDivisionModal';
 import { AddEmployeeModalSchema } from '@/features/AddEmployeeModal';
 import { AddVacationModalSchema } from '@/features/AddVacationModal';
 import { LoginSchema } from '@/features/AuthByUsername';
@@ -29,6 +30,7 @@ export interface StateSchema {
     addEmployeeModal?: AddEmployeeModalSchema;
     employeeListPage?: EmployeeListPageSchema;
     addVacationModal?: AddVacationModalSchema;
+    addDivisionModal?: AddDivsionModalSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

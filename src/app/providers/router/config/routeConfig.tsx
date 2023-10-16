@@ -1,3 +1,4 @@
+import { UserRole } from '@/entities/User';
 import { DivisionsPage } from '@/pages/DivisionsPage';
 import { EmployeeListPage } from '@/pages/EmployeeListPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -20,15 +21,18 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     },
     [AppRoutes.EMPLOYEE_LIST]: {
         path: getRouteEmployeeList(),
-        element: <EmployeeListPage />
+        element: <EmployeeListPage />,
+        roles: [UserRole.ADMIN]
     },
     [AppRoutes.DIVISIONS]: {
         path: getRouteDivisions(),
-        element: <DivisionsPage />
+        element: <DivisionsPage />,
+        roles: [UserRole.ADMIN]
     },
     [AppRoutes.USER_DETAILS]: {
         path: getRouteUserDetails(':id'),
-        element: <UserDetailsPage />
+        element: <UserDetailsPage />,
+        roles: [UserRole.ADMIN]
     },
     // last route
     [AppRoutes.NOT_FOUND]: {

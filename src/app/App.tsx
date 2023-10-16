@@ -3,8 +3,13 @@ import locale from 'antd/locale/ru_RU';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getDivisionInited } from '@/entities/Division';
-import { getUserAuthData, getUserInited, userActions } from '@/entities/User';
+import { divisionActions, getDivisionInited } from '@/entities/Division';
+import {
+    getIsUserAdmin,
+    getUserAuthData,
+    getUserInited,
+    userActions
+} from '@/entities/User';
 import { LoginPage } from '@/pages/AuthPage';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Navbar } from '@/widgets/Navbar';
@@ -21,10 +26,19 @@ const App = () => {
     const userInited = useSelector(getUserInited);
     const divisionInited = useSelector(getDivisionInited);
     const authData = useSelector(getUserAuthData);
+    const isUserAdmin = useSelector(getIsUserAdmin);
 
     useEffect(() => {
         dispatch(userActions.initAuthData());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (isUserAdmin) {
+            dispatch(divisionActions.initDivision());
+        } else {
+            dispatch(divisionActions.changeDivision(authData?.division || ''));
+        }
+    }, [authData?.division, dispatch, isUserAdmin]);
 
     if (!authData) {
         return <LoginPage />;
@@ -63,7 +77,7 @@ const App = () => {
                 <Navbar />
                 <div className="content-page">
                     <Sidebar />
-                    {userInited && divisionInited && <AppRouter />}
+                    {userInited && <AppRouter />}
                 </div>
             </ConfigProvider>
         </div>

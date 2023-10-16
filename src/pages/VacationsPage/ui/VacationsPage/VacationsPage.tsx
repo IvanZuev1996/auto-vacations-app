@@ -2,7 +2,7 @@ import { Button, Skeleton } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getCurrentDivision } from '@/entities/Division';
+import { getCurrentDivisionId } from '@/entities/Division';
 import { AddVacationModal } from '@/features/AddVacationModal';
 import {
     DynamicModuleLoader,
@@ -40,7 +40,7 @@ const VacationsPage = () => {
     const month = useSelector(getVacationsPageMonth);
     const viewType = useSelector(getVacationsPageView);
     const year = useSelector(getVacationsPageYear);
-    const currentDivision = useSelector(getCurrentDivision);
+    const currentDivisionId = useSelector(getCurrentDivisionId);
     const isLoading = useSelector(getVacationsPageIsLoading);
     const error = useSelector(getVacationsPageError);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -57,7 +57,7 @@ const VacationsPage = () => {
 
     useEffect(() => {
         dispatch(fetchVacations());
-    }, [dispatch, currentDivision]);
+    }, [dispatch, currentDivisionId]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterAnmount={false}>
