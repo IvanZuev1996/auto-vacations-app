@@ -20,10 +20,12 @@ export const divisionSlice = createSlice({
             );
             state.currentDivisionId = action.payload;
         },
-        initDivision: (state) => {
+        initDivision: (state, action: PayloadAction<string>) => {
             const division = localStorage.getItem(DIVISION_LOCALSTORAGE_KEY);
             if (division) {
                 state.currentDivisionId = JSON.parse(division);
+            } else {
+                state.currentDivisionId = action.payload;
             }
             state._inited = true;
         },

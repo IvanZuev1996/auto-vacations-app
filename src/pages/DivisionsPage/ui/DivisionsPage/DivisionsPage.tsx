@@ -1,9 +1,12 @@
 import { Button, Card } from 'antd';
 import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { DivisionList } from '@/entities/Division';
-import { AddEmployeeModal } from '@/features/AddEmployeeModal';
-import { useDivisions } from '@/features/ChangeDivisionSelect';
+import { DivisionList, useDivisions } from '@/entities/Division';
+import {
+    AddDivisionModal,
+    getAddDivisionModalIsSuccess
+} from '@/features/AddDivisionModal';
 import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
@@ -12,14 +15,10 @@ import { Page } from '@/widgets/Page';
 
 import cls from './DivisionsPage.module.scss';
 
-// const reducers: ReducerList = {
-//     employeeListPage: employeeListPageReducer
-// };
-
 const DivisionsPage = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
     const { data = [], isLoading, error } = useDivisions();
+    const isSuccess = useSelector(getAddDivisionModalIsSuccess);
 
     const onOpenModal = useCallback(() => {
         setIsModalOpen(true);
@@ -27,11 +26,15 @@ const DivisionsPage = () => {
 
     const onCloseModal = useCallback(() => {
         setIsModalOpen(false);
-    }, []);
+
+        if (isSuccess) {
+            window.location.reload();
+        }
+    }, [isSuccess]);
 
     return (
         <Page>
-            <AddEmployeeModal
+            <AddDivisionModal
                 isOpen={isModalOpen}
                 onCloseModal={onCloseModal}
             />

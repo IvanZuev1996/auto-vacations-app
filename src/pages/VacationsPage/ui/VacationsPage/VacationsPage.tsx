@@ -56,7 +56,9 @@ const VacationsPage = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchVacations());
+        if (currentDivisionId) {
+            dispatch(fetchVacations());
+        }
     }, [dispatch, currentDivisionId]);
 
     return (

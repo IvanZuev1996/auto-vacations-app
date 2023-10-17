@@ -25,7 +25,12 @@ export const TableContent = (props: TableContentProps) => {
             <VStack max>
                 <HStack justify="start" className={cls.days} max>
                     {mounthList.map((item, index) => (
-                        <TableItem index={index} monthItem={item} visible />
+                        <TableItem
+                            index={index}
+                            monthItem={item}
+                            visible
+                            key={index}
+                        />
                     ))}
                 </HStack>
                 {vacations?.map((vacationData) => (

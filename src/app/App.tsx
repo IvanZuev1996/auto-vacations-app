@@ -1,23 +1,15 @@
-import { ConfigProvider } from 'antd';
-import locale from 'antd/locale/ru_RU';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { divisionActions, getDivisionInited } from '@/entities/Division';
-import {
-    getIsUserAdmin,
-    getUserAuthData,
-    getUserInited,
-    userActions
-} from '@/entities/User';
+import { getUserAuthData, getUserInited, userActions } from '@/entities/User';
 import { LoginPage } from '@/pages/AuthPage';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Navbar } from '@/widgets/Navbar';
 import { Sidebar } from '@/widgets/Sidebar';
 
+import { AntdProvider } from './providers/AntdProvider/AntdProvider';
 import { AppRouter } from './providers/router';
-
-import 'dayjs/locale/ru';
 
 import './styles/index.scss';
 
@@ -26,19 +18,11 @@ const App = () => {
     const userInited = useSelector(getUserInited);
     const divisionInited = useSelector(getDivisionInited);
     const authData = useSelector(getUserAuthData);
-    const isUserAdmin = useSelector(getIsUserAdmin);
 
     useEffect(() => {
         dispatch(userActions.initAuthData());
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (isUserAdmin) {
-            dispatch(divisionActions.initDivision());
-        } else {
-            dispatch(divisionActions.changeDivision(authData?.division || ''));
-        }
-    }, [authData?.division, dispatch, isUserAdmin]);
+        dispatch(divisionActions.initDivision(authData?.division || ''));
+    }, [authData?.division, dispatch]);
 
     if (!authData) {
         return <LoginPage />;
@@ -46,40 +30,13 @@ const App = () => {
 
     return (
         <div className="app">
-            <ConfigProvider
-                locale={locale}
-                theme={{
-                    token: {
-                        fontSize: 13,
-                        fontFamily: '\'Montserrat\', sans-serif'
-                    },
-                    components: {
-                        Tabs: {
-                            horizontalItemPadding: '8px 0px',
-                            horizontalMargin: '0px'
-                        },
-                        Card: {
-                            paddingLG: 13,
-                            boxShadowTertiary:
-                                '0 5px 15px -3px rgba(34, 60, 80, 0.21)'
-                        },
-                        Dropdown: {
-                            controlPaddingHorizontal: 25,
-                            controlHeight: 40
-                        },
-                        Skeleton: {
-                            controlHeight: 50,
-                            padding: 0
-                        }
-                    }
-                }}
-            >
+            <AntdProvider>
                 <Navbar />
                 <div className="content-page">
                     <Sidebar />
-                    {userInited && <AppRouter />}
+                    {userInited && divisionInited && <AppRouter />}
                 </div>
-            </ConfigProvider>
+            </AntdProvider>
         </div>
     );
 };

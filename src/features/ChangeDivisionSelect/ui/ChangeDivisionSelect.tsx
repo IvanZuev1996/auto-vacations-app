@@ -1,24 +1,16 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
     DivisionSelect,
     divisionActions,
-    getCurrentDivisionId,
-    useDivisions
+    getCurrentDivisionId
 } from '@/entities/Division';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 
 export const ChangeDivisionSelect = () => {
     const dispatch = useAppDispatch();
-    const { data } = useDivisions();
     const currentDivisionId = useSelector(getCurrentDivisionId);
-
-    useEffect(() => {
-        if (data) {
-            dispatch(divisionActions.initDivision());
-        }
-    }, [data, dispatch]);
 
     const onChangeDivision = useCallback(
         (divisionId: string) => {
@@ -35,7 +27,7 @@ export const ChangeDivisionSelect = () => {
         <DivisionSelect
             onChangeDivision={onChangeDivision}
             selectOptions={[
-                { value: '', label: 'Все', _id: '', divisionNumber: 0 }
+                { value: 'all', label: 'Все', _id: 'all', divisionNumber: 0 }
             ]}
             value={currentDivisionId || ''}
             style={{ width: '180px' }}

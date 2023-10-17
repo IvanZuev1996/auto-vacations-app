@@ -10,6 +10,7 @@ import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { divisionActions } from '@/entities/Division';
 import { getUserAuthData, getIsUserAdmin, userActions } from '@/entities/User';
 import { ChangeDivisionSelect } from '@/features/ChangeDivisionSelect';
 import { getRouteMain } from '@/shared/consts/router';
@@ -52,6 +53,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
 
     const onLogout = () => {
         dispatch(userActions.logout());
+        dispatch(divisionActions.removeDivision());
     };
 
     const handleSidebarClick = () => {

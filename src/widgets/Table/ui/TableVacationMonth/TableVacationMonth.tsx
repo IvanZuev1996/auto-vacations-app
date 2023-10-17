@@ -56,7 +56,7 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
                         className={classNames(cls.active, mods)}
                     >
                         <Text className={cls.daysCount}>
-                            {getCurrentEnging(endDay - startDay)}
+                            {getCurrentEnging(endDay - startDay + 1)}
                         </Text>
                     </HStack>
                 ) : (

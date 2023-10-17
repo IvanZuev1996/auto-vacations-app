@@ -1,5 +1,7 @@
 import { Select, SelectProps } from 'antd';
 
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+
 import { useDivisions } from '../../api/divisionSelectApi';
 import { Division } from '../../model/types/division';
 
@@ -22,6 +24,7 @@ export const DivisionSelect = (props: DivisionSelectProps) => {
         placeholder,
         ...otherProps
     } = props;
+    const dispatch = useAppDispatch();
     const { data, isLoading, error } = useDivisions();
 
     const options: SelectOption[] = [...selectOptions];
