@@ -5,6 +5,7 @@ export interface SidebarItemType {
     title?: string;
     path?: string;
     adminOnly?: boolean;
+    userOnly?: boolean;
 }
 
 export interface SidebarSchema {

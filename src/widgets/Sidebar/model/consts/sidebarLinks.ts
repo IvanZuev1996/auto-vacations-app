@@ -19,6 +19,12 @@ export const links: SidebarItemType[] = [
         adminOnly: false
     },
     {
+        title: 'Иные отпуска',
+        path: '/other-vacations',
+        icon: InsertRowAboveOutlined,
+        adminOnly: true
+    },
+    {
         title: 'Сотрудники',
         path: '/staff',
         icon: UsergroupAddOutlined,
@@ -27,7 +33,8 @@ export const links: SidebarItemType[] = [
     {
         title: 'Заявки',
         path: '/applications',
-        icon: CommentOutlined
+        icon: CommentOutlined,
+        userOnly: true
     },
     {
         title: 'Профиль',

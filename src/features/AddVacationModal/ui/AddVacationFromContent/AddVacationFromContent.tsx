@@ -18,7 +18,8 @@ import cls from '../AddVacationForm/AddVacationForm.module.scss';
 const { RangePicker } = DatePicker;
 
 const disabledDate: RangePickerProps['disabledDate'] = (current) =>
-    current && current < dayjs().endOf('day');
+    (current && current < dayjs().endOf('day')) ||
+    current.year() === dayjs().year();
 
 interface AddVacationFromContentProps {
     userData?: User;
@@ -131,7 +132,23 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                         options={[
                             {
                                 value: '1',
-                                label: 'Оплачиваемый'
+                                label: 'Ежегодный оплачиваемый'
+                            },
+                            {
+                                value: '2',
+                                label: 'Донорский'
+                            },
+                            {
+                                value: '3',
+                                label: 'Без сохранения ЗП'
+                            },
+                            {
+                                value: '4',
+                                label: 'По беременности и родам'
+                            },
+                            {
+                                value: '5',
+                                label: 'По уходу за ребенком'
                             }
                         ]}
                         size="middle"
@@ -147,6 +164,10 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                                 ? [dayjs(startDate), dayjs(endDate)]
                                 : undefined
                         }
+                        defaultValue={[
+                            dayjs('2024-01-01', 'YYYY-MM-DD'),
+                            dayjs('2024-01-01', 'YYYY-MM-DD')
+                        ]}
                         disabledDate={disabledDate}
                         onChange={onChangeDates}
                         className={cls.datePicker}

@@ -37,6 +37,7 @@ export const Sidebar = memo(({ className }: SidebarProps) => {
                         title={link.title}
                         key={link.title}
                         isAdminOnly={link.adminOnly}
+                        isUserOnly={link.userOnly}
                     />
                 ))}
             </VStack>

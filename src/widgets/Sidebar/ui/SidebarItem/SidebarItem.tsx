@@ -18,6 +18,7 @@ interface SidebarItemProps {
     active?: boolean;
     className?: string;
     isAdminOnly?: boolean;
+    isUserOnly?: boolean;
 }
 
 export const SidebarItem = memo((props: SidebarItemProps) => {
@@ -28,11 +29,16 @@ export const SidebarItem = memo((props: SidebarItemProps) => {
         path = '',
         title,
         active,
+        isUserOnly,
         isAdminOnly
     } = props;
     const isUserAdmin = useSelector(getIsUserAdmin);
 
     if (isAdminOnly && !isUserAdmin) {
+        return null;
+    }
+
+    if (isUserOnly && isUserAdmin) {
         return null;
     }
 
