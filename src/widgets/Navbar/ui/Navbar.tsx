@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { divisionActions } from '@/entities/Division';
 import { getUserAuthData, getIsUserAdmin, userActions } from '@/entities/User';
 import { ChangeDivisionSelect } from '@/features/ChangeDivisionSelect';
-import { getRouteMain } from '@/shared/consts/router';
+import { getRouteMain, getRouteProfile } from '@/shared/consts/router';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { AppLink } from '@/shared/ui/AppLink';
@@ -29,20 +29,6 @@ interface NavbarProps {
     className?: string;
 }
 
-const items = [
-    {
-        label: <AppLink to={getRouteMain()}>Мой профиль</AppLink>,
-        key: '1',
-        icon: <UserOutlined />
-    },
-    {
-        key: '2',
-        label: 'Выйти',
-        icon: <LogoutOutlined />,
-        danger: true
-    }
-];
-
 export const Navbar = memo(({ className }: NavbarProps) => {
     const isOpen = useSelector(getSidabarState);
     const userData = useSelector(getUserAuthData);
@@ -50,6 +36,24 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     const isUserAdmin = useSelector(getIsUserAdmin);
     const navigate = useNavigate();
     const MenuIcon = isOpen ? MenuFoldOutlined : MenuUnfoldOutlined;
+
+    const items = [
+        {
+            label: (
+                <AppLink to={getRouteProfile(userData?._id || '')}>
+                    Мой профиль
+                </AppLink>
+            ),
+            key: '1',
+            icon: <UserOutlined />
+        },
+        {
+            key: '2',
+            label: 'Выйти',
+            icon: <LogoutOutlined />,
+            danger: true
+        }
+    ];
 
     const onLogout = () => {
         dispatch(userActions.logout());

@@ -1,7 +1,13 @@
+import { Button, Popover } from 'antd';
+
+import { User } from '@/entities/User';
 import { Vacation } from '@/entities/Vacation';
+import { getRouteVacationDetails } from '@/shared/consts/router';
 import { Mods, classNames } from '@/shared/lib/helpers/classNames';
 import { getCurrentEnging, getDaysByMonth } from '@/shared/lib/helpers/dates';
-import { HStack } from '@/shared/ui/Stack';
+import { getShortName } from '@/shared/lib/helpers/names';
+import { AppLink } from '@/shared/ui/AppLink';
+import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 
 import cls from '../Table/Table.module.scss';
@@ -9,15 +15,39 @@ import { TableItem } from '../TableItem/TableItem';
 
 interface TableVacationYearProps {
     items: Vacation[];
+    user?: User;
     index: number;
     month: number;
     year: number;
 }
 
 export const TableVacationMonth = (props: TableVacationYearProps) => {
-    const { items, index, month, year } = props;
+    const { items, index, month, year, user } = props;
 
     const getTableItem = (item: Vacation) => {
+        const popoverContent = (
+            <VStack align="start" justify="start" max gap="8">
+                <Text weight="bold_weight">
+                    {item.status === 'pending'
+                        ? 'Требуется действие'
+                        : 'Одобрено'}
+                </Text>
+                <Text>
+                    {getShortName({
+                        firstname: user?.firstname || '',
+                        lastname: user?.lastname || '',
+                        patronymic: user?.patronymic
+                    })}
+                </Text>
+                <Text>{`с ${new Date(item.start).getDate()} по ${new Date(
+                    item.end
+                ).getDate()} число`}</Text>
+                <AppLink to={getRouteVacationDetails(item._id)}>
+                    <Button type="link">Подробнее о заявке</Button>
+                </AppLink>
+            </VStack>
+        );
+
         // days
         const startDay = new Date(item.start).getUTCDate();
         let endDay = new Date(item.end).getUTCDate();
@@ -40,7 +70,8 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
 
         const mods: Mods = {
             [cls.end]: isEnd,
-            [cls.start]: isStart
+            [cls.start]: isStart,
+            [cls.pending]: item.status === 'pending'
         };
 
         if (startMonth === month && startYear === year) {
@@ -50,17 +81,29 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
 
             if (index >= startDay && index <= endDay) {
                 return isStart ? (
-                    <HStack
-                        align="center"
-                        justify="start"
-                        className={classNames(cls.active, mods)}
-                    >
-                        <Text className={cls.daysCount}>
-                            {getCurrentEnging(endDay - startDay + 1)}
-                        </Text>
-                    </HStack>
+                    <Popover content={popoverContent}>
+                        <AppLink
+                            to={getRouteVacationDetails(item._id)}
+                            style={{ zIndex: 40000 }}
+                        >
+                            <HStack
+                                align="center"
+                                justify="start"
+                                className={classNames(cls.active, mods)}
+                            >
+                                <Text className={cls.daysCount}>
+                                    {getCurrentEnging(endDay - startDay + 1)}
+                                </Text>
+                            </HStack>
+                        </AppLink>
+                    </Popover>
                 ) : (
-                    <div className={classNames(cls.active, mods)} />
+                    <Popover content={popoverContent}>
+                        <AppLink
+                            className={classNames(cls.active, mods)}
+                            to={getRouteVacationDetails(item._id)}
+                        />
+                    </Popover>
                 );
             }
 
@@ -68,7 +111,14 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
         }
 
         if (endMonth > month && startMonth < month && startYear === endYear) {
-            return <div className={classNames(cls.active, mods)} />;
+            return (
+                <Popover content={popoverContent}>
+                    <AppLink
+                        className={classNames(cls.active, mods)}
+                        to={getRouteVacationDetails(item._id)}
+                    />
+                </Popover>
+            );
         }
 
         if (endYear !== year) {
@@ -77,7 +127,14 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
 
         if (endMonth === month) {
             if (index <= endDay) {
-                return <div className={classNames(cls.active, mods)} />;
+                return (
+                    <Popover content={popoverContent}>
+                        <AppLink
+                            className={classNames(cls.active, mods)}
+                            to={getRouteVacationDetails(item._id)}
+                        />
+                    </Popover>
+                );
             }
         }
 

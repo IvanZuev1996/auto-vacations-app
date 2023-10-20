@@ -54,6 +54,7 @@ export const TableContent = (props: TableContentProps) => {
                                                 index={index}
                                                 month={month}
                                                 year={year}
+                                                user={vacationData.userData}
                                                 key={vacationItem._id}
                                             />
                                         )
@@ -90,6 +91,7 @@ export const TableContent = (props: TableContentProps) => {
                     {daysList.map((index) => (
                         <TableVacationMonth
                             items={vacationData.userVacations}
+                            user={vacationData.userData}
                             index={index}
                             month={month}
                             year={year}

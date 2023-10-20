@@ -1,58 +1,6 @@
-import {
-    CommentOutlined,
-    InsertRowAboveOutlined,
-    LineChartOutlined,
-    PartitionOutlined,
-    QuestionCircleOutlined,
-    SettingOutlined,
-    UserOutlined,
-    UsergroupAddOutlined
-} from '@ant-design/icons';
+import { QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { SidebarItemType } from '../types/sidebar';
-
-export const links: SidebarItemType[] = [
-    {
-        title: 'График отпусков',
-        path: '/',
-        icon: InsertRowAboveOutlined,
-        adminOnly: false
-    },
-    {
-        title: 'Иные отпуска',
-        path: '/other-vacations',
-        icon: InsertRowAboveOutlined,
-        adminOnly: true
-    },
-    {
-        title: 'Сотрудники',
-        path: '/staff',
-        icon: UsergroupAddOutlined,
-        adminOnly: true
-    },
-    {
-        title: 'Заявки',
-        path: '/applications',
-        icon: CommentOutlined,
-        userOnly: true
-    },
-    {
-        title: 'Профиль',
-        path: '/profile/:id',
-        icon: UserOutlined
-    },
-    {
-        title: 'Подразделения',
-        path: '/divisions',
-        icon: PartitionOutlined,
-        adminOnly: true
-    },
-    {
-        title: 'Статистика',
-        path: '/statistics',
-        icon: LineChartOutlined
-    }
-];
 
 export const settingsLinks: SidebarItemType[] = [
     {

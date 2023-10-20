@@ -93,6 +93,10 @@
     font: var(--font-m);
 }
 
+.pending {
+    background-color: var(--yellow-light-color);
+}
+
 .bordered {
     border-radius: 5px;
     border: 1px solid var(--green-color);

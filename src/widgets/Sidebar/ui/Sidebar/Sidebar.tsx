@@ -6,7 +6,8 @@ import { classNames } from '@/shared/lib/helpers/classNames';
 import { Line } from '@/shared/ui/Line';
 import { VStack } from '@/shared/ui/Stack';
 
-import { links, settingsLinks } from '../../model/consts/sidebarLinks';
+import { settingsLinks } from '../../model/consts/sidebarLinks';
+import { getSidebarLinks } from '../../model/selectors/getSidebarLinks';
 import { getSidabarState } from '../../model/selectors/getSidebarState';
 import { SidebarItem } from '../SidebarItem/SidebarItem';
 
@@ -18,6 +19,7 @@ interface SidebarProps {
 
 export const Sidebar = memo(({ className }: SidebarProps) => {
     const { pathname } = useLocation();
+    const links = useSelector(getSidebarLinks);
     const isOpen = useSelector(getSidabarState);
 
     return (

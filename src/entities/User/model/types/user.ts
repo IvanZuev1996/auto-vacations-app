@@ -1,5 +1,7 @@
 import { UserRole } from '../consts/userConsts';
 
+export type UserStatus = 'on vacation' | 'work';
+
 export interface AuthData {
     username: string;
     password: string;
@@ -26,7 +28,7 @@ export interface User {
     auth: AuthData;
     daysOnVacations?: number; // кол-во дней проведенных в отпуске
     visibleUsers?: string[]; // доступные для просмотра пользователи
-    vacationStatus?: 'on vacation' | 'work'; // статус 'в отпуске' или 'работает'
+    vacationStatus?: UserStatus; // статус 'в отпуске' или 'работает'
     createdAt?: Date;
     updatedAt?: Date;
 }

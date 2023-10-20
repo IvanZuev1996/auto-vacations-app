@@ -1,7 +1,14 @@
+import { Button, Popover } from 'antd';
+
+import { User } from '@/entities/User';
 import { Vacation } from '@/entities/Vacation';
-import { classNames } from '@/shared/lib/helpers/classNames';
+import { getRouteVacationDetails } from '@/shared/consts/router';
+import { classNames, Mods } from '@/shared/lib/helpers/classNames';
 import { getDaysByMonth } from '@/shared/lib/helpers/dates';
-import { HStack } from '@/shared/ui/Stack';
+import { getShortName } from '@/shared/lib/helpers/names';
+import { AppLink } from '@/shared/ui/AppLink';
+import { HStack, VStack } from '@/shared/ui/Stack';
+import { Text } from '@/shared/ui/Text';
 
 import cls from '../Table/Table.module.scss';
 
@@ -9,13 +16,35 @@ interface TableVacationMonthProps {
     item: Vacation;
     index: number;
     month: number;
+    user?: User;
     year: number;
 }
 
 export const TableVacationYear = (props: TableVacationMonthProps) => {
-    const { index, item, month, year } = props;
+    const { index, item, month, year, user } = props;
     const isOdd = index % 2 === 0;
     const currentMonth = index + 1;
+
+    const popoverContent = (
+        <VStack align="start" justify="start" max gap="8">
+            <Text weight="bold_weight">
+                {item.status === 'pending' ? 'Требуется действие' : 'Одобрено'}
+            </Text>
+            <Text>
+                {getShortName({
+                    firstname: user?.firstname || '',
+                    lastname: user?.lastname || '',
+                    patronymic: user?.patronymic
+                })}
+            </Text>
+            <Text>{`с ${new Date(item.start).getDate()} по ${new Date(
+                item.end
+            ).getDate()} число`}</Text>
+            <AppLink to={getRouteVacationDetails(item._id)}>
+                <Button type="link">Подробнее о заявке</Button>
+            </AppLink>
+        </VStack>
+    );
 
     // days
     const startDay = new Date(item.start).getDate();
@@ -33,6 +62,10 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
         month: startMonth,
         year: startYear
     });
+
+    const mods: Mods = {
+        [cls.pending]: item.status === 'pending'
+    };
 
     if (startMonth === currentMonth && startYear === year) {
         if (endMonth !== startMonth) {
@@ -58,10 +91,13 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                 ])}
             >
                 <div style={{ width: `${startPercent}%` }} />
-                <div
-                    className={cls.active}
-                    style={{ width: `${middlePercent}%` }}
-                />
+                <Popover content={popoverContent}>
+                    <AppLink
+                        to={getRouteVacationDetails(item._id)}
+                        className={classNames(cls.active, mods)}
+                        style={{ width: `${middlePercent}%` }}
+                    />
+                </Popover>
                 <div style={{ width: `${endPercent}%` }} />
             </HStack>
         );
@@ -78,10 +114,13 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                     cls.vacationsOnYearWrapper
                 ])}
             >
-                <div
-                    className={classNames(cls.active)}
-                    style={{ width: '100%' }}
-                />
+                <Popover content={popoverContent}>
+                    <AppLink
+                        to={getRouteVacationDetails(item._id)}
+                        className={classNames(cls.active, mods)}
+                        style={{ width: '100%' }}
+                    />
+                </Popover>
             </HStack>
         );
     }
@@ -105,10 +144,13 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                     cls.vacationsOnYearWrapper
                 ])}
             >
-                <div
-                    className={cls.active}
-                    style={{ width: `${startPercent}%` }}
-                />
+                <Popover content={popoverContent}>
+                    <AppLink
+                        to={getRouteVacationDetails(item._id)}
+                        className={classNames(cls.active, mods)}
+                        style={{ width: `${startPercent}%` }}
+                    />
+                </Popover>
                 <div style={{ width: `${endPercent}%` }} />
             </HStack>
         );
