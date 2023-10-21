@@ -9,6 +9,6 @@ export {
     getDivisionInited
 } from './model/selectors/division';
 
-export { useDivisions } from './api/divisionSelectApi';
+export { useDivisions, useDivisionById } from './api/divisionSelectApi';
 
 export { DivisionSelect } from './ui/DivisionSelect/DivisionSelect';

@@ -46,6 +46,16 @@
     }
 }
 
+.LARGE_S {
+    .normal_weight {
+        font: var(--font-large-s);
+    }
+
+    .bold_weight {
+        font: var(--font-large-s-bold);
+    }
+}
+
 .M {
     .normal_weight {
         font: var(--font-m);

@@ -2,7 +2,12 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { divisionActions, getDivisionInited } from '@/entities/Division';
-import { getUserAuthData, getUserInited, userActions } from '@/entities/User';
+import {
+    fetchUserData,
+    getUserAuthData,
+    getUserInited,
+    userActions
+} from '@/entities/User';
 import { LoginPage } from '@/pages/AuthPage';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Navbar } from '@/widgets/Navbar';
@@ -23,6 +28,12 @@ const App = () => {
         dispatch(userActions.initAuthData());
         dispatch(divisionActions.initDivision(authData?.division || ''));
     }, [authData?.division, dispatch]);
+
+    useEffect(() => {
+        if (authData?._id) {
+            dispatch(fetchUserData(authData._id));
+        }
+    }, [authData?._id, dispatch]);
 
     if (!authData) {
         return <LoginPage />;

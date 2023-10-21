@@ -11,7 +11,7 @@ import { User } from '../../model/types/user';
 import cls from './UserList.module.scss';
 
 interface UserListProps {
-    users: User[];
+    users?: User[];
     isLoading?: boolean;
     error?: string;
 }
@@ -26,7 +26,7 @@ export const UserList = (props: UserListProps) => {
 
     const data: DataType[] = [];
 
-    users.forEach((user) =>
+    users?.forEach((user) =>
         data.push({
             ...user,
             key: user._id,

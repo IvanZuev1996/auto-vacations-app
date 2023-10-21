@@ -1,18 +1,13 @@
-import {
-    Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
-    Font
-} from '@react-pdf/renderer';
+import { StyleSheet, Font, PDFDownloadLink } from '@react-pdf/renderer';
+
+import { AnnualPaid } from './AnnualPaid/AnnualPaid';
 
 Font.register({
     family: 'Roboto',
     src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf'
 });
 
-const styles = StyleSheet.create({
+export const documentStyles = StyleSheet.create({
     page: {
         flexDirection: 'row',
         backgroundColor: '#ffffff'
@@ -33,15 +28,31 @@ const styles = StyleSheet.create({
     }
 });
 
-export const PDFDocument = () => {
-    const a = 0;
-    return (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.section}>
-                    <Text style={styles.text}>Тут будет заявление</Text>
-                </View>
-            </Page>
-        </Document>
-    );
+interface PDFDocumentProps {
+    isOpen?: boolean;
+    onOpen: (newState: boolean) => void;
+}
+
+export const PDFDocument = (props: PDFDocumentProps) => {
+    const { isOpen, onOpen } = props;
+
+    if (isOpen) {
+        return (
+            <PDFDownloadLink document={<AnnualPaid />} fileName="somename.pdf">
+                {({ blob, url, loading, error }) => {
+                    let link;
+
+                    if (blob !== null) {
+                        link = URL.createObjectURL(blob);
+                        window.open(link);
+                        onOpen(false);
+                    }
+
+                    return null;
+                }}
+            </PDFDownloadLink>
+        );
+    }
+
+    return null;
 };

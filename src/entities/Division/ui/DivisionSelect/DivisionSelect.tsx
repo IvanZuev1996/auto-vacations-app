@@ -37,6 +37,17 @@ export const DivisionSelect = (props: DivisionSelectProps) => {
         })
     );
 
+    if (error) {
+        return (
+            <Select
+                disabled
+                value="Произошла ошибка"
+                size="middle"
+                style={style}
+            />
+        );
+    }
+
     return (
         <Select
             loading={isLoading}

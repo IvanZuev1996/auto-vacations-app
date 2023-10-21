@@ -2,7 +2,7 @@ import { Button, Card } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getCurrentDivisionId } from '@/entities/Division';
+import { getCurrentDivisionId, useDivisionById } from '@/entities/Division';
 import { UserList } from '@/entities/User';
 import { AddEmployeeModal } from '@/features/AddEmployeeModal';
 import {
@@ -39,6 +39,10 @@ const EmployeeListPage = () => {
     const isLoading = useSelector(getEmployeeListPageIsLoading);
     const error = useSelector(getEmployeeListPageError);
     const currentDivisionId = useSelector(getCurrentDivisionId);
+    const { data: divisionData, isLoading: isDivisionLoading } =
+        useDivisionById({
+            id: currentDivisionId || 'all'
+        });
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -80,7 +84,14 @@ const EmployeeListPage = () => {
                             + Добавить сотрудника
                         </Button>
                     </HStack>
-                    <Text size="S">Подразделение 1</Text>
+                    <HStack gap="12" align="center">
+                        <Text size="S">Подразделение</Text>
+                        <Text size="S">
+                            {isDivisionLoading
+                                ? 'Загрузка...'
+                                : divisionData?.divisionNumber}
+                        </Text>
+                    </HStack>
                     <Line />
                     <Card className={cls.card} bordered={false}>
                         <EmployeeListPageFilters />

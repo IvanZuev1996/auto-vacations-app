@@ -4,7 +4,7 @@ import { classNames, Mods } from '@/shared/lib/helpers/classNames';
 
 import cls from './Text.module.scss';
 
-type TextSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
+type TextSize = 'XS' | 'S' | 'LARGE_S' | 'M' | 'L' | 'XL';
 type HeaderTagType = 'h1' | 'h2' | 'h3' | 'p';
 type TextTheme = 'primary' | 'error';
 type TextAlign = 'center' | 'left' | 'right';
@@ -23,6 +23,7 @@ interface TextProps {
 const mapSizeToHeaderTag: Record<TextSize, HeaderTagType> = {
     XS: 'p',
     S: 'p',
+    LARGE_S: 'p',
     M: 'h3',
     L: 'h2',
     XL: 'h1'
