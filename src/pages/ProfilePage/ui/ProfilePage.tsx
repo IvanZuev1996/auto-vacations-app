@@ -1,9 +1,11 @@
+import { Card } from 'antd';
 import { useSelector } from 'react-redux';
 
 import { getUserAuthData } from '@/entities/User';
+import { VacationList } from '@/entities/Vacation';
 import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
-import { HStack } from '@/shared/ui/Stack';
+import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 import { Page } from '@/widgets/Page';
 
@@ -12,6 +14,7 @@ import cls from './ProfilePage.module.scss';
 const ProfilePage = () => {
     const a = 0;
     const authData = useSelector(getUserAuthData);
+
     return (
         <Page>
             <Breadcrumb />
@@ -35,6 +38,25 @@ const ProfilePage = () => {
                 </HStack>
             </HStack>
             <Line />
+            <VStack gap="32">
+                <Card title="Ваши личные данные" style={{ width: '100%' }}>
+                    ....
+                </Card>
+                <Text size="L" weight="bold_weight">
+                    Ваши заявки
+                </Text>
+            </VStack>
+            <VacationList
+                vacations={[
+                    {
+                        _id: '',
+                        end: '2023-02-12',
+                        start: '2023-01-12',
+                        status: 'agreed',
+                        type: 'standart'
+                    }
+                ]}
+            />
         </Page>
     );
 };

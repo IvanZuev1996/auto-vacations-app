@@ -5,3 +5,4 @@ export type {
     VacationStatus,
     SortByDivisionVacation
 } from './model/types/vacation';
+export { VacationList } from './ui/VacationList/VacationList';
