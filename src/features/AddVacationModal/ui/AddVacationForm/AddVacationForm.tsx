@@ -8,6 +8,7 @@ import {
     DynamicModuleLoader,
     ReducerList
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { getWeekendCount } from '@/shared/lib/helpers/dates';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 
 import {
@@ -38,6 +39,7 @@ const AddVacationForm = (props: AddVacationFormProps) => {
     const { className, onCancel, onSuccess } = props;
     const dispatch = useAppDispatch();
     const [daysCount, setDaysCount] = useState<string>('');
+    const [weekendCount, setWeekendCount] = useState<number>(0);
     const [isApprove, setIsApprove] = useState<boolean>(false);
     const userData = useSelector(getUserAuthData);
     const type = useSelector(getAddVacationModalVacationType);
@@ -56,11 +58,20 @@ const AddVacationForm = (props: AddVacationFormProps) => {
 
     const onChangeDates = useCallback(
         (dayjsDates: any, dates: [string, string]) => {
+            if (!dates[1] && dates[0]) {
+                dispatch(addVacationModalActions.setStartDate(dates[0]));
+
+                return;
+            }
+
             if (dayjsDates) {
-                setDaysCount(dayjsDates[1].diff(dates[0], 'day') + 1);
+                const currentDaysCount =
+                    dayjsDates[1].diff(dates[0], 'day') + 1;
+                setDaysCount(currentDaysCount);
+
                 if (userData?.balance) {
-                    if (userData.balance - Number(daysCount) < 0) {
-                        setIsApprove(true);
+                    if (userData.balance - Number(currentDaysCount) < 0) {
+                        setIsApprove(false);
                     } else {
                         setIsApprove(true);
                     }
@@ -70,10 +81,14 @@ const AddVacationForm = (props: AddVacationFormProps) => {
                 setIsApprove(false);
             }
 
+            setWeekendCount(
+                getWeekendCount({ startDate: dates[0], endDate: dates[1] })
+            );
+
             dispatch(addVacationModalActions.setStartDate(dates[0]));
             dispatch(addVacationModalActions.setEndDate(dates[1]));
         },
-        [daysCount, dispatch, userData?.balance]
+        [dispatch, userData?.balance]
     );
 
     return (
@@ -86,6 +101,7 @@ const AddVacationForm = (props: AddVacationFormProps) => {
                 onChangeType={onChangeType}
                 onSuccess={onSuccess}
                 userData={userData}
+                weekendCount={weekendCount}
                 isSuccess={isSuccess}
                 error={error}
                 isLoading={isLoading}

@@ -71,6 +71,11 @@ const ProfilePage = () => {
                             <Descriptions.Item label="Право на 2023 год">
                                 <Text weight="bold_weight">28 д.</Text>
                             </Descriptions.Item>
+                            <Descriptions.Item label="Израсходовано">
+                                <Text weight="bold_weight">
+                                    {authData?.spentVacationDays} д.
+                                </Text>
+                            </Descriptions.Item>
                             <Descriptions.Item label="Итоговый баланс">
                                 <Text weight="bold_weight">
                                     {authData?.balance} д.
@@ -119,6 +124,7 @@ const ProfilePage = () => {
                 vacations={data}
                 isLoading={isLoading || isFetching}
                 error={String(error)}
+                isOwner
             />
         </Page>
     );

@@ -7,7 +7,7 @@ import { Vacation } from '@/entities/Vacation';
 
 export const addVacation = createAsyncThunk<
     Vacation,
-    DeepPartial<Vacation> | undefined,
+    Vacation | undefined,
     ThunkConfig<string>
 >('addVacationModal/addVacation', async (props, thunkApi) => {
     const { extra, rejectWithValue, getState } = thunkApi;
@@ -16,7 +16,13 @@ export const addVacation = createAsyncThunk<
     try {
         const response: AxiosResponse<Vacation> = await extra.api.post(
             'api/vacations',
-            { ...props, user: user?._id }
+            {
+                user: user?._id,
+                start: props?.start,
+                end: props?.end,
+                type: props?.type,
+                status: props?.status
+            }
         );
 
         if (!response.data) {

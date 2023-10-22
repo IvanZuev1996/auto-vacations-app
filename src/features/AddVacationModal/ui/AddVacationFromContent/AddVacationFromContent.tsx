@@ -1,6 +1,5 @@
-import { Button, DatePicker, Input, Result, Select, Spin } from 'antd';
-import { RangePickerProps } from 'antd/es/date-picker';
-import dayjs from 'dayjs';
+import { Alert, Button, Result, Spin } from 'antd';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { User } from '@/entities/User';
@@ -14,12 +13,7 @@ import {
     getAddVacationModalStartDate
 } from '../../model/selectors/addVacationModal';
 import cls from '../AddVacationForm/AddVacationForm.module.scss';
-
-const { RangePicker } = DatePicker;
-
-const disabledDate: RangePickerProps['disabledDate'] = (current) =>
-    (current && current < dayjs().endOf('day')) ||
-    current.year() === dayjs().year();
+import { AddVacationInputs } from '../AddVacationInputs/AddVacationInputs';
 
 interface AddVacationFromContentProps {
     userData?: User;
@@ -29,6 +23,7 @@ interface AddVacationFromContentProps {
     onSuccess?: () => void;
     isApprove?: boolean;
     daysCount?: string;
+    weekendCount?: number;
     isSuccess?: boolean;
     isLoading?: boolean;
     error?: string;
@@ -44,13 +39,19 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
         daysCount,
         isApprove,
         onCancel,
+        weekendCount,
         isSuccess,
         error,
         isLoading,
         onSuccess
     } = props;
+    const [vacationCount, setVacationCount] = useState<number>(1);
     const endDate = useSelector(getAddVacationModalEndDate);
     const startDate = useSelector(getAddVacationModalStartDate);
+
+    const onRemoveInputs = useCallback(() => {
+        setVacationCount((prev) => prev - 1);
+    }, []);
 
     if (isSuccess) {
         return <Result status="success" title="Заявка отправлена!" />;
@@ -124,61 +125,30 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                     </HStack>
                 </VStack>
             </HStack>
-            <HStack align="end" gap="32" max className={cls.inputWrap}>
-                <VStack gap="4" max className={cls.inputItem}>
-                    <Text>Тип отпуска</Text>
-                    <Select
-                        defaultValue="1"
-                        options={[
-                            {
-                                value: '1',
-                                label: 'Ежегодный оплачиваемый'
-                            },
-                            {
-                                value: '2',
-                                label: 'Донорский'
-                            },
-                            {
-                                value: '3',
-                                label: 'Без сохранения ЗП'
-                            },
-                            {
-                                value: '4',
-                                label: 'По беременности и родам'
-                            },
-                            {
-                                value: '5',
-                                label: 'По уходу за ребенком'
-                            }
-                        ]}
-                        size="middle"
-                        onChange={onChangeType}
-                        className={cls.select}
-                    />
-                </VStack>
-                <VStack gap="4" max className={cls.dateInputItem}>
-                    <Text>Даты</Text>
-                    <RangePicker
-                        value={
-                            startDate
-                                ? [dayjs(startDate), dayjs(endDate)]
-                                : undefined
-                        }
-                        defaultValue={[
-                            dayjs('2024-01-01', 'YYYY-MM-DD'),
-                            dayjs('2024-01-01', 'YYYY-MM-DD')
-                        ]}
-                        disabledDate={disabledDate}
-                        onChange={onChangeDates}
-                        className={cls.datePicker}
-                    />
-                </VStack>
-
-                <VStack gap="4" max className={cls.daysCountInputItem}>
-                    <Text>Кол-во дней</Text>
-                    <Input className={cls.input} value={daysCount} />
-                </VStack>
-            </HStack>
+            <VStack gap="16" className={cls.inputWrap} max>
+                {Array(vacationCount)
+                    .fill(null)
+                    .map((_, index) => (
+                        <AddVacationInputs
+                            daysCount={daysCount}
+                            onChangeDates={onChangeDates}
+                            onChangeType={onChangeType}
+                            onRemoveInputs={onRemoveInputs}
+                            index={index}
+                        />
+                    ))}
+                <Alert
+                    message={`Кол-во выходных дней в отпуске: ${weekendCount}`}
+                    type="warning"
+                    showIcon
+                    style={{ width: '100%' }}
+                />
+                {/* <HStack justify="end" align="end" max>
+                    <Button type="link" onClick={onAddInputs}>
+                        + Добавить еще один отпуск
+                    </Button>
+                </HStack> */}
+            </VStack>
             <Line />
             <HStack gap="32" justify="start" align="start" max>
                 <VStack align="start" gap="16" max>

@@ -1,9 +1,7 @@
 import { Vacation } from '@/entities/Vacation';
 
-export type NewVacationData = Omit<Vacation, 'user' | '_id'>;
-
 export interface AddVacationModalSchema {
-    data: NewVacationData;
+    data: Vacation;
     isLoading?: boolean;
     error?: string;
     isSuccess?: boolean;

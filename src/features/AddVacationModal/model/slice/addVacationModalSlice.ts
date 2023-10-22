@@ -7,10 +7,12 @@ import { AddVacationModalSchema } from '../types/addVacationModalSchema';
 
 const initialState: AddVacationModalSchema = {
     data: {
+        _id: '',
         end: '',
         start: '',
         status: 'pending',
-        type: 'standart'
+        type: 'standart',
+        user: undefined
     },
     error: undefined,
     isLoading: false,

@@ -23,6 +23,7 @@ export interface User {
     division: string; // подразделение
     intersections?: string[]; // пересечения
     startWork?: Date; // дата начала работы
+    spentVacationDays?: number; // баланс отпускных дней
     prevBalance?: number; // баланс отпускных дней
     balance: number; // баланс отпускных дней
     auth: AuthData;

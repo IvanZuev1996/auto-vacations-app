@@ -5,7 +5,7 @@ import {
     MenuUnfoldOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import { Button, Dropdown, MenuProps, Space } from 'antd';
+import { Button, Dropdown, MenuProps, Space, Tag } from 'antd';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -91,18 +91,19 @@ export const Navbar = memo(({ className }: NavbarProps) => {
 
             {isUserAdmin && <ChangeDivisionSelect />}
 
-            <Dropdown
-                menu={menuProps}
-                trigger={['click']}
-                className={cls.logout}
-            >
-                <Button>
-                    <Space>
-                        {`${userData?.firstname} ${userData?.lastname[0]}.`}
-                        <DownOutlined />
-                    </Space>
-                </Button>
-            </Dropdown>
+            <HStack align="center" gap="12" className={cls.logout}>
+                <Tag>
+                    Вы зашли как {isUserAdmin ? 'руководитель' : 'сотрудник'}
+                </Tag>
+                <Dropdown menu={menuProps} trigger={['click']}>
+                    <Button>
+                        <Space>
+                            {`${userData?.firstname} ${userData?.lastname[0]}.`}
+                            <DownOutlined />
+                        </Space>
+                    </Button>
+                </Dropdown>
+            </HStack>
         </nav>
     );
 });

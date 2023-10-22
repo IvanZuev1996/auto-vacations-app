@@ -1,5 +1,5 @@
 import { MoreOutlined } from '@ant-design/icons';
-import { Dropdown, MenuProps, Modal, Table } from 'antd';
+import { Dropdown, MenuProps, Modal, Spin, Table } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useCallback, useState } from 'react';
 
@@ -21,18 +21,23 @@ interface UserListProps {
     vacations?: Vacation[];
     isLoading?: boolean;
     error?: string;
+    isOwner?: boolean;
 }
 
 export const VacationList = (props: UserListProps) => {
-    const { vacations, error, isLoading, onEditVacation } = props;
-    const [fetchDeleteVacation, { isSuccess }] = useDeleteVacation();
+    const { vacations, error, isLoading, onEditVacation, isOwner } = props;
+    const [
+        fetchDeleteVacation,
+        { isSuccess, isLoading: isDeleteVacationLoading }
+    ] = useDeleteVacation();
     const [isPDFOpen, setIsPDFOpen] = useState<boolean>(false);
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deletedVacaionId, setDeletedVacaionId] = useState<
         string | undefined
     >(undefined);
 
     const data: DataType[] = [];
+    const deleteDropdownItems: DropdownItem[] = [];
     let dropdownItems: DropdownItem[] = [];
 
     vacations?.forEach((vacation) => {
@@ -43,19 +48,19 @@ export const VacationList = (props: UserListProps) => {
     });
 
     const onCloseModal = useCallback(() => {
-        setModalOpen(false);
+        setIsModalOpen(false);
     }, []);
 
     const onOpenModal = useCallback(() => {
-        setModalOpen(true);
+        setIsModalOpen(true);
     }, []);
 
     const deleteVacation = async () => {
         if (deletedVacaionId) {
             await fetchDeleteVacation({ vacationId: deletedVacaionId });
+            onCloseModal();
             setDeletedVacaionId(undefined);
             onEditVacation?.();
-            onCloseModal();
         }
     };
 
@@ -76,6 +81,10 @@ export const VacationList = (props: UserListProps) => {
             }
         ];
 
+        if (!isOwner) {
+            return dropdownItems;
+        }
+
         if (status === 'agreed') {
             dropdownItems.push({
                 key: '2',
@@ -86,7 +95,15 @@ export const VacationList = (props: UserListProps) => {
         }
 
         dropdownItems.push({
-            key: '3',
+            key: id,
+            label: 'Отменить',
+            value: 'cancel',
+            danger: true,
+            vacationid: id
+        });
+
+        deleteDropdownItems.push({
+            key: id,
             label: 'Отменить',
             value: 'cancel',
             danger: true,
@@ -109,7 +126,7 @@ export const VacationList = (props: UserListProps) => {
             return openPDF();
         }
 
-        const currentItem = dropdownItems.find(
+        const currentItem = deleteDropdownItems.find(
             (item) => item?.key === e.key && item.value === 'cancel'
         );
 
@@ -141,7 +158,11 @@ export const VacationList = (props: UserListProps) => {
                 cancelText="Нет, вернуться"
                 centered
             >
-                <Text size="M">Вы уверены, что хотите отменить заявку?</Text>
+                <Spin spinning={isDeleteVacationLoading}>
+                    <Text size="M">
+                        Вы уверены, что хотите отменить заявку?
+                    </Text>
+                </Spin>
             </Modal>
             <Table
                 pagination={false}

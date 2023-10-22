@@ -1,11 +1,13 @@
 import { LinkOutlined } from '@ant-design/icons';
 import { Button, Table } from 'antd';
 import Column from 'antd/es/table/Column';
+import { useSelector } from 'react-redux';
 
-import { getRouteUserDetails } from '@/shared/consts/router';
+import { getRouteProfile, getRouteUserDetails } from '@/shared/consts/router';
 import { AppLink } from '@/shared/ui/AppLink';
 import { HStack } from '@/shared/ui/Stack';
 
+import { getUserAuthData } from '../../model/selectors/getUserAuthData/getUserAuthData';
 import { User } from '../../model/types/user';
 
 import cls from './UserList.module.scss';
@@ -23,7 +25,7 @@ interface DataType extends User {
 
 export const UserList = (props: UserListProps) => {
     const { users, error, isLoading } = props;
-
+    const authData = useSelector(getUserAuthData);
     const data: DataType[] = [];
 
     users?.forEach((user) =>
@@ -52,7 +54,14 @@ export const UserList = (props: UserListProps) => {
                 dataIndex="_id"
                 key="_id"
                 render={(id: string) => (
-                    <AppLink to={getRouteUserDetails(id)} className={cls.link}>
+                    <AppLink
+                        to={
+                            authData?._id === id
+                                ? getRouteProfile(id)
+                                : getRouteUserDetails(id)
+                        }
+                        className={cls.link}
+                    >
                         <HStack align="center" gap="8">
                             <Button type="link">Подробнее</Button>
                             <LinkOutlined />

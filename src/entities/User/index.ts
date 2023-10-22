@@ -14,6 +14,6 @@ export {
 } from './model/selectors/getUserRoles/getUserRoles';
 
 export { UserList } from './ui/UserList/UserList';
-export { useUserVacations } from './api/userApi';
+export { useUserVacations, useUserData } from './api/userApi';
 
 export { fetchUserData } from './model/services/fetchUserData';

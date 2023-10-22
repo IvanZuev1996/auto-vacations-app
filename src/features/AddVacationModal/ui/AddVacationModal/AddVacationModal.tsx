@@ -19,7 +19,7 @@ export const AddVacationModal = (props: AddVacationModalProps) => {
     const dispatch = useAppDispatch();
     const vacationData = useSelector(getAddVacationModalData);
 
-    const onAddVacation = useCallback(() => {
+    const onAddVacations = useCallback(() => {
         dispatch(addVacation(vacationData));
     }, [dispatch, vacationData]);
 
@@ -46,7 +46,7 @@ export const AddVacationModal = (props: AddVacationModalProps) => {
             >
                 <AddVacationForm
                     onCancel={onCloseModal}
-                    onSuccess={onAddVacation}
+                    onSuccess={onAddVacations}
                 />
             </Suspense>
         </Modal>
