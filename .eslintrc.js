@@ -35,6 +35,7 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'no-unused-vars': 'off',
         indent: [2, 4],
+        'consistent-return': 'off',
         'react/require-default-props': 'off',
         'react/react-in-jsx-scope': 'off',
         'react/jsx-indent-props': [2, 4],

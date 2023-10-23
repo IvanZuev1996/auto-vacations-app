@@ -1,7 +1,11 @@
 import { StyleSheet, Font, PDFDownloadLink } from '@react-pdf/renderer';
+import { Modal, Spin } from 'antd';
+import { useEffect, useState } from 'react';
 
 import timesNewRomanBold from '../../fonts/TimesNewRomanBold.ttf';
 import timesNewRoman from '../../fonts/timesnewromanpsmt.ttf';
+import { VStack } from '../Stack';
+import { Text } from '../Text';
 
 import { AnnualPaid } from './AnnualPaid/AnnualPaid';
 
@@ -82,32 +86,57 @@ interface PDFDocumentProps {
 
 export const PDFDocument = (props: PDFDocumentProps) => {
     const { isOpen, onOpen, currentDate, date, daysCount, name } = props;
+    const [isPdfLoading, setIsPdfLoading] = useState(false);
+    const [isOpenPdf, setIsOpenPdf] = useState(false);
+
+    useEffect(() => {
+        if (isPdfLoading) {
+            setIsOpenPdf(true);
+            return;
+        }
+
+        const id = setTimeout(() => {
+            setIsOpenPdf(false);
+        }, 2000);
+
+        return () => clearTimeout(id);
+    }, [isPdfLoading]);
 
     if (isOpen) {
         return (
-            <PDFDownloadLink
-                document={
-                    <AnnualPaid
-                        date={date}
-                        name={name}
-                        currentDate={currentDate}
-                        daysCount={daysCount}
-                    />
-                }
-                fileName="Заявление на отпуск.pdf"
-            >
-                {({ blob, url, loading, error }) => {
-                    let link;
-
-                    if (blob !== null) {
-                        link = URL.createObjectURL(blob);
-                        window.open(link);
-                        onOpen(false);
+            <>
+                <Modal footer={null} centered open={isOpenPdf} width="40%">
+                    <VStack justify="center" align="center" gap="16" max>
+                        <Spin size="large" />
+                        <Text>Генерация заявления...</Text>
+                    </VStack>
+                </Modal>
+                <PDFDownloadLink
+                    document={
+                        <AnnualPaid
+                            date={date}
+                            name={name}
+                            currentDate={currentDate}
+                            daysCount={daysCount}
+                        />
                     }
+                    fileName="Заявление на отпуск.pdf"
+                >
+                    {({ blob, url, loading, error }) => {
+                        let link;
 
-                    return null;
-                }}
-            </PDFDownloadLink>
+                        setIsPdfLoading(loading);
+
+                        if (blob !== null && !isOpenPdf && !isPdfLoading) {
+                            link = URL.createObjectURL(blob);
+                            window.open(link);
+                            onOpen(false);
+                        }
+
+                        return null;
+                    }}
+                </PDFDownloadLink>
+            </>
         );
     }
 

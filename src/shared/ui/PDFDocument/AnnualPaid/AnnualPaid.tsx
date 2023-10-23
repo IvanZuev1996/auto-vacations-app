@@ -23,8 +23,7 @@ export const AnnualPaid = ({
             <View style={styles.rightSection}>
                 <View style={styles.leftSection}>
                     <Text style={styles.line}>Руководителю</Text>
-                    <Text style={styles.line}>ООО НПО "ВМИ.Сервис"</Text>
-                    <Text style={styles.line}>А.В. Макееву</Text>
+                    <Text style={styles.line}>______________________</Text>
                     <Text style={[styles.date, styles.fromPlace]}>
                         от {name}
                     </Text>
