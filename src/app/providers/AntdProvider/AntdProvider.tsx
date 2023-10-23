@@ -32,6 +32,9 @@ export const AntdProvider = ({ children }: AntdProviderProps) => (
                 Skeleton: {
                     controlHeight: 50,
                     padding: 0
+                },
+                Drawer: {
+                    paddingLG: 30
                 }
             }
         }}

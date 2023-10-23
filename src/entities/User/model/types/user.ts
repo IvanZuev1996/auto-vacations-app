@@ -29,7 +29,7 @@ export interface User {
     auth: AuthData;
     daysOnVacations?: number; // кол-во дней проведенных в отпуске
     visibleUsers?: string[]; // доступные для просмотра пользователи
-    vacationStatus?: UserStatus; // статус 'в отпуске' или 'работает'
+    nowInVacation?: boolean; // статус 'в отпуске' или 'работает'
     createdAt?: Date;
     updatedAt?: Date;
 }

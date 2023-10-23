@@ -1,19 +1,25 @@
 import { UserRole } from '@/entities/User';
+import { ApplicationPage } from '@/pages/ApplicationsPage';
 import { DivisionsPage } from '@/pages/DivisionsPage';
 import { EmployeeListPage } from '@/pages/EmployeeListPage';
+import { HelpPage } from '@/pages/HelpPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ProfilePage } from '@/pages/ProfilePage';
+import { StatisticsPage } from '@/pages/StatisticsPage';
 import { UserDetailsPage } from '@/pages/UserDetailsPage';
 import { VacationDetailsPage } from '@/pages/VacationDetailsPage';
 import { VacationsPage } from '@/pages/VacationsPage';
 import {
     AppRoutes,
+    getRouteApplications,
     getRouteDivisions,
     getRouteEmployeeList,
+    getRouteHelp,
     getRouteMain,
     getRouteNotFound,
     getRouteOtherVacations,
     getRouteProfile,
+    getRouteStatistics,
     getRouteUserDetails,
     getRouteVacationDetails,
     getRouteVacations
@@ -55,6 +61,19 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
         path: getRouteUserDetails(':id'),
         element: <UserDetailsPage />,
         roles: [UserRole.ADMIN]
+    },
+    [AppRoutes.APPLICATIONS]: {
+        path: getRouteApplications(':id'),
+        element: <ApplicationPage />,
+        roles: [UserRole.USER]
+    },
+    [AppRoutes.STATISTICS]: {
+        path: getRouteStatistics(),
+        element: <StatisticsPage />
+    },
+    [AppRoutes.HELP]: {
+        path: getRouteHelp(),
+        element: <HelpPage />
     },
     // last route
     [AppRoutes.NOT_FOUND]: {

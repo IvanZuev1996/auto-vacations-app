@@ -6,6 +6,11 @@ declare module '*.scss' {
     export = classNames;
 }
 
+declare module '*.woff';
+declare module '*.woff2';
+declare module '*.ttf';
+declare module '*.pdf';
+
 declare module '*.png' {
     const content: any;
     export default content;

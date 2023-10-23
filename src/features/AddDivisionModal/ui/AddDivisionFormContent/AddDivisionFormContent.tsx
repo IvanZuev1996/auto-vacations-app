@@ -1,5 +1,5 @@
 import { Button, Input, Result, Spin } from 'antd';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { classNames } from '@/shared/lib/helpers/classNames';
@@ -33,8 +33,12 @@ export const AddDivisionFormContent = (props: AddDivisionFormContentProps) => {
         onChangeNumber,
         onSuccess
     } = props;
-
+    const [isApprove, setIsApprove] = useState<boolean>(false);
     const data = useSelector(getAddDivisionModalData);
+
+    useEffect(() => {
+        setIsApprove(Boolean(data && data.divisionNumber && data.name));
+    }, [data, data?.divisionNumber, data?.name]);
 
     if (isSuccess) {
         return (
@@ -106,7 +110,12 @@ export const AddDivisionFormContent = (props: AddDivisionFormContentProps) => {
                 <Button size="large" type="text" onClick={onCancel}>
                     Отменить
                 </Button>
-                <Button size="large" type="primary" onClick={onSuccess}>
+                <Button
+                    size="large"
+                    type="primary"
+                    onClick={onSuccess}
+                    disabled={!isApprove}
+                >
                     Добавить подразделение
                 </Button>
             </HStack>

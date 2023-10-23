@@ -12,10 +12,13 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { getUserAuthData } from '@/entities/User';
 import {
+    getRouteApplications,
     getRouteDivisions,
     getRouteEmployeeList,
     getRouteMain,
+    getRouteOtherVacations,
     getRouteProfile,
+    getRouteStatistics,
     getRouteVacations
 } from '@/shared/consts/router';
 
@@ -36,7 +39,7 @@ export const getSidebarLinks = createSelector(getUserAuthData, (authData) => {
         },
         {
             title: 'Иные отпуска',
-            path: '/other-vacations',
+            path: getRouteOtherVacations(),
             icon: InsertRowAboveOutlined,
             adminOnly: true
         },
@@ -48,7 +51,7 @@ export const getSidebarLinks = createSelector(getUserAuthData, (authData) => {
         },
         {
             title: 'Заявки',
-            path: '/applications',
+            path: getRouteApplications(authData?._id || ''),
             icon: CommentOutlined,
             userOnly: true
         },
@@ -65,7 +68,7 @@ export const getSidebarLinks = createSelector(getUserAuthData, (authData) => {
         },
         {
             title: 'Статистика',
-            path: '/statistics',
+            path: getRouteStatistics(),
             icon: LineChartOutlined
         }
     ];

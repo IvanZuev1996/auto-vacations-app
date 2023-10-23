@@ -1,11 +1,13 @@
 import { FilterOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Drawer, Tabs } from 'antd';
+import { Button, Card, DatePicker, Drawer, Radio, Slider, Tabs } from 'antd';
+import { SliderMarks } from 'antd/es/slider';
 import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { HStack } from '@/shared/ui/Stack';
+import { HStack, VStack } from '@/shared/ui/Stack';
+import { Text } from '@/shared/ui/Text';
 import { TableView } from '@/widgets/Table';
 
 import {
@@ -35,6 +37,21 @@ const items: ViewItem[] = [
         value: 'month'
     }
 ];
+
+const marks: SliderMarks = {
+    1: 'Янв',
+    2: 'Фев',
+    3: 'Мар',
+    4: 'Апр',
+    5: 'Май',
+    6: 'Июн',
+    7: 'Июл',
+    8: 'Авг',
+    9: 'Сен',
+    10: 'Окт',
+    11: 'Ноя',
+    12: 'Дек'
+};
 
 export const VacationsPageFilters = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -92,8 +109,43 @@ export const VacationsPageFilters = () => {
                 placement="right"
                 open={isDrawerOpen}
                 onClose={onCloseDrawer}
+                size="large"
             >
-                Фильтры
+                <VStack gap="32" max>
+                    <Button className={cls.onlyMyBtn}>
+                        Показать только мои отпуска
+                    </Button>
+                    <VStack gap="16" max>
+                        <Text className={cls.filterText}>
+                            По статусу заявки
+                        </Text>
+                        <Radio.Group
+                            size="large"
+                            className={cls.radioGroup}
+                            value={1}
+                        >
+                            <Radio className={cls.radio} value={1}>
+                                Только согласованные
+                            </Radio>
+                            <Radio className={cls.radio} value={2}>
+                                Только не согласованые
+                            </Radio>
+                        </Radio.Group>
+                    </VStack>
+                    <VStack gap="16" max>
+                        <Text className={cls.filterText}>
+                            По дате (выбете нужный промежуток)
+                        </Text>
+                        <Slider
+                            className={cls.slider}
+                            range={{ draggableTrack: true }}
+                            marks={marks}
+                            defaultValue={[10, 12]}
+                            min={1}
+                            max={12}
+                        />
+                    </VStack>
+                </VStack>
             </Drawer>
             <HStack align="center" justify="between">
                 <Tabs

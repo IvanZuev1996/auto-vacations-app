@@ -1,6 +1,6 @@
 import { Button, DatePicker, Input, Result, Select, Spin } from 'antd';
 import dayjs from 'dayjs';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { DivisionSelect, useDivisions } from '@/entities/Division';
 import { classNames } from '@/shared/lib/helpers/classNames';
@@ -50,9 +50,21 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
         onChangeStartWork
     } = props;
     const { data: divisions } = useDivisions();
+    const [isApprove, setIsApprove] = useState<boolean>(false);
     const choosenDivison = divisions?.find(
         (item) => item._id === data?.division
     );
+
+    useEffect(() => {
+        const isComplete =
+            data &&
+            data.firstname &&
+            data.lastname &&
+            data.division &&
+            data.post;
+
+        setIsApprove(Boolean(isComplete));
+    }, [data]);
 
     if (isSuccess) {
         return (
@@ -265,7 +277,12 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                 <Button size="large" type="text" onClick={onCancel}>
                     Отменить
                 </Button>
-                <Button size="large" type="primary" onClick={onSuccess}>
+                <Button
+                    size="large"
+                    type="primary"
+                    onClick={onSuccess}
+                    disabled={!isApprove}
+                >
                     Добавить сотрудника
                 </Button>
             </HStack>

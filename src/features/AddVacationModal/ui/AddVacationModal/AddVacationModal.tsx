@@ -2,6 +2,7 @@ import { Modal, Spin } from 'antd';
 import { Suspense, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
+import { fetchUserData, getUserAuthData } from '@/entities/User';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { HStack } from '@/shared/ui/Stack';
 
@@ -17,11 +18,13 @@ interface AddVacationModalProps {
 export const AddVacationModal = (props: AddVacationModalProps) => {
     const { isOpen, onCloseModal } = props;
     const dispatch = useAppDispatch();
+    const authData = useSelector(getUserAuthData);
     const vacationData = useSelector(getAddVacationModalData);
 
-    const onAddVacations = useCallback(() => {
-        dispatch(addVacation(vacationData));
-    }, [dispatch, vacationData]);
+    const onAddVacations = useCallback(async () => {
+        await dispatch(addVacation(vacationData));
+        await dispatch(fetchUserData(authData?._id || ''));
+    }, [authData?._id, dispatch, vacationData]);
 
     return (
         <Modal

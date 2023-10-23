@@ -24,12 +24,15 @@
 
 .title {
     opacity: 0.6;
+    width: fit-content;
+    transition: all 0.1s ease-out;
 }
 
 .active {
     background-color: rgb(0 112 255 / 6%);
     pointer-events: none;
     cursor: default;
+    color: var(--secondary-color);
 
     .activeBlink {
         display: block;
@@ -55,6 +58,15 @@
 
 .collapsed {
     margin: 0;
+    justify-content: center;
+
+    .icon {
+        margin: 0;
+    }
+
+    .activeBlink {
+        display: none;
+    }
 
     .title {
         display: none;

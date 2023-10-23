@@ -1,44 +1,101 @@
 import { StyleSheet, Font, PDFDownloadLink } from '@react-pdf/renderer';
 
+import timesNewRomanBold from '../../fonts/TimesNewRomanBold.ttf';
+import timesNewRoman from '../../fonts/timesnewromanpsmt.ttf';
+
 import { AnnualPaid } from './AnnualPaid/AnnualPaid';
 
 Font.register({
-    family: 'Roboto',
-    src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf'
+    family: 'Times New Roman',
+    fonts: [
+        { src: timesNewRoman },
+        { src: timesNewRomanBold, fontWeight: 'bold' }
+    ]
 });
 
 export const documentStyles = StyleSheet.create({
     page: {
-        flexDirection: 'row',
-        backgroundColor: '#ffffff'
+        fontFamily: 'Times New Roman',
+        flexDirection: 'column',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        paddingTop: 50,
+        paddingBottom: '35%',
+        paddingLeft: 70,
+        paddingRight: 70
     },
     section: {
-        margin: 10,
-        padding: 10,
-        flexGrow: 1
+        width: '100%',
+        paddingBottom: 40
     },
-    header: {
-        fontFamily: 'Roboto',
-        fontSize: 24,
-        marginBottom: 10
+    centeredSection: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingBottom: 25,
+        width: '100%'
+    },
+    rightSection: {
+        width: '100%',
+        textAlign: 'right',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
+    },
+    leftSection: {
+        textAlign: 'left'
     },
     text: {
-        fontFamily: 'Roboto',
-        fontSize: 16
+        fontSize: 14,
+        textAlign: 'justify',
+        width: '100%'
+    },
+    fromPlace: {
+        marginTop: 20
+    },
+    header: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
+    date: {
+        fontSize: 13,
+        marginTop: 30
+    },
+    line: {
+        fontSize: 13,
+        height: 20
     }
 });
 
 interface PDFDocumentProps {
     isOpen?: boolean;
     onOpen: (newState: boolean) => void;
+    date: string;
+    name: string;
+    currentDate: string;
+    daysCount: number;
 }
 
 export const PDFDocument = (props: PDFDocumentProps) => {
-    const { isOpen, onOpen } = props;
+    const { isOpen, onOpen, currentDate, date, daysCount, name } = props;
 
     if (isOpen) {
         return (
-            <PDFDownloadLink document={<AnnualPaid />} fileName="somename.pdf">
+            <PDFDownloadLink
+                document={
+                    <AnnualPaid
+                        date={date}
+                        name={name}
+                        currentDate={currentDate}
+                        daysCount={daysCount}
+                    />
+                }
+                fileName="Заявление на отпуск.pdf"
+            >
                 {({ blob, url, loading, error }) => {
                     let link;
 

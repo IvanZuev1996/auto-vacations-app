@@ -1,5 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons';
-import { Button, Table } from 'antd';
+import { Button, Table, Tag } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useSelector } from 'react-redux';
 
@@ -49,6 +49,20 @@ export const UserList = (props: UserListProps) => {
                 title="Текущий баланс (дней)"
                 dataIndex="balance"
                 key="balance"
+            />
+            <Column
+                title="Статус"
+                dataIndex="nowInVacation"
+                key="nowInVacation"
+                render={(nowInVacation) =>
+                    nowInVacation ? (
+                        <Tag color="success" style={{ fontSize: '12px' }}>
+                            В отпуске
+                        </Tag>
+                    ) : (
+                        <Tag style={{ fontSize: '12px' }}>Работает</Tag>
+                    )
+                }
             />
             <Column
                 dataIndex="_id"

@@ -1,5 +1,7 @@
 import { QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons';
 
+import { getRouteHelp } from '@/shared/consts/router';
+
 import { SidebarItemType } from '../types/sidebar';
 
 export const settingsLinks: SidebarItemType[] = [
@@ -9,8 +11,8 @@ export const settingsLinks: SidebarItemType[] = [
         icon: SettingOutlined
     },
     {
-        title: 'Справочный центр',
-        path: '/info',
+        title: 'Справка',
+        path: getRouteHelp(),
         icon: QuestionCircleOutlined
     }
 ];

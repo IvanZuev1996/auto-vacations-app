@@ -85,11 +85,13 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
                         <AppLink
                             to={getRouteVacationDetails(item._id)}
                             style={{ zIndex: 40000 }}
+                            className={classNames(cls.active, mods)}
                         >
                             <HStack
                                 align="center"
                                 justify="start"
-                                className={classNames(cls.active, mods)}
+                                max
+                                style={{ height: '100%' }}
                             >
                                 <Text className={cls.daysCount}>
                                     {getCurrentEnging(endDay - startDay + 1)}

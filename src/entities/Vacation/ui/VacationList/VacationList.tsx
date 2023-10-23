@@ -1,9 +1,17 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Modal, Spin, Table } from 'antd';
 import Column from 'antd/es/table/Column';
+import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { fetchUserData, getUserAuthData } from '@/entities/User';
 import { getRouteVacationDetails } from '@/shared/consts/router';
+import { formatCurrentDate } from '@/shared/lib/helpers/applications/formatCurrentDate';
+import { formatName } from '@/shared/lib/helpers/applications/formatName';
+import { formatStartDate } from '@/shared/lib/helpers/applications/formatStartDate';
+import { getDatesDiff } from '@/shared/lib/helpers/dates';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { AppLink } from '@/shared/ui/AppLink';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { PDFDocument } from '@/shared/ui/PDFDocument/PDFDocument';
@@ -26,18 +34,20 @@ interface UserListProps {
 
 export const VacationList = (props: UserListProps) => {
     const { vacations, error, isLoading, onEditVacation, isOwner } = props;
-    const [
-        fetchDeleteVacation,
-        { isSuccess, isLoading: isDeleteVacationLoading }
-    ] = useDeleteVacation();
+    const dispatch = useAppDispatch();
+    const authData = useSelector(getUserAuthData);
     const [isPDFOpen, setIsPDFOpen] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deletedVacaionId, setDeletedVacaionId] = useState<
         string | undefined
     >(undefined);
+    const [openedVacation, setOpenedVacation] = useState<Vacation>();
+    const [fetchDeleteVacation, { isLoading: isDeleteLoading }] =
+        useDeleteVacation();
 
     const data: DataType[] = [];
     const deleteDropdownItems: DropdownItem[] = [];
+    const openPDFDropdownItems: DropdownItem[] = [];
     let dropdownItems: DropdownItem[] = [];
 
     vacations?.forEach((vacation) => {
@@ -58,6 +68,7 @@ export const VacationList = (props: UserListProps) => {
     const deleteVacation = async () => {
         if (deletedVacaionId) {
             await fetchDeleteVacation({ vacationId: deletedVacaionId });
+            await dispatch(fetchUserData(authData?._id || ''));
             onCloseModal();
             setDeletedVacaionId(undefined);
             onEditVacation?.();
@@ -87,7 +98,14 @@ export const VacationList = (props: UserListProps) => {
 
         if (status === 'agreed') {
             dropdownItems.push({
-                key: '2',
+                key: `${id}print`,
+                label: 'Распечатать заявление',
+                value: 'print',
+                vacationid: id
+            });
+
+            openPDFDropdownItems.push({
+                key: `${id}print`,
                 label: 'Распечатать заявление',
                 value: 'print',
                 vacationid: id
@@ -119,10 +137,15 @@ export const VacationList = (props: UserListProps) => {
 
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (
-            dropdownItems.find(
+            openPDFDropdownItems.find(
                 (item) => item?.key === e.key && item.value === 'print'
             )
         ) {
+            const currentVacation = vacations?.find(
+                (vacation) => vacation._id === e.key.replace('print', '')
+            );
+            setOpenedVacation(currentVacation);
+
             return openPDF();
         }
 
@@ -149,7 +172,21 @@ export const VacationList = (props: UserListProps) => {
 
     return (
         <>
-            <PDFDocument isOpen={isPDFOpen} onOpen={setIsPDFOpen} />
+            <PDFDocument
+                isOpen={isPDFOpen}
+                onOpen={setIsPDFOpen}
+                name={formatName(
+                    authData?.firstname,
+                    authData?.lastname,
+                    authData?.patronymic
+                )}
+                currentDate={formatCurrentDate(dayjs())}
+                date={formatStartDate(openedVacation?.start)}
+                daysCount={getDatesDiff(
+                    openedVacation?.start,
+                    openedVacation?.end
+                )}
+            />
             <Modal
                 open={isModalOpen}
                 onCancel={onCloseModal}
@@ -158,7 +195,7 @@ export const VacationList = (props: UserListProps) => {
                 cancelText="Нет, вернуться"
                 centered
             >
-                <Spin spinning={isDeleteVacationLoading}>
+                <Spin spinning={isDeleteLoading}>
                     <Text size="M">
                         Вы уверены, что хотите отменить заявку?
                     </Text>
@@ -167,7 +204,7 @@ export const VacationList = (props: UserListProps) => {
             <Table
                 pagination={false}
                 dataSource={data}
-                style={{ width: '100%', minHeight: '300px', marginTop: '20px' }}
+                style={{ width: '100%', marginTop: '20px' }}
                 loading={isLoading}
             >
                 <Column

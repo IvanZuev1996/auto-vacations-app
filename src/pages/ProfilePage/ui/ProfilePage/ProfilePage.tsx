@@ -3,7 +3,11 @@ import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useDivisionById } from '@/entities/Division';
-import { getUserAuthData, useUserVacations } from '@/entities/User';
+import {
+    getIsUserAdmin,
+    getUserAuthData,
+    useUserVacations
+} from '@/entities/User';
 import { VacationList } from '@/entities/Vacation';
 import { EditableEmailInput } from '@/features/editableEmailInput';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates';
@@ -17,8 +21,9 @@ import cls from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
     const authData = useSelector(getUserAuthData);
-    const divisionId = authData?.division || '';
-    const userId = authData?._id || 'all';
+    const isAdmin = useSelector(getIsUserAdmin);
+    const divisionId = authData?.division || 'all';
+    const userId = authData?._id || '';
     const { data: divisionData, isLoading: isDivisionLoading } =
         useDivisionById({
             id: divisionId
@@ -115,13 +120,15 @@ const ProfilePage = () => {
                         />
                     </HStack>
                 </Card>
-                <Text size="L" weight="bold_weight">
-                    Ваши заявки
-                </Text>
+                <HStack align="center" gap="16">
+                    <Text size="L" weight="bold_weight">
+                        Ваши заявки
+                    </Text>
+                </HStack>
             </VStack>
             <VacationList
                 onEditVacation={onEditVacation}
-                vacations={data}
+                vacations={isAdmin ? data : data?.slice(0, 3)}
                 isLoading={isLoading || isFetching}
                 error={String(error)}
                 isOwner

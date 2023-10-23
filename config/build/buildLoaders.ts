@@ -17,8 +17,13 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
 
     const cssLoader = buildCssLoader(isDev);
 
+    const fontsLoader = {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource'
+    };
+
     const fileLoader = {
-        test: /\.(png|jpe?g|gif|woff2|woff)$/i,
+        test: /\.(png|jpe?g|gif|woff2|woff|pdf)$/i,
         use: [
             {
                 loader: 'file-loader'
@@ -29,6 +34,7 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
     return [
         svgLoader,
         fileLoader,
+        fontsLoader,
         codeBabelLoader,
         tsxCodeBabelLoader,
         cssLoader
