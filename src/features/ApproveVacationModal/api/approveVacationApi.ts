@@ -28,5 +28,6 @@ const approveVacationApi = rtkApi.injectEndpoints({
     })
 });
 
-export const useVacation = approveVacationApi.useLazyGetVacationQuery;
+export const useVacation = approveVacationApi.useGetVacationQuery;
+export const useLazyVacation = approveVacationApi.useLazyGetVacationQuery;
 export const useApproveVacation = approveVacationApi.useApproveVacationMutation;

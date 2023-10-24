@@ -4,7 +4,7 @@ import { User } from '@/entities/User';
 import { Vacation } from '@/entities/Vacation';
 import { getRouteVacationDetails } from '@/shared/consts/router';
 import { classNames, Mods } from '@/shared/lib/helpers/classNames';
-import { getDaysByMonth } from '@/shared/lib/helpers/dates';
+import { getDaysByMonth, getShortsDates } from '@/shared/lib/helpers/dates';
 import { getShortName } from '@/shared/lib/helpers/names';
 import { AppLink } from '@/shared/ui/AppLink';
 import { HStack, VStack } from '@/shared/ui/Stack';
@@ -37,9 +37,7 @@ export const TableVacationYear = (props: TableVacationMonthProps) => {
                     patronymic: user?.patronymic
                 })}
             </Text>
-            <Text>{`с ${new Date(item.start).getDate()} по ${new Date(
-                item.end
-            ).getDate()} число`}</Text>
+            <Text>{getShortsDates(item.start, item.end)}</Text>
             <AppLink to={getRouteVacationDetails(item._id)}>
                 <Button type="link">Подробнее о заявке</Button>
             </AppLink>

@@ -10,6 +10,7 @@ import {
 } from '@/entities/User';
 import { VacationList } from '@/entities/Vacation';
 import { EditableEmailInput } from '@/features/editableEmailInput';
+import { formatStartDate } from '@/shared/lib/helpers/applications/formatStartDate';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates';
 import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
@@ -109,9 +110,11 @@ const ProfilePage = () => {
                                 {authData?.post}
                             </Descriptions.Item>
                             <Descriptions.Item label="Дата начала работы">
-                                {getNormalizedDate(
-                                    new Date(authData?.startWork || '')
-                                )}
+                                {`${formatStartDate(
+                                    getNormalizedDate(
+                                        new Date(authData?.startWork || '')
+                                    )
+                                )}`}
                             </Descriptions.Item>
                         </Descriptions>
                         <EditableEmailInput

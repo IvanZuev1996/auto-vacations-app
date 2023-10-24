@@ -13,6 +13,7 @@ import { AddDivsionModalSchema } from '@/features/AddDivisionModal';
 import { AddEmployeeModalSchema } from '@/features/AddEmployeeModal';
 import { AddVacationModalSchema } from '@/features/AddVacationModal';
 import { LoginSchema } from '@/features/AuthByUsername';
+import { EditVacationModalSchema } from '@/features/EditVacationModal';
 import { EmployeeListPageSchema } from '@/pages/EmployeeListPage';
 import { VacationsPageSchema } from '@/pages/VacationsPage';
 import { rtkApi } from '@/shared/api/rtkApi';
@@ -31,6 +32,7 @@ export interface StateSchema {
     employeeListPage?: EmployeeListPageSchema;
     addVacationModal?: AddVacationModalSchema;
     addDivisionModal?: AddDivsionModalSchema;
+    editVacationModal?: EditVacationModalSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -3,7 +3,7 @@ import { User } from '@/entities/User';
 
 export type VacationStatus = 'pending' | 'rejected' | 'agreed';
 
-export type VacationType = 'standart';
+export type VacationType = 'standart' | 'donor';
 
 export interface Vacation {
     _id: string; // id заявки

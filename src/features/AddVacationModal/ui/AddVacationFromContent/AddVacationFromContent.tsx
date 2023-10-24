@@ -1,9 +1,10 @@
 import { Alert, Button, Result, Spin } from 'antd';
-import { useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { User } from '@/entities/User';
 import { classNames } from '@/shared/lib/helpers/classNames';
+import { getCurrentEnging } from '@/shared/lib/helpers/dates';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -45,13 +46,39 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
         isLoading,
         onSuccess
     } = props;
-    const [vacationCount, setVacationCount] = useState<number>(1);
     const endDate = useSelector(getAddVacationModalEndDate);
     const startDate = useSelector(getAddVacationModalStartDate);
+    const [isApproveVacation, setIsApproveVacation] = useState<boolean>(true);
+    const [isEnoughBalance, setIsEnoughBalance] = useState<boolean>(true);
 
-    const onRemoveInputs = useCallback(() => {
-        setVacationCount((prev) => prev - 1);
-    }, []);
+    useEffect(() => {
+        if (!userData) {
+            return;
+        }
+
+        const maxVacationDuration = userData.vacationsDuration?.reduce(
+            (max, item) => (item > max ? item : max),
+            0
+        );
+
+        if (
+            maxVacationDuration &&
+            maxVacationDuration < 14 &&
+            userData.balance - Number(daysCount) < 14 &&
+            daysCount &&
+            Number(daysCount) < 14
+        ) {
+            setIsApproveVacation(false);
+        } else {
+            setIsApproveVacation(true);
+        }
+
+        if (userData.balance - Number(daysCount) < 0) {
+            setIsEnoughBalance(false);
+        } else {
+            setIsEnoughBalance(true);
+        }
+    }, [daysCount, userData, userData?.vacationsDuration]);
 
     if (isSuccess) {
         return <Result status="success" title="Заявка отправлена!" />;
@@ -96,7 +123,9 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                     <VStack gap="4">
                         <HStack gap="16" align="center" max>
                             <Text>Остаток с 2022г:</Text>
-                            <Text>{userData?.prevBalance || 0} дней</Text>
+                            <Text>
+                                {getCurrentEnging(userData?.prevBalance || 0)}
+                            </Text>
                         </HStack>
 
                         <HStack gap="16" align="center" max>
@@ -106,12 +135,16 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
 
                         <HStack gap="16" align="center" max>
                             <Text>Израсходовано:</Text>
-                            <Text>0 дней</Text>
+                            <Text>
+                                {getCurrentEnging(
+                                    userData?.spentVacationDays || 0
+                                )}
+                            </Text>
                         </HStack>
                     </VStack>
                     <HStack gap="16" align="center" max>
                         <Text weight="bold_weight">Итоговый баланс:</Text>
-                        <Text>28 дней</Text>
+                        <Text>{getCurrentEnging(userData?.balance || 0)}</Text>
                     </HStack>
                 </VStack>
                 <VStack gap="4" max>
@@ -126,28 +159,33 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                 </VStack>
             </HStack>
             <VStack gap="16" className={cls.inputWrap} max>
-                {Array(vacationCount)
-                    .fill(null)
-                    .map((_, index) => (
-                        <AddVacationInputs
-                            daysCount={daysCount}
-                            onChangeDates={onChangeDates}
-                            onChangeType={onChangeType}
-                            onRemoveInputs={onRemoveInputs}
-                            index={index}
-                        />
-                    ))}
+                <AddVacationInputs
+                    daysCount={daysCount}
+                    onChangeDates={onChangeDates}
+                    onChangeType={onChangeType}
+                />
+                {!isApproveVacation && (
+                    <Alert
+                        message="Обратите внимание, соласно ТК РФ Вам необходимо выбрать хотябы один отпуск длительностью не менее 14 календарных дней"
+                        type="error"
+                        showIcon
+                        style={{ width: '100%' }}
+                    />
+                )}
+                {!isEnoughBalance && (
+                    <Alert
+                        message="У вас недостаточно отпускных дней"
+                        type="error"
+                        showIcon
+                        style={{ width: '100%' }}
+                    />
+                )}
                 <Alert
                     message={`Кол-во выходных дней в отпуске: ${weekendCount}`}
                     type="warning"
                     showIcon
                     style={{ width: '100%' }}
                 />
-                {/* <HStack justify="end" align="end" max>
-                    <Button type="link" onClick={onAddInputs}>
-                        + Добавить еще один отпуск
-                    </Button>
-                </HStack> */}
             </VStack>
             <Line />
             <HStack gap="32" justify="start" align="start" max>
@@ -200,7 +238,7 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                 <Button
                     type="primary"
                     onClick={onSuccess}
-                    disabled={!isApprove}
+                    disabled={!isApprove || !isApproveVacation}
                 >
                     + Запланировать отпуск
                 </Button>

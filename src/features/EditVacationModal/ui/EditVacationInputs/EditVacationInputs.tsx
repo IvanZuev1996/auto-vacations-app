@@ -1,3 +1,4 @@
+/* eslint-disable babun4ek-fsd-plugin/layer-imports-checker */
 import { Select, DatePicker, Input, Skeleton } from 'antd';
 import { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
@@ -6,19 +7,22 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { getUserAuthData, useUserVacations } from '@/entities/User';
 import { Vacation } from '@/entities/Vacation';
+import { useVacation } from '@/features/ApproveVacationModal';
 import { vacationTypeOptions } from '@/shared/consts/vacationTypeOptions';
+import { getDatesDiff } from '@/shared/lib/helpers/dates';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 
 import {
-    getAddVacationModalEndDate,
-    getAddVacationModalStartDate
-} from '../../model/selectors/addVacationModal';
+    getEditVacationModalEndDate,
+    getEditVacationModalStartDate
+} from '../../model/selectors/editVacationModal';
 
-import cls from './AddVacationInputs.module.scss';
+import cls from './EditVacationInputs.module.scss';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -26,18 +30,24 @@ dayjs.extend(isBetween);
 
 const { RangePicker } = DatePicker;
 
-interface AddVacationInputsProps {
-    onChangeType?: (value: string) => void;
-    onChangeDates?: (dayjsDates: any, dates: [string, string]) => void;
+interface EditVacationInputsProps {
     daysCount?: string;
+    onChangeDates?: (dayjsDates: any, dates: [string, string]) => void;
 }
 
-export const AddVacationInputs = (props: AddVacationInputsProps) => {
-    const { daysCount, onChangeDates, onChangeType } = props;
+export const EditVacationInputs = (props: EditVacationInputsProps) => {
+    const { onChangeDates, daysCount } = props;
+    const { id = '' } = useParams<{ id: string }>();
     const [fetchUserVacations, { data, isLoading }] = useUserVacations();
     const authData = useSelector(getUserAuthData);
-    const endDate = useSelector(getAddVacationModalEndDate);
-    const startDate = useSelector(getAddVacationModalStartDate);
+    const { data: vacationData } = useVacation({ id });
+    const startDate = useSelector(getEditVacationModalStartDate);
+    const endDate = useSelector(getEditVacationModalEndDate);
+
+    const defaultStartDate = vacationData?.start;
+    const defaultEndDate = vacationData?.end;
+
+    const defaultDaysCount = getDatesDiff(defaultStartDate, defaultEndDate);
 
     const onChooseStartDate = (dates: any, stringDates: [string, string]) => {
         if (!startDate) {
@@ -116,7 +126,11 @@ export const AddVacationInputs = (props: AddVacationInputsProps) => {
     };
 
     if (isLoading) {
-        return <Skeleton.Input active style={{ width: '100%' }} />;
+        return (
+            <HStack max>
+                <Skeleton.Input active className={cls.skeleton} block />
+            </HStack>
+        );
     }
 
     return (
@@ -127,16 +141,20 @@ export const AddVacationInputs = (props: AddVacationInputsProps) => {
                     defaultValue="1"
                     options={vacationTypeOptions}
                     size="middle"
-                    onChange={onChangeType}
                     className={cls.select}
+                    disabled
                 />
             </VStack>
             <VStack gap="4" max className={cls.dateInputItem}>
                 <Text>Даты</Text>
                 <RangePicker
-                    value={
-                        startDate
-                            ? [dayjs(startDate), dayjs(endDate)]
+                    value={[
+                        dayjs(startDate || defaultStartDate),
+                        dayjs(endDate || defaultEndDate)
+                    ]}
+                    defaultValue={
+                        defaultStartDate
+                            ? [dayjs(defaultStartDate), dayjs(defaultEndDate)]
                             : undefined
                     }
                     disabledDate={disabledDate}
@@ -148,7 +166,10 @@ export const AddVacationInputs = (props: AddVacationInputsProps) => {
 
             <VStack gap="4" max className={cls.daysCountInputItem}>
                 <Text>Кол-во дней</Text>
-                <Input className={cls.input} value={daysCount} />
+                <Input
+                    className={cls.input}
+                    value={daysCount || defaultDaysCount}
+                />
             </VStack>
         </HStack>
     );

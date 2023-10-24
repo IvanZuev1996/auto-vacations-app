@@ -19,9 +19,14 @@ import { HStack } from '@/shared/ui/Stack';
 import { TagElement } from '@/shared/ui/TagElement/TagElement';
 import { Text } from '@/shared/ui/Text';
 
+import { vacationTypeMap } from '../../model/consts/vacationConsts';
 import { DropdownItem } from '../../model/types/actionsDropdown';
 import { DataType } from '../../model/types/tableVacation';
-import { Vacation, VacationStatus } from '../../model/types/vacation';
+import {
+    Vacation,
+    VacationStatus,
+    VacationType
+} from '../../model/types/vacation';
 import { useDeleteVacation } from '../api/vacationsListApi';
 
 interface UserListProps {
@@ -211,15 +216,30 @@ export const VacationList = (props: UserListProps) => {
                     title="Дата начала отпуска"
                     dataIndex="start"
                     key="start"
-                    render={(date: string) => date.slice(0, 10)}
+                    render={(date: string) => (
+                        <HStack align="center" gap="8">
+                            <Text>{formatStartDate(date.slice(0, 10))}</Text>
+                            <Text size="S">({date.slice(0, 10)})</Text>
+                        </HStack>
+                    )}
                 />
                 <Column
                     title="Дата конца отпуска"
                     dataIndex="end"
                     key="end"
-                    render={(date: string) => date.slice(0, 10)}
+                    render={(date: string) => (
+                        <HStack align="center" gap="8">
+                            <Text>{formatStartDate(date.slice(0, 10))}</Text>
+                            <Text size="S">({date.slice(0, 10)})</Text>
+                        </HStack>
+                    )}
                 />
-                <Column title="Тип отпуска" dataIndex="type" key="type" />
+                <Column
+                    title="Тип отпуска"
+                    dataIndex="type"
+                    key="type"
+                    render={(type: VacationType) => vacationTypeMap[type]}
+                />
                 <Column
                     title="Статус заявки"
                     dataIndex="status"

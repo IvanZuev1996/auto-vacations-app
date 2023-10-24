@@ -6,3 +6,4 @@ export type {
     SortByDivisionVacation
 } from './model/types/vacation';
 export { VacationList } from './ui/VacationList/VacationList';
+export { vacationTypeMap } from './model/consts/vacationConsts';

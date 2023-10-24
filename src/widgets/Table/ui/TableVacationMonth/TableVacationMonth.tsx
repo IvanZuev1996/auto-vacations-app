@@ -4,7 +4,11 @@ import { User } from '@/entities/User';
 import { Vacation } from '@/entities/Vacation';
 import { getRouteVacationDetails } from '@/shared/consts/router';
 import { Mods, classNames } from '@/shared/lib/helpers/classNames';
-import { getCurrentEnging, getDaysByMonth } from '@/shared/lib/helpers/dates';
+import {
+    getCurrentEnging,
+    getDaysByMonth,
+    getShortsDates
+} from '@/shared/lib/helpers/dates';
 import { getShortName } from '@/shared/lib/helpers/names';
 import { AppLink } from '@/shared/ui/AppLink';
 import { HStack, VStack } from '@/shared/ui/Stack';
@@ -39,9 +43,7 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
                         patronymic: user?.patronymic
                     })}
                 </Text>
-                <Text>{`с ${new Date(item.start).getDate()} по ${new Date(
-                    item.end
-                ).getDate()} число`}</Text>
+                <Text>{getShortsDates(item.start, item.end)}</Text>
                 <AppLink to={getRouteVacationDetails(item._id)}>
                     <Button type="link">Подробнее о заявке</Button>
                 </AppLink>
@@ -93,7 +95,10 @@ export const TableVacationMonth = (props: TableVacationYearProps) => {
                                 max
                                 style={{ height: '100%' }}
                             >
-                                <Text className={cls.daysCount}>
+                                <Text
+                                    className={cls.daysCount}
+                                    weight="bold_weight"
+                                >
                                     {getCurrentEnging(endDay - startDay + 1)}
                                 </Text>
                             </HStack>

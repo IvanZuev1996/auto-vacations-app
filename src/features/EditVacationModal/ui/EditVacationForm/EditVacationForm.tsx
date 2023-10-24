@@ -1,8 +1,10 @@
-import { useCallback, useState } from 'react';
+/* eslint-disable babun4ek-fsd-plugin/layer-imports-checker */
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import { getUserAuthData } from '@/entities/User';
-import { VacationType } from '@/entities/Vacation';
+import { useUserData } from '@/entities/User';
+import { useVacation } from '@/features/ApproveVacationModal';
 import {
     DynamicModuleLoader,
     ReducerList
@@ -11,52 +13,53 @@ import { getWeekendCount } from '@/shared/lib/helpers/dates';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 
 import {
-    getAddVacationModalError,
-    getAddVacationModalIsLoading,
-    getAddVacationModalIsSuccess,
-    getAddVacationModalVacationType
-} from '../../model/selectors/addVacationModal';
+    getEditVacationModalError,
+    getEditVacationModalInited,
+    getEditVacationModalIsLoading,
+    getEditVacationModalIsSuccess
+} from '../../model/selectors/editVacationModal';
 import {
-    addVacationModalActions,
-    addVacationModalReducer
-} from '../../model/slice/addVacationModalSlice';
-import { AddVacationFromContent } from '../AddVacationFromContent/AddVacationFromContent';
+    editVacationModalActions,
+    editVacationModalReducer
+} from '../../model/slice/editVacationModalSlice';
+import { EditVacationFromContent } from '../EditVacationFromContent/EditVacationFromContent';
 
-interface AddVacationFormProps {
+interface EditVacationFormProps {
     onCancel?: () => void;
     onSuccess?: () => void;
     className?: string;
 }
 
 const reducers: ReducerList = {
-    addVacationModal: addVacationModalReducer
+    editVacationModal: editVacationModalReducer
 };
 
-const AddVacationForm = (props: AddVacationFormProps) => {
+const EditVacationForm = (props: EditVacationFormProps) => {
     const { className, onCancel, onSuccess } = props;
+    const { id = '' } = useParams<{ id: string }>();
+    const { data: vacationData } = useVacation({ id });
     const dispatch = useAppDispatch();
     const [daysCount, setDaysCount] = useState<string>('');
     const [weekendCount, setWeekendCount] = useState<number>(0);
     const [isApprove, setIsApprove] = useState<boolean>(false);
-    const userData = useSelector(getUserAuthData);
-    const type = useSelector(getAddVacationModalVacationType);
-    const isSuccess = useSelector(getAddVacationModalIsSuccess);
-    const isLoading = useSelector(getAddVacationModalIsLoading);
-    const error = useSelector(getAddVacationModalError);
+    const { data: userData } = useUserData({
+        userId: vacationData?.user?._id || ''
+    });
+    const isSuccess = useSelector(getEditVacationModalIsSuccess);
+    const isInited = useSelector(getEditVacationModalInited);
+    const isLoading = useSelector(getEditVacationModalIsLoading);
+    const error = useSelector(getEditVacationModalError);
 
-    const onChangeType = useCallback(
-        (value: string) => {
-            dispatch(
-                addVacationModalActions.setVacationType(value as VacationType)
-            );
-        },
-        [dispatch]
-    );
+    useEffect(() => {
+        if (!isInited && vacationData) {
+            dispatch(editVacationModalActions.initVacation(vacationData));
+        }
+    }, [dispatch, isInited, vacationData]);
 
     const onChangeDates = useCallback(
         (dayjsDates: any, dates: [string, string]) => {
             if (!dates[1] && dates[0]) {
-                dispatch(addVacationModalActions.setStartDate(dates[0]));
+                dispatch(editVacationModalActions.setStartDate(dates[0]));
 
                 return;
             }
@@ -82,20 +85,19 @@ const AddVacationForm = (props: AddVacationFormProps) => {
                 getWeekendCount({ startDate: dates[0], endDate: dates[1] })
             );
 
-            dispatch(addVacationModalActions.setStartDate(dates[0]));
-            dispatch(addVacationModalActions.setEndDate(dates[1]));
+            dispatch(editVacationModalActions.setStartDate(dates[0]));
+            dispatch(editVacationModalActions.setEndDate(dates[1]));
         },
         [dispatch, userData?.balance]
     );
 
     return (
         <DynamicModuleLoader reducers={reducers}>
-            <AddVacationFromContent
+            <EditVacationFromContent
                 daysCount={daysCount}
                 isApprove={isApprove}
                 onCancel={onCancel}
                 onChangeDates={onChangeDates}
-                onChangeType={onChangeType}
                 onSuccess={onSuccess}
                 userData={userData}
                 weekendCount={weekendCount}
@@ -108,4 +110,4 @@ const AddVacationForm = (props: AddVacationFormProps) => {
     );
 };
 
-export default AddVacationForm;
+export default EditVacationForm;

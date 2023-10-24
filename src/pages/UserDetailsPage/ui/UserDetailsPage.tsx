@@ -3,8 +3,9 @@ import { useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDivisionById } from '@/entities/Division';
-import { useUserData, useUserVacations } from '@/entities/User';
+import { useLazyUserData, useUserVacations } from '@/entities/User';
 import { VacationList } from '@/entities/Vacation';
+import { formatStartDate } from '@/shared/lib/helpers/applications/formatStartDate';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates';
 import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
@@ -23,7 +24,7 @@ const UserDetailsPage = () => {
             isLoading: isUserDataLoading,
             isFetching: isUserDataFetching
         }
-    ] = useUserData();
+    ] = useLazyUserData();
     const divisionId = userData?.division || '';
     const { data: divisionData, isLoading: isDivisionLoading } =
         useDivisionById({
@@ -107,9 +108,11 @@ const UserDetailsPage = () => {
                                     {userData?.post}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Дата начала работы">
-                                    {getNormalizedDate(
-                                        new Date(userData?.startWork || '')
-                                    )}
+                                    {`${formatStartDate(
+                                        getNormalizedDate(
+                                            new Date(userData?.startWork || '')
+                                        )
+                                    )}`}
                                 </Descriptions.Item>
                             </Descriptions>
                             <VStack gap="8" max>

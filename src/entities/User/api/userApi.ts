@@ -31,4 +31,5 @@ const userApi = rtkApi.injectEndpoints({
 });
 
 export const useUserVacations = userApi.useLazyGetUserVacationsByIdQuery;
-export const useUserData = userApi.useLazyGetUserDataByIdQuery;
+export const useLazyUserData = userApi.useLazyGetUserDataByIdQuery;
+export const useUserData = userApi.useGetUserDataByIdQuery;
