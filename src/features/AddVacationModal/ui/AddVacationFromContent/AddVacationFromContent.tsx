@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { User } from '@/entities/User';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getCurrentEnging } from '@/shared/lib/helpers/dates';
+import { AppLink } from '@/shared/ui/AppLink';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -165,12 +166,18 @@ export const AddVacationFromContent = (props: AddVacationFromContentProps) => {
                     onChangeType={onChangeType}
                 />
                 {!isApproveVacation && (
-                    <Alert
-                        message="Обратите внимание, соласно ТК РФ Вам необходимо выбрать хотябы один отпуск длительностью не менее 14 календарных дней"
-                        type="error"
-                        showIcon
+                    <AppLink
                         style={{ width: '100%' }}
-                    />
+                        target="_blank"
+                        to="https://www.consultant.ru/document/cons_doc_LAW_34683/befc35b415ff7b334824418693252b451205ffc0/"
+                    >
+                        <Alert
+                            message="Обратите внимание, одна из частей отпуска должна быть не менее 14 дней (ст. 125 ТК РФ)."
+                            type="error"
+                            showIcon
+                            style={{ width: '100%' }}
+                        />
+                    </AppLink>
                 )}
                 {!isEnoughBalance && (
                     <Alert

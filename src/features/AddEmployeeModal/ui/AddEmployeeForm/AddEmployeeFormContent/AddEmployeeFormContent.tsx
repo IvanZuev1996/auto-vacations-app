@@ -1,4 +1,12 @@
-import { Button, DatePicker, Input, Result, Select, Spin } from 'antd';
+import {
+    Button,
+    Checkbox,
+    DatePicker,
+    Input,
+    Result,
+    Select,
+    Spin
+} from 'antd';
 import dayjs from 'dayjs';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -12,6 +20,8 @@ import { Text } from '@/shared/ui/Text';
 
 import { NewUserData } from '../../../model/types/AddEmployeeModalSchema';
 import cls from '../AddEmployeeForm.module.scss';
+
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 interface AddEmployeeFormContentProps {
     data?: NewUserData;
@@ -51,9 +61,14 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
     } = props;
     const { data: divisions } = useDivisions();
     const [isApprove, setIsApprove] = useState<boolean>(false);
+    const [checkboxState, setCheckboxState] = useState<boolean>(true);
     const choosenDivison = divisions?.find(
         (item) => item._id === data?.division
     );
+
+    const onChangeCheckbox = (e: CheckboxChangeEvent) => {
+        setCheckboxState(e.target.checked);
+    };
 
     useEffect(() => {
         const isComplete =
@@ -110,9 +125,9 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                 subTitle="Попробуйте снова"
                 extra={[
                     <Button type="primary" key="console">
-                        Go Console
+                        Отмена
                     </Button>,
-                    <Button key="buy">Buy Again</Button>
+                    <Button key="buy">Вернуться на главную</Button>
                 ]}
             />
         );
@@ -189,10 +204,25 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                             />
                         </VStack>
                     </HStack>
-                    <VStack justify="center" gap="8" max>
-                        <Text>Пересечения с другими сотрудниками</Text>
+                    <VStack
+                        style={{ marginTop: 15 }}
+                        justify="center"
+                        gap="8"
+                        max
+                    >
+                        <HStack align="center" max>
+                            <Text max>На кого пишется заявление на отпуск</Text>
+                            <Checkbox
+                                style={{ width: '300px' }}
+                                onChange={onChangeCheckbox}
+                                checked={checkboxState}
+                            >
+                                На меня
+                            </Checkbox>
+                        </HStack>
                         <Select
                             className={cls.selectDivision}
+                            disabled={checkboxState}
                             size="middle"
                             value={data?.intersections}
                             onChange={onChangeIntersections}
@@ -210,10 +240,9 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                                     label: 'Сотрудник 3'
                                 }
                             ]}
-                            mode="multiple"
                             allowClear
                             style={{ width: '100%' }}
-                            placeholder="Выберете сотрудников"
+                            placeholder="Выберете сотрудника"
                         />
                     </VStack>
                 </VStack>

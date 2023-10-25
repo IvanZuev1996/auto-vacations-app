@@ -48,8 +48,8 @@ const LoginForm = () => {
     const onDirectorLogin = () => {
         dispatch(
             loginByUsername({
-                password: '40QDHyytHn',
-                username: 'RO1qUJicug'
+                password: '1fbsERrKYc',
+                username: '0mspSno8fo'
             })
         );
     };

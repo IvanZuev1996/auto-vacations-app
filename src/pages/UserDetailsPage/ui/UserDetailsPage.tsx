@@ -119,6 +119,7 @@ const UserDetailsPage = () => {
                                 <Text>Почта для уведомлений</Text>
                                 <Input
                                     value={userData?.email}
+                                    disabled
                                     placeholder="Не указано"
                                 />
                             </VStack>

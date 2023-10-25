@@ -5,8 +5,7 @@ import {
     UserOutlined,
     UsergroupAddOutlined,
     CalendarOutlined,
-    HomeOutlined,
-    InsertRowAboveOutlined
+    HomeOutlined
 } from '@ant-design/icons';
 import { createSelector } from '@reduxjs/toolkit';
 
@@ -16,7 +15,6 @@ import {
     getRouteDivisions,
     getRouteEmployeeList,
     getRouteMain,
-    getRouteOtherVacations,
     getRouteProfile,
     getRouteStatistics,
     getRouteVacations
@@ -36,12 +34,6 @@ export const getSidebarLinks = createSelector(getUserAuthData, (authData) => {
             path: getRouteVacations(),
             icon: CalendarOutlined,
             adminOnly: false
-        },
-        {
-            title: 'Иные отпуска',
-            path: getRouteOtherVacations(),
-            icon: InsertRowAboveOutlined,
-            adminOnly: true
         },
         {
             title: 'Сотрудники',

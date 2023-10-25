@@ -7,6 +7,7 @@ import { User } from '@/entities/User';
 import { useVacation } from '@/features/ApproveVacationModal';
 import { classNames } from '@/shared/lib/helpers/classNames';
 import { getWeekendCount } from '@/shared/lib/helpers/dates';
+import { AppLink } from '@/shared/ui/AppLink';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
 
@@ -129,12 +130,14 @@ export const EditVacationFromContent = (
                     daysCount={daysCount}
                 />
                 {!isApproveVacation && (
-                    <Alert
-                        message="Обратите внимание, соласно ТК РФ Вам необходимо выбрать хотябы один отпуск длительностью не менее 14 календарных дней"
-                        type="error"
-                        showIcon
-                        style={{ width: '100%' }}
-                    />
+                    <AppLink to="https://www.consultant.ru/document/cons_doc_LAW_34683/befc35b415ff7b334824418693252b451205ffc0/">
+                        <Alert
+                            message="Обратите внимание, одна из частей отпуска должна быть не менее 14 дней (ст. 125 ТК РФ)."
+                            type="error"
+                            showIcon
+                            style={{ width: '100%' }}
+                        />
+                    </AppLink>
                 )}
                 {!isEnoughBalance && (
                     <Alert

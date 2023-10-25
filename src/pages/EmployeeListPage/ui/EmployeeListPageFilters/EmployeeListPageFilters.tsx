@@ -7,7 +7,7 @@ import { Button, Input, Tabs } from 'antd';
 import { ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getRouteMain } from '@/shared/consts/router';
+import { getRouteVacations } from '@/shared/consts/router';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebouce';
 import { SortType } from '@/shared/types/sort';
@@ -90,7 +90,7 @@ export const EmployeeListPageFilters = () => {
                     />
                 </HStack>
                 <HStack justify="end" align="center" gap="12" max>
-                    <AppLink to={getRouteMain()} className={cls.link}>
+                    <AppLink to={getRouteVacations()} className={cls.link}>
                         <HStack align="center" gap="8">
                             <Button type="link">
                                 Посмотреть график отпусков
