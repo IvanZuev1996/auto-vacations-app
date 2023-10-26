@@ -34,7 +34,8 @@ const MainPage = () => {
                     </Text>
                     <VStack gap="12" align="center" max>
                         <Text size="M">
-                            Ваше действие требуется для 10 заявок
+                            У вас есть заявки для которых требуется ваше
+                            действие
                         </Text>
                         <Button
                             type="primary"
@@ -57,7 +58,8 @@ const MainPage = () => {
                 </Text>
                 <VStack gap="12" align="center" max>
                     <Text size="M">
-                        У вас осталось 28 незапланированных отпускных дней.
+                        У вас осталось {authData?.balance} незапланированных
+                        отпускных дней.
                     </Text>
                     <Text size="M">Запланируйте отпуск прямо сейчас!</Text>
                     <Button
