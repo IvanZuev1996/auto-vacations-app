@@ -29,7 +29,7 @@ const MainPage = () => {
                         weight="bold_weight"
                         className={cls.mainText}
                     >
-                        Добро пожаловать, {authData?.lastname}{' '}
+                        Добро пожаловать, {authData?.firstname}{' '}
                         {authData?.patronymic} !
                     </Text>
                     <VStack gap="12" align="center" max>
@@ -52,7 +52,7 @@ const MainPage = () => {
         <Page>
             <VStack align="center" justify="center" max className={cls.content}>
                 <Text size="XL" weight="bold_weight" className={cls.mainText}>
-                    Добро пожаловать, {authData?.lastname}{' '}
+                    Добро пожаловать, {authData?.firstname}{' '}
                     {authData?.patronymic} !
                 </Text>
                 <VStack gap="12" align="center" max>
