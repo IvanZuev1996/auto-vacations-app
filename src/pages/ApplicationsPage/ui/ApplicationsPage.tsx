@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { getUserAuthData, useUserVacations } from '@/entities/User';
 import { VacationList } from '@/entities/Vacation';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -31,7 +30,6 @@ const ApplicationsPage = () => {
 
     return (
         <Page>
-            <Breadcrumb />
             <HStack
                 justify="start"
                 gap="16"

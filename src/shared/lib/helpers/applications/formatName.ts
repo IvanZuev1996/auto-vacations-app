@@ -1,3 +1,5 @@
+const vowelChars: string[] = ['а', 'у', 'о', 'ы', 'и', 'э', 'я', 'ю', 'ё', 'е'];
+
 export const formatName = (
     firstname?: string,
     lastname?: string,
@@ -12,7 +14,9 @@ export const formatName = (
         ? patronymic.charAt(0).toUpperCase()
         : '';
 
-    const formattedLastname = `${lastname}а`;
+    const formattedLastname = vowelChars.includes(lastname[lastname.length - 1])
+        ? lastname
+        : `${lastname}а`;
 
     const formattedName = `${formattedFirstname}.${formattedPatronymic}. ${formattedLastname}`;
 

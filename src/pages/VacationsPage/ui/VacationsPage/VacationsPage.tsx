@@ -9,7 +9,6 @@ import {
     ReducerList
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -69,7 +68,6 @@ const VacationsPage = () => {
             />
             <Page>
                 <VStack gap="4" max>
-                    <Breadcrumb />
                     <HStack justify="between" gap="16" align="center" max>
                         <Text size="L" weight="bold_weight">
                             График отпусков

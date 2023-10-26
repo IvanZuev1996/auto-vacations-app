@@ -1,6 +1,7 @@
 import { LinkOutlined } from '@ant-design/icons';
 import { Button, Table } from 'antd';
 import Column from 'antd/es/table/Column';
+import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -55,7 +56,9 @@ export const DivisionList = (props: DivisionListProps) => {
                 title="Дата добавления"
                 dataIndex="createdAt"
                 key="createdAt"
-                render={(createdAt: string) => createdAt.slice(0, 10)}
+                render={(createdAt: string) =>
+                    dayjs(createdAt.slice(0, 10)).format('DD-MM-YYYY')
+                }
             />
             <Column
                 dataIndex="_id"

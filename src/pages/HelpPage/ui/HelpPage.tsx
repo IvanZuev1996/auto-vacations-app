@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import helpPdf from '@/shared/fonts/help.pdf';
 import userGuidePdf from '@/shared/fonts/useGuide.pdf';
 import { AppLink } from '@/shared/ui/AppLink';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
@@ -17,7 +16,6 @@ const HelpPage = () => {
     const a = 0;
     return (
         <Page>
-            <Breadcrumb />
             <HStack
                 justify="start"
                 gap="16"

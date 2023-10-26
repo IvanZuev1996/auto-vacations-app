@@ -3,6 +3,7 @@ import { ApplicationPage } from '@/pages/ApplicationsPage';
 import { DivisionsPage } from '@/pages/DivisionsPage';
 import { EmployeeListPage } from '@/pages/EmployeeListPage';
 import { HelpPage } from '@/pages/HelpPage';
+import { MainPage } from '@/pages/MainPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { StatisticsPage } from '@/pages/StatisticsPage';
@@ -29,7 +30,7 @@ import { AppRouteProps } from '@/shared/types/router';
 export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.MAIN]: {
         path: getRouteMain(),
-        element: <div />
+        element: <MainPage />
     },
     [AppRoutes.PROFILE]: {
         path: getRouteProfile(':id'),

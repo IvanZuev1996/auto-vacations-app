@@ -98,7 +98,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                 <Dropdown menu={menuProps} trigger={['click']}>
                     <Button>
                         <Space>
-                            {`${userData?.firstname} ${userData?.lastname[0]}.`}
+                            {`${userData?.lastname} ${userData?.firstname[0]}.${userData?.patronymic?.[0]}.`}
                             <DownOutlined />
                         </Space>
                     </Button>

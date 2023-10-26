@@ -7,7 +7,6 @@ import {
     AddDivisionModal,
     getAddDivisionModalIsSuccess
 } from '@/features/AddDivisionModal';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -39,7 +38,6 @@ const DivisionsPage = () => {
                 onCloseModal={onCloseModal}
             />
             <VStack gap="8" max>
-                <Breadcrumb />
                 <HStack justify="between" gap="32" align="center" max>
                     <HStack gap="32" align="center">
                         <Text size="L" weight="bold_weight">

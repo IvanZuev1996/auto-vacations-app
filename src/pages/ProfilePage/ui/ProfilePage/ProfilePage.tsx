@@ -12,7 +12,6 @@ import { VacationList } from '@/entities/Vacation';
 import { EditableEmailInput } from '@/features/editableEmailInput';
 import { formatStartDate } from '@/shared/lib/helpers/applications/formatStartDate';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -46,7 +45,6 @@ const ProfilePage = () => {
 
     return (
         <Page>
-            <Breadcrumb />
             <HStack
                 justify="start"
                 gap="16"

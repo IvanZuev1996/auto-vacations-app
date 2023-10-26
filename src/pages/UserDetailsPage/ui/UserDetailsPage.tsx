@@ -7,7 +7,6 @@ import { useLazyUserData, useUserVacations } from '@/entities/User';
 import { VacationList } from '@/entities/Vacation';
 import { formatStartDate } from '@/shared/lib/helpers/applications/formatStartDate';
 import { getNormalizedDate } from '@/shared/lib/helpers/dates';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -48,7 +47,6 @@ const UserDetailsPage = () => {
 
     return (
         <Page>
-            <Breadcrumb />
             <Skeleton
                 loading={
                     isUserDataLoading || isUserDataFetching || isDivisionLoading

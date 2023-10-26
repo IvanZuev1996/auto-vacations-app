@@ -219,7 +219,10 @@ export const VacationList = (props: UserListProps) => {
                     render={(date: string) => (
                         <HStack align="center" gap="8">
                             <Text>{formatStartDate(date.slice(0, 10))}</Text>
-                            <Text size="S">({date.slice(0, 10)})</Text>
+                            <Text size="S">
+                                ({dayjs(date.slice(0, 10)).format('DD-MM-YYYY')}
+                                )
+                            </Text>
                         </HStack>
                     )}
                 />
@@ -230,7 +233,10 @@ export const VacationList = (props: UserListProps) => {
                     render={(date: string) => (
                         <HStack align="center" gap="8">
                             <Text>{formatStartDate(date.slice(0, 10))}</Text>
-                            <Text size="S">({date.slice(0, 10)})</Text>
+                            <Text size="S">
+                                ({dayjs(date.slice(0, 10)).format('DD-MM-YYYY')}
+                                )
+                            </Text>
                         </HStack>
                     )}
                 />

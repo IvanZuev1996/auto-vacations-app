@@ -22,7 +22,8 @@ export const AnnualPaid = ({
         <Page size="A4" style={styles.page}>
             <View style={styles.rightSection}>
                 <View style={styles.leftSection}>
-                    <Text style={styles.line}>Руководителю</Text>
+                    <Text style={styles.line}>Генеральному директору</Text>
+                    <Text style={styles.line}>______________________</Text>
                     <Text style={styles.line}>______________________</Text>
                     <Text style={[styles.date, styles.fromPlace]}>
                         от {name}
@@ -30,7 +31,7 @@ export const AnnualPaid = ({
                 </View>
             </View>
             <View style={styles.section}>
-                <Text style={styles.centeredSection}>Заявление.</Text>
+                <Text style={styles.centeredSection}>Заявление</Text>
                 <Text style={styles.text}>
                     Прошу предоставить мне ежегодный оплачиваемый отпуск с{' '}
                     {date} на {daysCount} {formatDaysEnding(daysCount)}.

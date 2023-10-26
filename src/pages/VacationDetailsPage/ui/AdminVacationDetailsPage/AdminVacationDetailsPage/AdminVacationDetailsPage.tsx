@@ -1,4 +1,5 @@
-import { Breadcrumb, Card, Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -92,7 +93,6 @@ const AdminVacationDetailsPage = () => {
 
     return (
         <Page>
-            <Breadcrumb />
             <ApproveVacationModal
                 isOpen={isModalOpen}
                 onCloseModal={onCloseModal}
@@ -104,7 +104,7 @@ const AdminVacationDetailsPage = () => {
             />
             <HStack justify="between" gap="16" align="center" max>
                 <Text size="L" weight="bold_weight">
-                    Заявка на отпуск #{data?._id.slice(0, 5)}
+                    Заявка на отпуск
                 </Text>
             </HStack>
             <Line />
@@ -140,9 +140,11 @@ const AdminVacationDetailsPage = () => {
                                     </Text>
                                     <Text>
                                         (
-                                        {getNormalizedDate(
-                                            new Date(data?.start)
-                                        )}
+                                        {dayjs(
+                                            getNormalizedDate(
+                                                new Date(data?.start)
+                                            )
+                                        ).format('DD-MM-YYYY')}
                                         )
                                     </Text>
                                 </HStack>
@@ -158,7 +160,11 @@ const AdminVacationDetailsPage = () => {
                                     </Text>
                                     <Text>
                                         (
-                                        {getNormalizedDate(new Date(data?.end))}
+                                        {dayjs(
+                                            getNormalizedDate(
+                                                new Date(data?.end)
+                                            )
+                                        ).format('DD-MM-YYYY')}
                                         )
                                     </Text>
                                 </HStack>

@@ -3,7 +3,6 @@ import { Card, Spin, Statistic } from 'antd';
 import { useSelector } from 'react-redux';
 
 import { getCurrentDivisionId } from '@/entities/Division';
-import { Breadcrumb } from '@/shared/ui/Breadcrumb/Breadcrumb';
 import { Line } from '@/shared/ui/Line';
 import { HStack } from '@/shared/ui/Stack';
 import { Text } from '@/shared/ui/Text';
@@ -21,7 +20,6 @@ const StatisticsPage = () => {
 
     return (
         <Page>
-            <Breadcrumb />
             <Spin spinning={isLoading || isFetching}>
                 <HStack
                     justify="start"

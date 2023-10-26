@@ -1,12 +1,4 @@
-import {
-    Button,
-    Checkbox,
-    DatePicker,
-    Input,
-    Result,
-    Select,
-    Spin
-} from 'antd';
+import { Button, DatePicker, Input, Result, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -211,39 +203,9 @@ export const AddEmployeeFormContent = (props: AddEmployeeFormContentProps) => {
                         max
                     >
                         <HStack align="center" max>
-                            <Text max>На кого пишется заявление на отпуск</Text>
-                            <Checkbox
-                                style={{ width: '300px' }}
-                                onChange={onChangeCheckbox}
-                                checked={checkboxState}
-                            >
-                                На меня
-                            </Checkbox>
+                            <Text max>Заявление на отпуск пишется на</Text>
+                            <Input placeholder="Введите ФИО" />
                         </HStack>
-                        <Select
-                            className={cls.selectDivision}
-                            disabled={checkboxState}
-                            size="middle"
-                            value={data?.intersections}
-                            onChange={onChangeIntersections}
-                            options={[
-                                {
-                                    value: 'Сотрудник 1',
-                                    label: 'Сотрудник 1'
-                                },
-                                {
-                                    value: 'Сотрудник 2',
-                                    label: 'Сотрудник 2'
-                                },
-                                {
-                                    value: 'Сотрудник 3',
-                                    label: 'Сотрудник 3'
-                                }
-                            ]}
-                            allowClear
-                            style={{ width: '100%' }}
-                            placeholder="Выберете сотрудника"
-                        />
                     </VStack>
                 </VStack>
                 <VStack gap="16" className={cls.inputsArea}>
